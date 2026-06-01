@@ -1,0 +1,1775 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Twine — Early Access · The Modern Wedding Platform</title>
+<meta name="description" content="Wedding planning reimagined. Swipe to discover verified vendors, let AI draft your outreach, and build your wedding website in seconds. Free forever for couples. Join the early-access waitlist.">
+<meta name="theme-color" content="#0D0B09">
+<meta name="author" content="Twine">
+<link rel="canonical" href="https://twine.wedding/">
+<!-- Open Graph / social -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Twine — Wedding Planning, Reimagined">
+<meta property="og:description" content="Swipe to discover verified vendors, let AI draft your outreach, and build your wedding website in seconds. Free forever for couples.">
+<meta property="og:site_name" content="Twine">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Twine — Wedding Planning, Reimagined">
+<meta name="twitter:description" content="Swipe to discover verified vendors, let AI draft your outreach, and build your wedding website in seconds. Free forever for couples.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230D0B09'/%3E%3Ctext x='50' y='50' font-family='Georgia,serif' font-size='62' font-style='italic' fill='%23B8756C' text-anchor='middle' dominant-baseline='central'%3ET%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+
+:root{
+  --paper: #F7F4EE;
+  --paper2:#F0ECE3;
+  --paper3:#E8E2D6;
+  --ink:   #0D0B09;
+  --ink2:  #1E1A15;
+  --ash:   #5A5048;
+  --linen: #9A9088;
+  --rule:  rgba(13,11,9,.14);
+  --rose:  #B8756C;
+  --sage:  #607A5C;
+  --gold:  #C4913A;
+}
+
+html{scroll-behavior:smooth}
+
+body{
+  font-family:'Jost',sans-serif;
+  font-weight:300;
+  background:var(--paper);
+  color:var(--ink);
+  overflow-x:hidden;
+  cursor:none;
+}
+
+/* ── GRAIN ── */
+body::after{
+  content:'';position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.028'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:9990;
+}
+
+/* ── CUSTOM CURSOR ── */
+.cur{width:6px;height:6px;background:var(--rose);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .35s,height .35s}
+.cur-r{width:28px;height:28px;border:1px solid var(--rose);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);opacity:.35;transition:all .2s}
+.cur.h{width:12px;height:12px}
+.cur-r.h{width:44px;opacity:.12}
+
+/* ══════════════════════════════════
+   MASTHEAD / NAV
+══════════════════════════════════ */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:500;
+  border-bottom:1px solid var(--rule);
+  transition:background .4s;
+}
+nav.sc{background:rgba(247,244,238,.96);backdrop-filter:blur(16px)}
+.nav-inner{
+  max-width:1400px;margin:0 auto;
+  display:grid;grid-template-columns:1fr auto 1fr;
+  align-items:center;padding:20px 48px;transition:padding .4s;
+}
+nav.sc .nav-inner{padding:14px 48px}
+
+.nav-left{display:flex;align-items:center;gap:32px}
+.nav-item{font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--linen);text-decoration:none;transition:color .3s}
+.nav-item:hover{color:var(--ink)}
+
+.nav-center{text-align:center}
+.nav-logo{
+  font-family:'Cormorant',serif;
+  font-size:28px;font-weight:400;letter-spacing:.28em;
+  text-transform:uppercase;color:var(--ink);
+  text-decoration:none;display:block;line-height:1;
+}
+.nav-logo-sub{font-size:7px;letter-spacing:.4em;text-transform:uppercase;color:var(--linen);margin-top:3px}
+
+.nav-right{display:flex;align-items:center;justify-content:flex-end;gap:32px}
+
+/* MODE TOGGLE */
+.mode-toggle{
+  display:flex;align-items:center;gap:0;
+  border:1px solid var(--rule);
+}
+.mt-btn{
+  font-size:8px;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--linen);background:none;border:none;
+  padding:7px 16px;cursor:none;transition:all .3s;
+  font-family:'Jost',sans-serif;font-weight:400;
+}
+.mt-btn.active{background:var(--ink);color:var(--paper)}
+.mt-btn:not(.active):hover{color:var(--ink)}
+.mt-sep{width:1px;height:28px;background:var(--rule)}
+
+/* ══════════════════════════════════
+   COUPLE HERO — EDITORIAL SPREAD
+══════════════════════════════════ */
+.c-hero{
+  min-height:100vh;
+  display:flex;flex-direction:column;
+  justify-content:flex-end;
+  padding:0;
+  position:relative;
+  overflow:hidden;
+  background:var(--paper);
+}
+
+/* Full-bleed editorial photo panel */
+.c-hero-img{
+  position:absolute;top:0;right:0;
+  width:52%;height:100%;
+  background:
+    linear-gradient(160deg, #D6C8BE 0%, #C2A89A 30%, #9E7E72 65%, #7A5A50 100%);
+  z-index:0;
+}
+.c-hero-img::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(to right, var(--paper) 0%, transparent 20%),
+             linear-gradient(to top, var(--paper) 0%, transparent 30%);
+}
+
+/* Issue line */
+.issue-line{
+  position:absolute;top:0;left:0;right:0;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:96px 48px 0;
+  font-size:8px;letter-spacing:.3em;text-transform:uppercase;
+  color:var(--linen);z-index:2;
+}
+
+.c-hero-content{
+  position:relative;z-index:2;
+  padding:0 48px 80px;
+  max-width:760px;
+}
+
+.c-hero-kicker{
+  font-size:9px;letter-spacing:.32em;text-transform:uppercase;
+  color:var(--rose);margin-bottom:24px;
+  display:flex;align-items:center;gap:14px;
+}
+.c-hero-kicker::before{content:'';width:28px;height:1px;background:var(--rose)}
+
+h1.c-hero-title{
+  font-family:'Cormorant',serif;
+  font-size:clamp(72px,11vw,168px);
+  font-weight:300;
+  line-height:.88;
+  letter-spacing:-.02em;
+  color:var(--ink);
+  margin-bottom:0;
+}
+h1.c-hero-title .em{
+  font-style:italic;
+  font-weight:300;
+  color:var(--sage);
+  display:block;
+}
+h1.c-hero-title .sub{
+  font-family:'Cormorant Garamond',serif;
+  font-size:.42em;
+  font-style:italic;
+  font-weight:300;
+  color:var(--rose);
+  letter-spacing:.02em;
+  display:block;
+  margin-top:12px;
+  padding-left:2px;
+}
+
+/* horizontal rule with text */
+.rule-line{
+  display:flex;align-items:center;gap:20px;
+  margin:40px 0;
+}
+.rl-rule{flex:1;height:1px;background:var(--rule)}
+.rl-text{font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--linen);white-space:nowrap;flex-shrink:0}
+
+/* Inline form — editorial style */
+.c-hero-form{max-width:480px}
+.form-grid{display:grid;grid-template-columns:1fr auto;gap:0;border:1px solid var(--ink)}
+.form-email{
+  padding:14px 20px;border:none;background:none;
+  font-family:'Jost',sans-serif;font-size:13px;font-weight:300;
+  color:var(--ink);outline:none;width:100%;
+}
+.form-email::placeholder{color:var(--linen)}
+.form-sep{width:1px;background:var(--rule);align-self:stretch}
+.form-cta{
+  padding:14px 24px;background:var(--ink);color:var(--paper);
+  border:none;cursor:none;font-family:'Jost',sans-serif;
+  font-size:9px;letter-spacing:.22em;text-transform:uppercase;font-weight:400;
+  white-space:nowrap;transition:background .3s;
+}
+.form-cta:hover{background:var(--sage)}
+.form-note{font-size:9px;letter-spacing:.1em;color:var(--linen);margin-top:10px}
+
+.form-success{display:none;padding:14px 0}
+.form-success.show{display:block}
+.fs-t{font-family:'Cormorant',serif;font-size:20px;font-style:italic;color:var(--sage)}
+.fs-s{font-size:11px;color:var(--ash);line-height:1.7;margin-top:4px;letter-spacing:.03em}
+
+/* Hero footnote stats — editorial margin notes */
+.c-hero-stats{
+  position:absolute;right:48px;bottom:80px;
+  width:180px;z-index:2;
+}
+.ch-stat{margin-bottom:24px}
+.ch-stat-n{font-family:'Cormorant',serif;font-size:48px;font-weight:300;color:var(--ink);line-height:1}
+.ch-stat-l{font-size:12px;font-weight:300;letter-spacing:.04em;color:var(--ash);margin-top:6px;line-height:1.6}
+.ch-stat-s{font-size:9px;letter-spacing:.1em;color:var(--linen);margin-top:3px}
+
+/* ══════════════════════════════════
+   VENDOR HERO
+══════════════════════════════════ */
+.v-hero{
+  display:none;
+  min-height:100vh;
+  background:var(--ink2);
+  position:relative;overflow:hidden;
+}
+body.vm .v-hero{display:flex;flex-direction:column}
+body.vm .c-hero{display:none}
+
+.v-hero-bg{
+  position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 60% 80% at 90% 20%, rgba(196,145,58,.08) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 60% at 10% 80%, rgba(184,117,108,.06) 0%, transparent 55%);
+}
+
+.v-hero-top{
+  flex:1;display:grid;grid-template-columns:1fr 1fr;
+  max-width:1400px;width:100%;margin:0 auto;
+  padding:140px 48px 80px;gap:80px;align-items:center;
+  position:relative;z-index:2;
+}
+
+.vh-kicker{font-size:9px;letter-spacing:.32em;text-transform:uppercase;color:var(--gold);margin-bottom:28px;display:flex;align-items:center;gap:12px}
+.vh-kicker::before{content:'';width:24px;height:1px;background:var(--gold)}
+
+h1.vh-h{
+  font-family:'Cormorant',serif;
+  font-size:clamp(52px,6vw,90px);
+  font-weight:300;line-height:.93;letter-spacing:-.015em;
+  color:rgba(247,244,238,.92);
+  margin-bottom:28px;
+}
+h1.vh-h em{font-style:italic;color:var(--gold)}
+
+.vh-body{
+  font-size:14px;font-weight:300;line-height:1.9;
+  color:rgba(247,244,238,.38);letter-spacing:.03em;
+  margin-bottom:36px;max-width:480px;
+}
+
+/* Vendor form */
+.v-form-grid{display:grid;grid-template-columns:1fr auto;gap:0;border:1px solid rgba(247,244,238,.15);margin-bottom:8px}
+.v-form-email{padding:14px 20px;border:none;background:none;font-family:'Jost',sans-serif;font-size:13px;font-weight:300;color:rgba(247,244,238,.8);outline:none;width:100%}
+.v-form-email::placeholder{color:rgba(247,244,238,.2)}
+.v-form-btn{padding:14px 24px;background:var(--gold);color:var(--ink2);border:none;cursor:none;font-family:'Jost',sans-serif;font-size:9px;letter-spacing:.22em;text-transform:uppercase;font-weight:400;transition:background .3s}
+.v-form-btn:hover{background:#D4A148}
+.v-form-note{font-size:9px;letter-spacing:.1em;color:rgba(247,244,238,.22)}
+.v-success{display:none;padding:14px 0}
+.v-success.show{display:block}
+.v-success-t{font-family:'Cormorant',serif;font-size:20px;font-style:italic;color:var(--gold)}
+.v-success-s{font-size:11px;color:rgba(247,244,238,.78);line-height:1.7;margin-top:4px}
+
+/* Pricing — editorial table style */
+.v-pricing{position:relative}
+.vp-head{
+  font-size:8px;letter-spacing:.3em;text-transform:uppercase;
+  color:rgba(247,244,238,.58);margin-bottom:20px;padding-bottom:16px;
+  border-bottom:1px solid rgba(247,244,238,.08);
+}
+
+.vp-tier{
+  padding:22px 0;
+  border-bottom:1px solid rgba(247,244,238,.08);
+  display:grid;grid-template-columns:1fr auto;
+  align-items:center;gap:20px;
+  transition:opacity .3s;
+}
+.vp-tier:first-of-type{border-top:1px solid rgba(247,244,238,.08)}
+.vp-tier.featured{opacity:1}
+.vp-tier:not(.featured){opacity:.5}
+.vp-tier:hover{opacity:1}
+
+.vp-left{}
+.vp-name{font-family:'Cormorant',serif;font-size:20px;font-style:italic;color:rgba(247,244,238,.85);margin-bottom:3px}
+.vp-tier.featured .vp-name{color:var(--gold)}
+.vp-desc{font-size:10px;letter-spacing:.08em;color:rgba(247,244,238,.62)}
+.vp-badge{display:inline-block;font-size:7px;letter-spacing:.18em;text-transform:uppercase;padding:2px 9px;border-radius:20px;margin-left:8px;vertical-align:middle}
+.vp-badge-hot{background:rgba(196,145,58,.15);color:var(--gold);border:1px solid rgba(196,145,58,.25)}
+.vp-badge-found{background:rgba(96,122,92,.15);color:#8AAA86;border:1px solid rgba(96,122,92,.25)}
+
+.vp-right{text-align:right}
+.vp-price{font-family:'Cormorant',serif;font-size:36px;font-weight:300;line-height:1}
+.vp-tier.featured .vp-price{color:var(--gold)}
+.vp-tier:not(.featured) .vp-price{color:rgba(247,244,238,.5)}
+.vp-was{font-size:11px;color:rgba(247,244,238,.2);text-decoration:line-through;display:block;margin-top:2px}
+.vp-period{font-size:9px;color:rgba(247,244,238,.2);letter-spacing:.06em}
+
+/* spots remaining */
+.vp-spots{
+  margin-top:28px;padding:16px 0;
+  border-top:1px solid rgba(247,244,238,.08);
+  display:flex;align-items:center;justify-content:space-between;
+}
+.vps-label{font-size:9px;letter-spacing:.14em;color:rgba(247,244,238,.58)}
+.vps-bar-wrap{flex:1;margin:0 16px;height:2px;background:rgba(247,244,238,.08)}
+.vps-bar{height:100%;background:var(--gold);transition:width .8s cubic-bezier(.22,1,.36,1)}
+.vps-n{font-family:'Cormorant',serif;font-size:16px;color:var(--gold)}
+
+/* ── TIER SOLD OUT STATE ──
+   Mohamed: add class "tier-sold-out" to .vp-tier.featured
+   when the 100th founding vendor signs up. One line of code.
+   The CSS handles the rest automatically.
+*/
+.vp-tier.tier-sold-out{opacity:.5;position:relative}
+.vp-tier.tier-sold-out .vp-price{text-decoration:line-through;color:rgba(247,244,238,.25)}
+.vp-tier.tier-sold-out .vp-name{color:rgba(247,244,238,.35)}
+.vp-tier.tier-sold-out .vp-badge-hot{background:rgba(247,244,238,.1);color:rgba(247,244,238,.3)}
+.vp-tier.tier-sold-out .vp-badge-hot::before{content:''}
+.vp-tier.tier-sold-out::after{
+  content:'Sold Out';
+  position:absolute;top:50%;right:20px;transform:translateY(-50%);
+  font-size:8px;letter-spacing:.2em;text-transform:uppercase;
+  background:rgba(184,117,108,.15);color:rgba(184,117,108,.6);
+  padding:4px 12px;border-radius:10px;border:1px solid rgba(184,117,108,.2);
+}
+
+/* ══════════════════════════════════
+   EDITORIAL STRIP
+══════════════════════════════════ */
+.ed-strip{
+  border-top:1px solid var(--rule);
+  border-bottom:1px solid var(--rule);
+  overflow:hidden;padding:16px 0;
+  background:var(--paper);
+}
+.ed-track{display:flex;white-space:nowrap;animation:edScroll 32s linear infinite}
+.ed-item{
+  font-family:'Cormorant',serif;font-size:14px;font-style:italic;
+  color:var(--linen);padding:0 28px;
+  border-right:1px solid var(--rule);
+  flex-shrink:0;letter-spacing:.02em;
+}
+.ed-item.hi{color:var(--ash)}
+
+/* ══════════════════════════════════
+   SECTION RHYTHM
+══════════════════════════════════ */
+.section-wrapper{
+  max-width:1400px;margin:0 auto;padding:0 48px;
+}
+
+/* Editorial section opener */
+.sec-opener{
+  display:flex;align-items:baseline;gap:16px;
+  padding:80px 0 48px;
+  border-bottom:1px solid var(--rule);
+  margin-bottom:80px;
+}
+.so-num{font-family:'Cormorant',serif;font-size:11px;font-style:italic;color:var(--linen)}
+.so-rule{flex:1;height:1px;background:var(--rule);align-self:center}
+.so-label{font-size:8px;letter-spacing:.32em;text-transform:uppercase;color:var(--linen)}
+
+/* ══════════════════════════════════
+   THE PROBLEM — EDITORIAL SPREAD
+══════════════════════════════════ */
+.problem-spread{
+  padding:120px 0;
+  display:grid;grid-template-columns:3fr 1px 2fr;
+  gap:80px;align-items:start;
+}
+.ps-vr{background:var(--rule);align-self:stretch}
+
+.ps-main{}
+.ps-overline{font-size:9px;letter-spacing:.32em;text-transform:uppercase;color:var(--rose);margin-bottom:32px}
+.ps-pull{
+  font-family:'Cormorant',serif;
+  font-size:clamp(36px,4.5vw,64px);
+  font-weight:300;font-style:italic;
+  line-height:1.15;color:var(--ink);
+  margin-bottom:36px;
+}
+.ps-pull span{color:var(--rose)}
+.ps-text{font-size:14px;font-weight:300;line-height:1.95;color:var(--ash);letter-spacing:.02em}
+
+.ps-sidebar{padding-top:8px}
+.ps-fact{padding:28px 0;border-bottom:1px solid var(--rule)}
+.ps-fact:first-child{border-top:1px solid var(--rule)}
+.ps-fact-n{font-family:'Cormorant',serif;font-size:52px;font-weight:300;color:var(--ink);line-height:1}
+.ps-fact-l{font-size:11px;font-weight:300;line-height:1.7;color:var(--ash);margin-top:6px;letter-spacing:.02em}
+.ps-fact-s{font-size:8px;letter-spacing:.14em;color:var(--linen);margin-top:6px;text-transform:uppercase}
+
+/* ══════════════════════════════════
+   HOW IT WORKS — NUMBERED LIST
+══════════════════════════════════ */
+.how-spread{padding:0 0 120px}
+.how-head{
+  display:grid;grid-template-columns:1fr 1fr;gap:80px;
+  margin-bottom:80px;align-items:end;
+}
+.how-h{
+  font-family:'Cormorant',serif;
+  font-size:clamp(40px,5vw,72px);
+  font-weight:300;line-height:1.05;color:var(--ink);
+}
+.how-h em{font-style:italic;color:var(--sage)}
+.how-intro{font-size:14px;font-weight:300;line-height:1.9;color:var(--ash);letter-spacing:.02em}
+
+.how-steps{display:flex;flex-direction:column}
+.how-step{
+  display:grid;grid-template-columns:80px 1fr 1fr;
+  gap:48px;align-items:start;
+  padding:44px 0;border-top:1px solid var(--rule);
+}
+.hs-n{
+  font-family:'Cormorant',serif;font-size:72px;font-weight:300;
+  color:var(--paper3);line-height:1;font-style:italic;
+}
+.hs-t{font-family:'Cormorant',serif;font-size:24px;font-weight:400;color:var(--ink);margin-bottom:12px}
+.hs-d{font-size:13px;font-weight:300;line-height:1.9;color:var(--ash);letter-spacing:.02em}
+.hs-aside{padding-top:4px}
+.hs-aside-item{display:flex;align-items:flex-start;gap:10px;margin-bottom:12px}
+.hai-dot{width:4px;height:4px;border-radius:50%;background:var(--rose);margin-top:7px;flex-shrink:0}
+.hai-text{font-size:11px;font-weight:300;color:var(--linen);line-height:1.6;letter-spacing:.02em}
+
+/* ══════════════════════════════════
+   FEATURE SPREAD — MAGAZINE COLUMNS
+══════════════════════════════════ */
+.feature-spread{
+  padding:0 0 120px;
+  background:var(--paper);
+}
+.feat-banner{
+  height:320px;margin:0 -48px 80px;
+  background:linear-gradient(110deg, #C8D8C4 0%, #A8C0A0 35%, #8AA888 65%, #6A9068 100%);
+  position:relative;overflow:hidden;
+  display:flex;align-items:flex-end;
+  padding:48px;
+}
+.feat-banner::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(to right, rgba(247,244,238,.6) 0%, transparent 40%);
+}
+.feat-banner-text{position:relative;z-index:1}
+.fbt-over{font-size:9px;letter-spacing:.32em;text-transform:uppercase;color:var(--sage);margin-bottom:10px}
+.fbt-h{font-family:'Cormorant',serif;font-size:clamp(36px,4vw,60px);font-weight:300;color:var(--ink);line-height:1.05}
+.fbt-h em{font-style:italic}
+
+.feat-cols{columns:3;column-gap:48px;column-rule:1px solid var(--rule)}
+.feat-col-item{break-inside:avoid;padding-bottom:44px}
+.fci-num{font-family:'Cormorant',serif;font-size:11px;font-style:italic;color:var(--linen);margin-bottom:6px}
+.fci-rule{width:24px;height:1px;background:var(--rose);margin-bottom:14px}
+.fci-t{font-family:'Cormorant',serif;font-size:20px;font-weight:400;color:var(--ink);margin-bottom:8px}
+.fci-d{font-size:12px;font-weight:300;line-height:1.85;color:var(--ash);letter-spacing:.02em}
+.fci-tag{display:inline-block;margin-top:10px;font-size:7px;letter-spacing:.2em;text-transform:uppercase;color:var(--sage);border-bottom:1px solid var(--sage);padding-bottom:2px}
+
+/* ══════════════════════════════════
+   COMPARISON CARDS — high contrast
+══════════════════════════════════ */
+.compare-cards{
+  position:relative;
+  width:100%;
+  margin-top:8px;
+  overflow:hidden;
+  /* no grid — carousel handles layout */
+}
+
+/* CAROUSEL TRACK */
+.cmp-track{
+  display:flex;
+  gap:14px;
+  transition:transform .45s cubic-bezier(.22,1,.36,1);
+  will-change:transform;
+  padding:12px 4px 20px;
+  cursor:grab;
+  user-select:none;
+}
+.cmp-track.dragging{cursor:grabbing;transition:none}
+
+/* Each card takes fixed width */
+.cmp-card{
+  border-radius:12px;overflow:hidden;
+  flex:0 0 calc(min(340px, 80vw));
+  min-width:0;
+}
+.cmp-twine{
+  background:var(--paper);
+  box-shadow:0 0 0 2px var(--rose),0 24px 48px rgba(0,0,0,.35);
+}
+.cmp-other{
+  background:#2A2420;
+  border:1px solid rgba(255,255,255,.14);
+}
+
+/* DOT INDICATORS */
+.cmp-dots{
+  display:flex;justify-content:center;gap:7px;margin-top:4px;
+}
+.cmp-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:rgba(247,244,238,.15);
+  transition:all .3s;cursor:pointer;
+}
+.cmp-dot.active{
+  background:var(--rose);
+  width:20px;border-radius:3px;
+}
+
+/* PREV/NEXT ARROWS — desktop only */
+.cmp-arrows{
+  display:flex;justify-content:center;gap:10px;margin-top:12px;
+}
+.cmp-arrow{
+  width:36px;height:36px;border-radius:50%;
+  border:1px solid rgba(247,244,238,.15);
+  background:rgba(247,244,238,.05);
+  color:rgba(247,244,238,.5);
+  font-size:16px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:all .2s;
+}
+.cmp-arrow:hover{
+  border-color:rgba(247,244,238,.35);
+  color:rgba(247,244,238,.9);
+  background:rgba(247,244,238,.1);
+}
+
+/* SCROLL HINT — mobile */
+.cmp-hint{
+  text-align:center;
+  font-size:9px;letter-spacing:.18em;text-transform:uppercase;
+  color:rgba(247,244,238,.2);
+  margin-bottom:10px;display:flex;align-items:center;justify-content:center;gap:8px;
+}
+.cmp-hint::before,.cmp-hint::after{content:'';width:24px;height:1px;background:rgba(247,244,238,.1)}
+
+.cmp-tease .cmp-rows{
+  filter:blur(1.2px);
+  opacity:.8;
+  transition:filter .35s,opacity .35s;
+}
+.cmp-tease .cmp-vendor-price{
+  filter:blur(1px);
+  opacity:.75;
+  transition:filter .35s,opacity .35s;
+}
+.cmp-tease-overlay{
+  position:absolute;
+  bottom:0;left:0;right:0;
+  height:44%;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:flex-end;
+  padding-bottom:18px;
+  background:linear-gradient(to bottom,transparent,rgba(20,16,12,.85));
+  z-index:2;pointer-events:none;
+  border-radius:0 0 12px 12px;
+  transition:opacity .35s;
+}
+.cto-label{
+  font-size:10px;letter-spacing:.12em;text-transform:uppercase;
+  color:rgba(247,244,238,.8);text-align:center;line-height:1.75;
+  font-weight:400;text-shadow:0 1px 8px rgba(0,0,0,.4);
+}
+
+.cmp-card-header{
+  padding:20px 20px 16px;
+  border-bottom:1px solid rgba(13,11,9,.08);
+  display:flex;align-items:flex-start;justify-content:space-between;gap:12px;
+}
+.cmp-other .cmp-card-header{border-bottom-color:rgba(255,255,255,.12)}
+.cmp-logo-wrap{display:flex;flex-direction:column;gap:6px}
+.cmp-badge-best{
+  display:inline-block;font-size:8px;letter-spacing:.18em;
+  text-transform:uppercase;background:var(--rose);color:white;
+  padding:3px 8px;border-radius:20px;
+}
+.cmp-price-hero{text-align:right}
+.cmp-price-label{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--linen)}
+.cmp-price-val{font-family:'Cormorant',serif;font-size:26px;font-weight:300;color:var(--ink);line-height:1.1}
+.cmp-price-sub{font-size:9px;color:var(--linen);letter-spacing:.06em}
+
+.cmp-rows{padding:8px 0}
+.cmp-row{
+  display:flex;align-items:center;gap:12px;
+  padding:10px 20px;
+  border-bottom:1px solid rgba(13,11,9,.06);
+}
+.cmp-other .cmp-row{border-bottom-color:rgba(255,255,255,.09)}
+.cmp-row:last-child{border-bottom:none}
+.cmp-row-highlight{background:rgba(96,122,92,.08)}
+.cmp-row-warning{background:rgba(184,117,108,.07)}
+
+.cmp-check{
+  width:22px;height:22px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:11px;font-weight:500;flex-shrink:0;
+}
+.cmp-check.yes{background:rgba(96,122,92,.15);color:var(--sage)}
+.cmp-check.no{background:rgba(13,11,9,.06);color:rgba(13,11,9,.2)}
+.cmp-other .cmp-check.no{background:rgba(255,255,255,.08);color:rgba(247,244,238,.45)}
+.cmp-check.part{background:rgba(196,145,58,.12);color:var(--gold);font-size:14px}
+.cmp-check.warn{background:rgba(184,117,108,.15);color:var(--rose);font-size:13px}
+.cmp-row-label{font-size:12px;font-weight:300;color:var(--ink);letter-spacing:.02em;line-height:1.4}
+
+.cmp-vendor-price{
+  padding:14px 20px;background:rgba(96,122,92,.06);
+  border-top:1px solid rgba(13,11,9,.08);
+  display:flex;justify-content:space-between;align-items:center;
+}
+.cvp-label{font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--linen)}
+.cvp-val{font-size:13px;color:var(--sage);letter-spacing:.02em}
+.cvp-val strong{font-weight:500}
+
+/* ══════════════════════════════════
+   COMING SOON — EDITORIAL LIST
+══════════════════════════════════ */
+.coming-spread{padding:0 0 120px}
+.coming-head{
+  display:grid;grid-template-columns:1fr 1fr;gap:80px;
+  margin-bottom:72px;align-items:end;
+}
+.com-h{font-family:'Cormorant',serif;font-size:clamp(36px,4.5vw,64px);font-weight:300;line-height:1.05;color:var(--ink)}
+.com-h em{font-style:italic;color:var(--sage)}
+.com-intro{font-size:14px;font-weight:300;line-height:1.9;color:var(--ash);letter-spacing:.02em}
+
+.coming-list{}
+.cl-item{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:48px;align-items:baseline;
+  padding:32px 0;border-top:1px solid var(--rule);
+}
+.cl-t{font-family:'Cormorant',serif;font-size:22px;font-weight:400;color:var(--ink)}
+.cl-d{font-size:13px;font-weight:300;line-height:1.85;color:var(--ash);letter-spacing:.02em}
+
+/* ══════════════════════════════════
+   TESTIMONIALS — EDITORIAL QUOTES
+══════════════════════════════════ */
+.testi-spread{
+  padding:0 0 120px;
+  background:var(--paper2);
+  margin:0 -48px;padding-left:48px;padding-right:48px;
+}
+.testi-inner{padding:120px 0}
+
+.testi-over{font-size:9px;letter-spacing:.32em;text-transform:uppercase;color:var(--rose);margin-bottom:64px;display:flex;align-items:center;gap:16px}
+.testi-over::after{content:'';flex:1;height:1px;background:var(--rule)}
+
+.testi-layout{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0}
+.tq{padding:0 48px;border-right:1px solid var(--rule)}
+.tq:first-child{padding-left:0}
+.tq:last-child{border-right:none;padding-right:0}
+
+.tq-mark{
+  font-family:'Cormorant',serif;font-size:80px;font-weight:300;
+  color:var(--paper3);line-height:.7;margin-bottom:20px;display:block;
+  font-style:italic;
+}
+.tq-text{
+  font-family:'Cormorant Garamond',serif;
+  font-size:18px;font-style:italic;font-weight:300;
+  line-height:1.75;color:var(--ink2);margin-bottom:28px;
+}
+.tq-rule{width:20px;height:1px;background:var(--rose);margin-bottom:14px}
+.tq-name{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink)}
+.tq-detail{font-size:10px;color:var(--linen);margin-top:3px;letter-spacing:.04em}
+
+/* ══════════════════════════════════
+   COUNTDOWN
+══════════════════════════════════ */
+.countdown-bar{
+  background:var(--ink);
+  padding:48px;display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:32px;
+}
+.cb-label{font-size:9px;letter-spacing:.32em;text-transform:uppercase;color:rgba(247,244,238,.2)}
+.cb-timer{display:flex;align-items:baseline;gap:4px}
+.cb-unit{text-align:center}
+.cb-n{font-family:'Cormorant',serif;font-size:52px;font-weight:300;color:rgba(247,244,238,.85);line-height:1}
+.cb-l{font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:rgba(247,244,238,.2);margin-top:3px}
+.cb-sep{font-family:'Cormorant',serif;font-size:44px;color:rgba(247,244,238,.12);padding-bottom:4px;line-height:1;align-self:flex-end;margin-bottom:16px}
+
+/* ══════════════════════════════════
+   FINAL CTA
+══════════════════════════════════ */
+.final-spread{
+  padding:160px 0;
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:120px;align-items:center;
+}
+.final-left{}
+.final-pre{font-family:'Cormorant',serif;font-size:16px;font-style:italic;color:var(--rose);margin-bottom:20px}
+.final-h{
+  font-family:'Cormorant',serif;
+  font-size:clamp(44px,6vw,88px);
+  font-weight:300;line-height:.95;letter-spacing:-.02em;color:var(--ink);
+}
+.final-h em{font-style:italic;color:var(--sage)}
+.final-right{}
+.final-body{font-size:14px;font-weight:300;line-height:1.9;color:var(--ash);letter-spacing:.03em;margin-bottom:36px}
+.final-form .form-grid{max-width:100%}
+.final-note{font-size:9px;letter-spacing:.14em;color:var(--linen);margin-top:12px}
+
+/* ══════════════════════════════════
+   FOOTER — MASTHEAD STYLE
+══════════════════════════════════ */
+footer{
+  background:var(--ink);
+  border-top:3px solid var(--ink);
+}
+.footer-masthead{
+  padding:52px 48px 40px;
+  border-bottom:1px solid rgba(247,244,238,.06);
+  display:grid;grid-template-columns:1fr auto 1fr;
+  align-items:center;
+}
+.fm-left,.fm-right{display:flex;gap:28px}
+.fm-link{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:rgba(247,244,238,.58);text-decoration:none;transition:color .3s}
+.fm-link:hover{color:rgba(247,244,238,.6)}
+.fm-center{text-align:center}
+.fm-logo{font-family:'Cormorant',serif;font-size:32px;font-weight:300;letter-spacing:.3em;text-transform:uppercase;color:rgba(247,244,238,.7)}
+.fm-sub{font-size:7px;letter-spacing:.4em;text-transform:uppercase;color:rgba(247,244,238,.2);margin-top:4px}
+.footer-bottom{
+  padding:24px 48px;
+  display:flex;justify-content:space-between;
+  font-size:9px;letter-spacing:.1em;color:rgba(247,244,238,.15);
+}
+
+/* ══════════════════════════════════
+   COMPARE — DARK FULL BLEED
+══════════════════════════════════ */
+.compare-spread{
+  background:var(--ink2);
+  margin:0 -48px;padding-left:48px;padding-right:48px;
+  position:relative;overflow:hidden;
+}
+.compare-inner{padding:120px 0;position:relative;z-index:1}
+.cs-over{
+  font-size:9px;letter-spacing:.32em;text-transform:uppercase;
+  color:var(--rose);margin-bottom:24px;
+  display:flex;align-items:center;gap:14px;
+}
+.cs-over::before{content:'';width:28px;height:1px;background:var(--rose)}
+.cs-h{
+  font-family:'Cormorant',serif;
+  font-size:clamp(34px,4.5vw,60px);
+  font-weight:300;line-height:1.1;letter-spacing:-.01em;
+  color:rgba(247,244,238,.92);margin-bottom:28px;
+}
+.cs-h em{font-style:italic;color:var(--rose)}
+
+/* ── READABILITY FIXES ── */
+.ps-text{font-size:15px;font-weight:300;line-height:2;color:var(--ash);letter-spacing:.02em}
+.ps-fact-l{font-size:13px;font-weight:300;line-height:1.8;color:var(--ash);margin-top:8px}
+.ps-fact-s{font-size:9px;letter-spacing:.16em;color:var(--linen);margin-top:5px;text-transform:uppercase}
+.how-d{font-size:14px;color:var(--ash);line-height:1.95;letter-spacing:.02em}
+.how-intro{font-size:15px;font-weight:300;line-height:1.9;color:var(--ash);letter-spacing:.02em}
+.hs-d{font-size:14px;font-weight:300;line-height:1.95;color:var(--ash);letter-spacing:.02em}
+.hai-text{font-size:12px;font-weight:300;color:var(--ash);line-height:1.6;letter-spacing:.02em}
+.com-intro{font-size:15px;font-weight:300;line-height:1.9;color:var(--ash);letter-spacing:.02em}
+.cl-d{font-size:13px;font-weight:300;line-height:1.85;color:var(--ash);letter-spacing:.02em}
+.tq-text{font-family:'Cormorant Garamond',serif;font-size:19px;font-style:italic;font-weight:300;line-height:1.75;color:var(--ink2);margin-bottom:28px}
+.final-body{font-size:15px;font-weight:300;line-height:1.9;color:var(--ash);letter-spacing:.03em;margin-bottom:36px}
+.so-label{font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:var(--ash)}
+.nav-item{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--ash);text-decoration:none;transition:color .3s}
+.mt-btn{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--ash);background:none;border:none;padding:7px 16px;cursor:none;transition:all .3s;font-family:'Jost',sans-serif;font-weight:400}
+
+/* Dark section text fixes */
+.cs-sub{font-size:14px;font-weight:300;line-height:1.9;color:rgba(247,244,238,.55);letter-spacing:.03em;max-width:520px;margin-bottom:64px}
+.vh-body{font-size:15px;font-weight:300;line-height:1.9;color:rgba(247,244,238,.55);letter-spacing:.03em;margin-bottom:36px;max-width:480px}
+.ps-body{font-size:14px;color:rgba(255,255,255,.5);line-height:1.9;margin-top:20px;letter-spacing:.02em}
+.vp-desc{font-size:11px;letter-spacing:.06em;color:rgba(247,244,238,.82)}
+.vp-name{font-family:'Cormorant',serif;font-size:21px;font-style:italic;color:rgba(247,244,238,.88);margin-bottom:3px}
+.ct td{padding:16px 0;font-size:13px;font-weight:300;color:rgba(247,244,238,.55);letter-spacing:.03em;vertical-align:middle}
+.ct td.feat-col{color:rgba(247,244,238,.75)}
+.vps-label{font-size:10px;letter-spacing:.12em;color:rgba(247,244,238,.4)}
+.v-form-note{font-size:10px;letter-spacing:.08em;color:rgba(247,244,238,.38)}
+.rv{opacity:0;transform:translateY(28px);transition:opacity .9s cubic-bezier(.22,1,.36,1),transform .9s cubic-bezier(.22,1,.36,1)}
+.rv-l{opacity:0;transform:translateX(-28px);transition:opacity .9s cubic-bezier(.22,1,.36,1),transform .9s cubic-bezier(.22,1,.36,1)}
+.rv-r{opacity:0;transform:translateX(28px);transition:opacity .9s cubic-bezier(.22,1,.36,1),transform .9s cubic-bezier(.22,1,.36,1)}
+.rv.up,.rv-l.up,.rv-r.up{opacity:1;transform:translate(0)}
+[data-d="1"]{transition-delay:.1s}[data-d="2"]{transition-delay:.2s}[data-d="3"]{transition-delay:.3s}[data-d="4"]{transition-delay:.4s}
+
+/* hero animations */
+.c-hero-content .c-hero-kicker{opacity:0;animation:riseUp .9s .2s cubic-bezier(.22,1,.36,1) forwards}
+.c-hero-content h1{opacity:0;animation:riseUp 1.1s .35s cubic-bezier(.22,1,.36,1) forwards}
+.c-hero-content .rule-line{opacity:0;animation:riseUp .8s .5s cubic-bezier(.22,1,.36,1) forwards}
+.c-hero-content .c-hero-form{opacity:0;animation:riseUp .8s .62s cubic-bezier(.22,1,.36,1) forwards}
+.c-hero-stats{opacity:0;animation:riseUp .8s .75s cubic-bezier(.22,1,.36,1) forwards}
+.issue-line{opacity:0;animation:fadeIn .6s .1s forwards}
+.c-hero-img{opacity:0;animation:fadeIn 1.2s .2s forwards}
+
+.vh-kicker{opacity:0;animation:riseUp .8s .2s cubic-bezier(.22,1,.36,1) forwards}
+.vh-h{opacity:0;animation:riseUp 1s .35s cubic-bezier(.22,1,.36,1) forwards}
+.vh-body{opacity:0;animation:riseUp .8s .5s cubic-bezier(.22,1,.36,1) forwards}
+.v-form-grid{opacity:0;animation:riseUp .8s .6s cubic-bezier(.22,1,.36,1) forwards}
+.v-form-note,.v-success{opacity:0;animation:riseUp .7s .7s cubic-bezier(.22,1,.36,1) forwards}
+.v-pricing{opacity:0;animation:riseUp .9s .4s cubic-bezier(.22,1,.36,1) forwards}
+
+@keyframes riseUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes edScroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* RESPONSIVE */
+@media(max-width:1100px){
+  .nav-inner{grid-template-columns:auto 1fr auto;gap:20px}
+  .problem-spread{grid-template-columns:1fr;gap:48px}.ps-vr{display:none}
+  .how-step{grid-template-columns:60px 1fr;gap:24px}.hs-aside{display:none}
+  .compare-spread .ct td:nth-child(3),.compare-spread .ct th:nth-child(3){display:none}
+  .coming-list .cl-item{grid-template-columns:100px 1fr;gap:20px}.cl-d{grid-column:2}
+  .testi-layout{grid-template-columns:1fr}.tq{padding:36px 0;border-right:none;border-bottom:1px solid var(--rule)}
+  .final-spread{grid-template-columns:1fr;gap:48px}
+  .footer-masthead{grid-template-columns:1fr;text-align:center;gap:20px}.fm-left,.fm-right{justify-content:center}
+  nav .nav-inner{padding:16px 28px}nav.sc .nav-inner{padding:14px 28px}
+  .c-hero-content,.section-wrapper{padding-left:28px;padding-right:28px}
+  .c-hero-img{width:42%}
+  .c-hero-stats{right:28px}
+  .countdown-bar,.footer-masthead,.footer-bottom,.compare-inner,.testi-inner{padding-left:28px;padding-right:28px}
+  .testi-spread,.compare-spread{margin:0 -28px;padding-left:28px;padding-right:28px}
+  .ai-web-grid,.vera-grid{grid-template-columns:1fr!important;gap:48px!important}
+  .how-head{grid-template-columns:1fr}
+  .coming-head{grid-template-columns:1fr}
+}
+
+@media(max-width:768px){
+  /* hero */
+  .c-hero-img{display:none}
+  .c-hero-stats{position:static;width:auto;display:grid;grid-template-columns:1fr 1fr;gap:0;margin-top:40px;right:auto}
+  .ch-stat{padding:16px 0;border-bottom:1px solid var(--rule)}.ch-stat:last-child{border:none}
+  .c-hero-content{max-width:100%;padding:100px 24px 60px!important}
+  h1.c-hero-title{font-size:clamp(52px,14vw,90px)}
+  /* vendor hero */
+  .v-hero-top{grid-template-columns:1fr!important;padding:100px 24px 60px!important}
+  /* sections */
+  .how-step{grid-template-columns:1fr}.hs-n{display:none}
+  .coming-list .cl-item{grid-template-columns:1fr}
+  .how-head,.coming-head{grid-template-columns:1fr}
+  .compare-inner{padding:80px 24px}
+  .testi-inner{padding:80px 24px}
+  /* countdown */
+  .cb-timer{gap:4px}.cb-n{font-size:38px}.cb-sep{font-size:32px}
+  .countdown-bar{padding:36px 24px;flex-direction:column;gap:20px;text-align:center}
+  /* footer */
+  .footer-masthead{padding:40px 24px 32px}
+  .footer-bottom{padding:16px 24px;flex-direction:column;gap:6px;text-align:center}
+  .fm-left,.fm-right{flex-wrap:wrap;justify-content:center;gap:16px}
+  /* nav */
+  nav .nav-inner{grid-template-columns:1fr auto;padding:14px 20px}
+  nav.sc .nav-inner{padding:12px 20px}
+  .nav-left{display:none}
+  .nav-logo{font-size:22px;letter-spacing:.2em}
+  /* section wrapper */
+  .section-wrapper{padding-left:20px!important;padding-right:20px!important}
+  /* forms */
+  .form-grid{grid-template-columns:1fr}.form-sep{display:none}.form-cta{width:100%;height:48px;margin-top:8px}
+  .v-form-grid{grid-template-columns:1fr}.v-form-btn{width:100%;height:48px;margin-top:8px}
+  /* problem */
+  .problem-spread{padding:80px 0}
+  .ps-fact-n{font-size:40px}
+  /* ai web & vera grids */
+  .ai-web-grid,.vera-grid{grid-template-columns:1fr!important;gap:40px!important}
+  /* compare table - show only 2 cols */
+  .compare-spread .ct td:nth-child(4),.compare-spread .ct th:nth-child(4){display:none}
+  /* testi */
+  .testi-spread{margin:0 -20px;padding-left:20px;padding-right:20px}
+  .compare-spread{margin:0 -20px;padding-left:20px;padding-right:20px}
+  /* section opener */
+  .sec-opener{padding:52px 0 36px}
+  /* misc */
+  body{cursor:auto}.cur,.cur-r{display:none}
+  .issue-line{display:none}
+  .c-hero-stats .ch-stat{padding:14px 0}
+}
+
+@media(max-width:480px){
+  /* Prevent scroll reveals blocking content on small screens */
+  .rv,.rv-l,.rv-r{opacity:1!important;transform:none!important;transition:none!important}
+  /* hero title */
+  h1.c-hero-title{font-size:52px;line-height:.92}
+  h1.vh-h{font-size:42px}
+  /* stats grid to single col */
+  .c-hero-stats{grid-template-columns:1fr}
+  /* how steps */
+  .how-step{padding:32px 0}
+  .hs-t{font-size:20px}
+  /* coming list */
+  .cl-t{font-size:18px}
+  /* compare table - single extra column hide */
+  .compare-spread .ct td:nth-child(3),.compare-spread .ct th:nth-child(3){display:none}
+  /* vp tiers */
+  .vp-tier{flex-direction:column;gap:8px}
+  /* countdown */
+  .cb-n{font-size:32px}.cd-sep{font-size:28px}
+  /* form grid */
+  .form-grid,.v-form-grid{display:flex;flex-direction:column}
+  /* nav toggle text shorter */
+  .mt-btn{padding:6px 12px;font-size:8px}
+}
+
+/* ── EXTRA-SMALL / NARROW PHONES ── */
+@media(max-width:380px){
+  h1.c-hero-title{font-size:46px}
+  h1.vh-h{font-size:36px}
+  .nav-logo{font-size:20px}
+  .mt-btn{padding:6px 10px;letter-spacing:.12em}
+  .section-wrapper{padding-left:16px!important;padding-right:16px!important}
+  .c-hero-content{padding:96px 16px 52px!important}
+}
+
+/* ── ACCESSIBILITY: respect reduced-motion ── */
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    animation-duration:.001ms!important;
+    animation-iteration-count:1!important;
+    transition-duration:.001ms!important;
+    scroll-behavior:auto!important;
+  }
+  .rv,.rv-l,.rv-r{opacity:1!important;transform:none!important}
+  .ed-track{animation:none!important}
+}
+
+</style>
+</head>
+<body id="body">
+
+<div class="cur" id="cur"></div>
+<div class="cur-r" id="curR"></div>
+
+<!-- ══ NAV / MASTHEAD ══ -->
+<nav id="nav">
+  <div class="nav-inner">
+    <div class="nav-left">
+      <a href="#how" class="nav-item">How It Works</a>
+      <a href="#features" class="nav-item">Features</a>
+      <a href="#compare" class="nav-item">Compare</a>
+    </div>
+    <div class="nav-center">
+      <a href="#" class="nav-logo">Twine</a>
+      <div class="nav-logo-sub">Wedding Discovery</div>
+    </div>
+    <div class="nav-right">
+      <div class="mode-toggle">
+        <button class="mt-btn active" id="mtCouple" onclick="setMode('couple')">Couples</button>
+        <div class="mt-sep"></div>
+        <button class="mt-btn" id="mtVendor" onclick="setMode('vendor')">Vendors</button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ══ COUPLE HERO ══ -->
+<section class="c-hero" id="cHero">
+  <div class="c-hero-img"></div>
+  <div class="issue-line">
+    <span>Twine — Early Access 2026</span>
+    <span>The Modern Wedding Platform</span>
+    <span>Free for Couples · Always</span>
+  </div>
+  <div class="c-hero-content" style="padding:140px 48px 80px;max-width:760px">
+    <div class="c-hero-kicker">Early Access · Limited to First 500 Couples</div>
+    <h1 class="c-hero-title">
+      Wedding<br>planning
+      <span class="em">reimagined.</span>
+      <span class="sub">for the modern couple.</span>
+    </h1>
+    <div class="rule-line">
+      <div class="rl-rule"></div>
+      <span class="rl-text">Join the Waitlist</span>
+      <div class="rl-rule"></div>
+    </div>
+    <div class="c-hero-form">
+      <div id="cFormWrap">
+        <div class="form-grid">
+          <input class="form-email" type="email" id="cEmail" placeholder="your@email.com" autocomplete="email">
+          <div class="form-sep"></div>
+          <button class="form-cta" onclick="submitCouple()">Get Early Access</button>
+        </div>
+        <div class="form-note">Free forever · No credit card · Be first when we launch</div>
+      </div>
+      <div class="form-success" id="cSuccess">
+        <div class="fs-t">You're on the list.</div>
+        <div class="fs-s">We'll email you the moment Twine launches. You're among the first.</div>
+      </div>
+    </div>
+  </div>
+  <div class="c-hero-stats">
+    <div class="ch-stat">
+      <div class="ch-stat-n">2.5M</div>
+      <div class="ch-stat-l">Couples engaged<br>every year in the US</div>
+      <div class="ch-stat-s">Signet Jewelers, 2024</div>
+    </div>
+    <div class="ch-stat">
+      <div class="ch-stat-n">$36k</div>
+      <div class="ch-stat-l">Average US<br>wedding cost in 2026</div>
+      <div class="ch-stat-s">Zola, 2026</div>
+    </div>
+    <div class="ch-stat">
+      <div class="ch-stat-n">14</div>
+      <div class="ch-stat-l">Vendors booked<br>per wedding, average</div>
+      <div class="ch-stat-s">The Knot, 2025-26</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ VENDOR HERO ══ -->
+<section class="v-hero" id="vHero">
+  <div class="v-hero-bg"></div>
+  <div class="v-hero-top">
+    <div>
+      <div class="vh-kicker">Founding Vendor Program · Limited Spots</div>
+      <h1 class="vh-h">
+        You've been paying<br>The Knot to<br><em>ghost you.</em>
+      </h1>
+      <p class="vh-body">In 2025, The New Yorker, Forbes, and US Senator Chuck Grassley exposed what vendors already knew — The Knot's leads are widely alleged to be fake, their pricing is predatory, and their own insiders say it doesn't work for 80% of vendors. Twine is the alternative the wedding industry has been waiting for.</p>
+      <div id="vFormWrap">
+        <div class="v-form-grid">
+          <input class="v-form-email" type="email" id="vEmail" placeholder="your@business.com">
+          <button class="v-form-btn" onclick="submitVendor()">Claim My Profile</button>
+        </div>
+        <div class="v-form-note" style="margin-top:8px">30-day free trial · Founding pricing locked in forever · Cancel anytime</div>
+      </div>
+      <div class="v-success" id="vSuccess">
+        <div class="v-success-t">Profile reserved.</div>
+        <div class="v-success-s">Your founding spot is locked in. We'll email you to complete your profile before launch.</div>
+      </div>
+    </div>
+    <div>
+      <div class="v-pricing">
+        <div class="vp-head">Vendor Pricing — Lock in your tier before launch</div>
+        <div class="vp-tier featured">
+          <div class="vp-left">
+            <div class="vp-name">First 100 Vendors <span class="vp-badge vp-badge-hot">🔥 38 spots left</span></div>
+            <div class="vp-desc">Grandfathered forever — never pay more</div>
+          </div>
+          <div class="vp-right">
+            <div class="vp-price">$29</div>
+            <div class="vp-was">$79/mo</div>
+            <div class="vp-period">per month</div>
+          </div>
+        </div>
+        <div class="vp-tier">
+          <div class="vp-left">
+            <div class="vp-name">Founding Vendors <span class="vp-badge vp-badge-found">101–500</span></div>
+            <div class="vp-desc">Locked in for life at founding rate</div>
+          </div>
+          <div class="vp-right">
+            <div class="vp-price">$49</div>
+            <div class="vp-was">$79/mo</div>
+            <div class="vp-period">per month</div>
+          </div>
+        </div>
+        <div class="vp-tier">
+          <div class="vp-left">
+            <div class="vp-name">Standard</div>
+            <div class="vp-desc">After launch — still 93% cheaper than The Knot</div>
+          </div>
+          <div class="vp-right">
+            <div class="vp-price">$79</div>
+            <div class="vp-period">per month</div>
+          </div>
+        </div>
+        <div class="vp-spots">
+          <span class="vps-label">Founding spots claimed</span>
+          <div class="vps-bar-wrap"><div class="vps-bar" id="foundingBar" style="width:62%"></div></div>
+          <span class="vps-n" id="foundingCount">62 / 100</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EDITORIAL STRIP -->
+<div class="ed-strip">
+  <div class="ed-track">
+    <span class="ed-item hi">Photography</span><span class="ed-item">Venues</span><span class="ed-item hi">Florals</span>
+    <span class="ed-item">Catering</span><span class="ed-item hi">Music & DJs</span><span class="ed-item">Hair & Makeup</span>
+    <span class="ed-item hi">Wedding Cakes</span><span class="ed-item">Videography</span><span class="ed-item hi">Officiants</span>
+    <span class="ed-item">Transportation</span><span class="ed-item hi">Stationery</span><span class="ed-item">Jewellery</span>
+    <span class="ed-item hi">Photography</span><span class="ed-item">Venues</span><span class="ed-item hi">Florals</span>
+    <span class="ed-item">Catering</span><span class="ed-item hi">Music & DJs</span><span class="ed-item">Hair & Makeup</span>
+    <span class="ed-item hi">Wedding Cakes</span><span class="ed-item">Videography</span><span class="ed-item hi">Officiants</span>
+    <span class="ed-item">Transportation</span><span class="ed-item hi">Stationery</span><span class="ed-item">Jewellery</span>
+  </div>
+</div>
+
+<!-- ══ MAIN CONTENT ══ -->
+<div class="section-wrapper">
+
+  <!-- PROBLEM -->
+  <div class="sec-opener rv">
+    <span class="so-num">I.</span>
+    <div class="so-rule"></div>
+    <span class="so-label">The Problem</span>
+  </div>
+  <div class="problem-spread">
+    <div class="rv-l">
+      <div class="ps-overline">The State of Wedding Planning</div>
+      <blockquote class="ps-pull">Wedding planning in 2026 still means <span>hours of searching,</span> unresponsive vendors, and a platform facing federal scrutiny.</blockquote>
+      <p class="ps-text">The Knot was built in 1996. Their experience hasn't kept pace with how couples actually discover and decide in 2025 — visually, quickly, and on mobile. Meanwhile, vendors pay up to $1,200 a month for leads widely reported as unqualified. Twine was built to fix both sides of this broken equation.</p>
+    </div>
+    <div class="ps-vr"></div>
+    <div class="rv-r">
+      <div class="ps-fact">
+        <div class="ps-fact-n">2.5M</div>
+        <div class="ps-fact-l">Couples get engaged in the US every year — 200,000 entering the planning window every single month</div>
+        <div class="ps-fact-s">Signet Jewelers, 2024</div>
+      </div>
+      <div class="ps-fact">
+        <div class="ps-fact-n">$36k</div>
+        <div class="ps-fact-l">Average US wedding cost in 2026, spread across an average of 14 vendors — all of whom need to be found, vetted, and booked</div>
+        <div class="ps-fact-s">Zola, 2026</div>
+      </div>
+      <div class="ps-fact">
+        <div class="ps-fact-n">78%</div>
+        <div class="ps-fact-l">Of couples now create a wedding website, up from 52% in 2019 — the digital planning shift is permanent</div>
+        <div class="ps-fact-s">The Knot Real Weddings Study, 2023</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HOW IT WORKS -->
+  <div class="sec-opener rv" id="how">
+    <span class="so-num">II.</span>
+    <div class="so-rule"></div>
+    <span class="so-label">How It Works</span>
+  </div>
+  <div class="how-spread">
+    <div class="how-head">
+      <h2 class="how-h rv">Three steps to your<br>dream vendor <em>team.</em></h2>
+      <p class="how-intro rv">Twine replaces the spreadsheets, the browser tabs, and the anxious waiting. From personalised planning timeline to swipe discovery to AI-drafted outreach — everything flows in sequence, beautifully.</p>
+    </div>
+    <div class="how-steps">
+      <div class="how-step rv">
+        <div class="hs-n">01</div>
+        <div>
+          <div class="hs-t">Tell us about your day</div>
+          <p class="hs-d">Enter your date, location, aesthetic, and budget. Twine builds a personalised planning timeline in seconds — every task linked directly to your wedding date and vendor categories. The checklist adapts as you go.</p>
+        </div>
+        <div class="hs-aside">
+          <div class="hs-aside-item"><div class="hai-dot"></div><span class="hai-text">Date-specific task timing</span></div>
+          <div class="hs-aside-item"><div class="hai-dot"></div><span class="hai-text">Vibe quiz powers match scoring</span></div>
+          <div class="hs-aside-item"><div class="hai-dot"></div><span class="hai-text">Budget filters vendor cards</span></div>
+        </div>
+      </div>
+      <div class="how-step rv" data-d="1">
+        <div class="hs-n">02</div>
+        <div>
+          <div class="hs-t">Swipe to discover vendors</div>
+          <p class="hs-d">Browse verified vendors one card at a time — real Instagram work pulled live, Google and Yelp reviews aggregated, pricing and response time on every card, and a personalised aesthetic match score. Save or skip in a moment.</p>
+        </div>
+        <div class="hs-aside">
+          <div class="hs-aside-item"><div class="hai-dot"></div><span class="hai-text">Live Instagram feed on every card</span></div>
+          <div class="hs-aside-item"><div class="hai-dot"></div><span class="hai-text">Google + Yelp reviews combined</span></div>
+          <div class="hs-aside-item"><div class="hai-dot"></div><span class="hai-text">Availability confirmed before saving</span></div>
+        </div>
+      </div>
+      <div class="how-step rv" data-d="2">
+        <div class="hs-n">03</div>
+        <div>
+          <div class="hs-t">Twine drafts your outreach</div>
+          <p class="hs-d">Save your top 10 per category. Twine drafts a personalised inquiry for every single one — your date, location, style, and budget woven in. Review each message, edit if you like, and send all 10 in a single tap. Nothing like this has existed before.</p>
+        </div>
+        <div class="hs-aside">
+          <div class="hs-aside-item"><div class="hai-dot"></div><span class="hai-text">Category-specific message templates</span></div>
+          <div class="hs-aside-item"><div class="hai-dot"></div><span class="hai-text">Editable before sending</span></div>
+          <div class="hs-aside-item"><div class="hai-dot"></div><span class="hai-text">Vendors notified on save</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /section-wrapper -->
+
+<!-- AI WEBSITE BUILDER TEASER — full bleed -->
+<div id="features" style="background:var(--ink2);padding:120px 0;position:relative;overflow:hidden">
+  <div style="position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 80% 50%,rgba(96,122,92,.1) 0%,transparent 60%),radial-gradient(ellipse 40% 60% at 20% 30%,rgba(184,117,108,.08) 0%,transparent 55%);pointer-events:none"></div>
+  <div class="section-wrapper" style="position:relative;z-index:1">
+    <div class="sec-opener rv" style="border-bottom-color:rgba(247,244,238,.08)">
+      <span class="so-num" style="color:rgba(247,244,238,.58)">III.</span>
+      <div class="so-rule" style="background:rgba(247,244,238,.08)"></div>
+      <span class="so-label" style="color:rgba(247,244,238,.62)">New — AI Wedding Websites</span>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center" class="ai-web-grid">
+      <div class="rv-l">
+        <div style="font-size:9px;letter-spacing:.32em;text-transform:uppercase;color:var(--gold);margin-bottom:20px;display:flex;align-items:center;gap:12px"><span style="display:inline-block;width:20px;height:1px;background:var(--gold)"></span>Describe it. It exists.</div>
+        <h2 style="font-family:'Cormorant',serif;font-size:clamp(36px,4.5vw,64px);font-weight:300;line-height:1.05;color:rgba(247,244,238,.92);margin-bottom:20px">Your wedding website,<br><em style="color:var(--gold)">built by AI</em><br>in seconds.</h2>
+        <p style="font-size:15px;font-weight:300;line-height:1.9;color:rgba(247,244,238,.82);letter-spacing:.03em;margin-bottom:32px">No templates to choose from. No design decisions. Just describe your day in your own words and Twine generates a stunning, personalised wedding website instantly. Zola has 200+ templates you still have to choose from. The Knot's builder is from 2012. Twine's is built for 2026.</p>
+        <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:36px">
+          <div style="display:flex;align-items:flex-start;gap:12px">
+            <div style="width:5px;height:5px;border-radius:50%;background:var(--gold);margin-top:8px;flex-shrink:0"></div>
+            <span style="font-size:13px;font-weight:300;color:rgba(247,244,238,.5);line-height:1.6;letter-spacing:.02em">Type your vision in plain language — palette, vibe, season, venue style</span>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:12px">
+            <div style="width:5px;height:5px;border-radius:50%;background:var(--gold);margin-top:8px;flex-shrink:0"></div>
+            <span style="font-size:13px;font-weight:300;color:rgba(247,244,238,.5);line-height:1.6;letter-spacing:.02em">AI generates a complete, beautiful site matched to your description</span>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:12px">
+            <div style="width:5px;height:5px;border-radius:50%;background:var(--gold);margin-top:8px;flex-shrink:0"></div>
+            <span style="font-size:13px;font-weight:300;color:rgba(247,244,238,.5);line-height:1.6;letter-spacing:.02em">RSVP, guest management, and your story — all live at yournames.twine.wedding</span>
+          </div>
+        </div>
+        <div style="font-size:11px;letter-spacing:.1em;color:rgba(247,244,238,.2);font-style:italic;font-family:'Cormorant',serif">Free for every couple. Always.</div>
+      </div>
+
+      <!-- WEBSITE BUILDER DEMO -->
+      <div class="rv-r">
+        <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:12px;overflow:hidden">
+          <!-- Browser bar -->
+          <div style="background:rgba(255,255,255,.05);padding:10px 16px;display:flex;align-items:center;gap:10px;border-bottom:1px solid rgba(255,255,255,.08)">
+            <div style="display:flex;gap:5px"><div style="width:9px;height:9px;border-radius:50%;background:#E88080"></div><div style="width:9px;height:9px;border-radius:50%;background:#E8C880"></div><div style="width:9px;height:9px;border-radius:50%;background:#88C880"></div></div>
+            <div style="flex:1;background:rgba(255,255,255,.06);border-radius:20px;padding:4px 14px;font-size:10px;letter-spacing:.06em;color:rgba(247,244,238,.3);text-align:center">emma-james.twine.wedding</div>
+          </div>
+          <!-- Prompt bar -->
+          <div style="padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.03)">
+            <div style="font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:rgba(247,244,238,.2);margin-bottom:8px">Describe your wedding</div>
+            <div style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:6px;padding:10px 14px;font-size:12px;font-weight:300;color:rgba(247,244,238,.7);line-height:1.5;letter-spacing:.02em;font-style:italic;font-family:'Cormorant',serif">"Garden wedding in Napa, dusty rose and sage palette, romantic but modern, September evening, golden hour photos…"</div>
+            <div style="margin-top:8px;display:flex;justify-content:flex-end">
+              <div style="background:var(--gold);color:var(--ink2);font-size:9px;letter-spacing:.18em;text-transform:uppercase;padding:7px 16px;border-radius:4px;font-family:'Jost',sans-serif;font-weight:400">Generate →</div>
+            </div>
+          </div>
+          <!-- Generated site preview -->
+          <div style="background:linear-gradient(160deg,#D8C8BE 0%,#C4B0A4 40%,#9AAA90 100%);padding:28px 24px;text-align:center;position:relative">
+            <div style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 40%,rgba(26,20,16,.4) 100%)"></div>
+            <div style="position:relative;z-index:1">
+              <div style="font-size:8px;letter-spacing:.32em;text-transform:uppercase;color:rgba(247,244,238,.6);margin-bottom:8px">September 14, 2027 · Napa Valley</div>
+              <div style="font-family:'Cormorant',serif;font-size:32px;font-weight:300;font-style:italic;color:white;line-height:1">Emma & James</div>
+              <div style="width:32px;height:1px;background:rgba(247,244,238,.4);margin:12px auto"></div>
+              <div style="font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:rgba(247,244,238,.5)">Join us as we say our vows</div>
+            </div>
+          </div>
+          <div style="padding:16px;background:rgba(247,244,238,.96);display:flex;justify-content:center;gap:20px">
+            <span style="font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--ash);border-bottom:1px solid var(--rose);padding-bottom:2px">Our Story</span>
+            <span style="font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--linen)">Details</span>
+            <span style="font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--linen)">Gallery</span>
+            <span style="font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--linen)">RSVP</span>
+          </div>
+          <div style="padding:16px 20px;background:rgba(247,244,238,.96)">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px">
+              <div style="background:var(--paper2);padding:12px;text-align:center;border-radius:4px"><div style="font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:var(--linen);margin-bottom:4px">Ceremony</div><div style="font-family:'Cormorant',serif;font-size:15px;color:var(--ink)">5:00 PM</div></div>
+              <div style="background:var(--paper2);padding:12px;text-align:center;border-radius:4px"><div style="font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:var(--linen);margin-bottom:4px">Dress Code</div><div style="font-family:'Cormorant',serif;font-size:15px;color:var(--ink)">Garden Formal</div></div>
+            </div>
+            <div style="background:var(--ink);color:rgba(247,244,238,.9);text-align:center;padding:10px;font-size:9px;letter-spacing:.2em;text-transform:uppercase;border-radius:2px;font-family:'Jost',sans-serif">RSVP by August 1</div>
+          </div>
+          <div style="padding:10px 16px;background:rgba(255,255,255,.04);border-top:1px solid rgba(255,255,255,.08);text-align:center">
+            <div style="font-size:8px;letter-spacing:.1em;color:rgba(247,244,238,.2)">✨ Generated by Twine AI from your description · Edit anytime</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- VERA TEASER -->
+    <div style="margin-top:80px;padding-top:60px;border-top:1px solid rgba(247,244,238,.08)" class="rv">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center" class="vera-grid">
+        <div>
+          <div style="font-size:9px;letter-spacing:.32em;text-transform:uppercase;color:var(--rose);margin-bottom:20px;display:flex;align-items:center;gap:12px"><span style="display:inline-block;width:20px;height:1px;background:var(--rose)"></span>Meet Vera</div>
+          <h2 style="font-family:'Cormorant',serif;font-size:clamp(34px,4vw,58px);font-weight:300;line-height:1.08;color:rgba(247,244,238,.92);margin-bottom:20px">Your AI wedding<br><em style="color:var(--rose)">planning concierge.</em></h2>
+          <p style="font-size:15px;font-weight:300;line-height:1.9;color:rgba(247,244,238,.82);letter-spacing:.03em;margin-bottom:28px">Vera knows your date, budget, checklist, saved vendors, and your local market pricing. Ask her anything — she answers in the context of your specific wedding, not generic advice.</p>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);border-radius:10px;padding:12px 16px">
+              <div style="font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:rgba(247,244,238,.58);margin-bottom:6px">Ask Vera</div>
+              <div style="font-size:13px;font-weight:300;color:rgba(247,244,238,.7);font-style:italic;font-family:'Cormorant',serif;line-height:1.5">"Is $3,200 a fair price for a photographer in Napa?"</div>
+            </div>
+            <div style="background:rgba(184,117,108,.08);border:1px solid rgba(184,117,108,.18);border-radius:10px;padding:12px 16px">
+              <div style="font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:rgba(184,117,108,.5);margin-bottom:6px">Vera replies</div>
+              <div style="font-size:13px;font-weight:300;color:rgba(247,244,238,.65);line-height:1.6;letter-spacing:.02em">That's actually on the lower end for Napa — the average is $3,500–$5,000 for a full day. Your $25k budget has room for a stronger photographer. Want me to pull your saved options with pricing?</div>
+            </div>
+            <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);border-radius:10px;padding:12px 16px">
+              <div style="font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:rgba(247,244,238,.58);margin-bottom:6px">Ask Vera</div>
+              <div style="font-size:13px;font-weight:300;color:rgba(247,244,238,.7);font-style:italic;font-family:'Cormorant',serif;line-height:1.5">"Draft an inquiry to Luna & Bloom Studio for me."</div>
+            </div>
+          </div>
+        </div>
+        <div style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:24px">
+          <div style="font-size:9px;letter-spacing:.24em;text-transform:uppercase;color:rgba(247,244,238,.58);margin-bottom:16px;padding-bottom:14px;border-bottom:1px solid rgba(255,255,255,.07)">Vera knows your entire wedding</div>
+          <div style="display:flex;flex-direction:column;gap:0">
+            <div style="display:flex;justify-content:space-between;padding:11px 0;border-bottom:1px solid rgba(255,255,255,.06);font-size:12px"><span style="color:rgba(247,244,238,.3)">Your date & venue</span><span style="font-family:'Cormorant',serif;font-style:italic;color:rgba(247,244,238,.65)">Sep 14, 2027 · Napa</span></div>
+            <div style="display:flex;justify-content:space-between;padding:11px 0;border-bottom:1px solid rgba(255,255,255,.06);font-size:12px"><span style="color:rgba(247,244,238,.3)">Budget & allocation</span><span style="font-family:'Cormorant',serif;font-style:italic;color:rgba(247,244,238,.65)">$25,000 total</span></div>
+            <div style="display:flex;justify-content:space-between;padding:11px 0;border-bottom:1px solid rgba(255,255,255,.06);font-size:12px"><span style="color:rgba(247,244,238,.3)">Saved vendors</span><span style="font-family:'Cormorant',serif;font-style:italic;color:rgba(247,244,238,.65)">Every save & skip</span></div>
+            <div style="display:flex;justify-content:space-between;padding:11px 0;border-bottom:1px solid rgba(255,255,255,.06);font-size:12px"><span style="color:rgba(247,244,238,.3)">Checklist status</span><span style="font-family:'Cormorant',serif;font-style:italic;color:rgba(247,244,238,.65)">What's done & urgent</span></div>
+            <div style="display:flex;justify-content:space-between;padding:11px 0;font-size:12px"><span style="color:rgba(247,244,238,.3)">Your market pricing</span><span style="font-family:'Cormorant',serif;font-style:italic;color:rgba(247,244,238,.65)">Real local data</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- COMPARE — DARK FULL BLEED -->
+<div class="compare-spread" id="compare">
+  <div class="section-wrapper">
+    <div class="compare-inner">
+      <div class="sec-opener rv" style="border-bottom-color:rgba(247,244,238,.08);padding-top:0">
+        <span class="so-num" style="color:rgba(247,244,238,.78)">IV.</span>
+        <div class="so-rule" style="background:rgba(247,244,238,.08)"></div>
+        <span class="so-label" style="color:rgba(247,244,238,.78)">The Honest Comparison</span>
+      </div>
+      <div class="rv">
+        <div class="cs-over">The Knot — 2025–26</div>
+        <h2 class="cs-h">Federal investigation.<br>Class action lawsuit.<br><em>Couples deserve better.</em></h2>
+        <p class="cs-sub">In March 2025, The New Yorker exposed The Knot's fake leads allegations. Senator Chuck Grassley called for a federal investigation. A nationwide class action lawsuit was filed. Whistleblowers with 60 years combined inside experience confirmed the platform "does not work for 80% of vendors."</p>
+      </div>
+
+      <!-- COMPARISON CAROUSEL -->
+      <div class="cmp-hint">Swipe to compare</div>
+      <div class="compare-cards rv" id="cmpCarousel">
+        <div class="cmp-track" id="cmpTrack">
+
+        <!-- TWINE — winner -->
+        <div class="cmp-card cmp-twine">
+          <div class="cmp-card-header">
+            <div class="cmp-logo-wrap">
+              <div class="cmp-logo" style="font-family:'Cormorant',serif;font-size:22px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink)">Twine</div>
+              <div class="cmp-badge-best">Best Choice</div>
+            </div>
+            <div class="cmp-price-hero">
+              <div class="cmp-price-label">Couples pay</div>
+              <div class="cmp-price-val">Free</div>
+              <div class="cmp-price-sub">always · forever</div>
+            </div>
+          </div>
+          <div class="cmp-rows">
+            <div class="cmp-row"><div class="cmp-check yes">✓</div><div class="cmp-row-label">Swipe vendor discovery</div></div>
+            <div class="cmp-row"><div class="cmp-check yes">✓</div><div class="cmp-row-label">AI-drafted outreach</div></div>
+            <div class="cmp-row"><div class="cmp-check yes">✓</div><div class="cmp-row-label">Live Instagram on every card</div></div>
+            <div class="cmp-row"><div class="cmp-check yes">✓</div><div class="cmp-row-label">Google + Yelp reviews</div></div>
+            <div class="cmp-row"><div class="cmp-check yes">✓</div><div class="cmp-row-label">AI wedding website builder</div></div>
+            <div class="cmp-row"><div class="cmp-check yes">✓</div><div class="cmp-row-label">Vera AI concierge</div></div>
+            <div class="cmp-row"><div class="cmp-check yes">✓</div><div class="cmp-row-label">Shared couple account</div></div>
+            <div class="cmp-row"><div class="cmp-check yes">✓</div><div class="cmp-row-label">Wedding planner listings</div></div>
+            <div class="cmp-row cmp-row-highlight"><div class="cmp-check yes">✓</div><div class="cmp-row-label">No investigations</div></div>
+          </div>
+          <div class="cmp-vendor-price">
+            <div class="cvp-label">Vendors from</div>
+            <div class="cvp-val"><strong>$29</strong>/mo</div>
+          </div>
+        </div>
+
+        <!-- THE KNOT -->
+        <div class="cmp-card cmp-other">
+          <div class="cmp-card-header">
+            <div class="cmp-logo-wrap">
+              <div style="font-size:15px;letter-spacing:.04em;color:rgba(247,244,238,.7);font-weight:400">The Knot</div>
+              <div style="font-size:9px;color:rgba(212,165,160,.7);letter-spacing:.08em;margin-top:2px">FTC Investigation 2025</div>
+            </div>
+            <div class="cmp-price-hero">
+              <div class="cmp-price-label" style="color:rgba(247,244,238,.6)">Couples pay</div>
+              <div class="cmp-price-val" style="color:rgba(247,244,238,.9);font-size:20px">Free*</div>
+              <div class="cmp-price-sub" style="color:rgba(247,244,238,.65)">*limited</div>
+            </div>
+          </div>
+          <div class="cmp-rows">
+            <div class="cmp-row"><div class="cmp-check no">✗</div><div class="cmp-row-label" style="color:rgba(247,244,238,.85)">Swipe vendor discovery</div></div>
+            <div class="cmp-row"><div class="cmp-check no">✗</div><div class="cmp-row-label" style="color:rgba(247,244,238,.85)">AI-drafted outreach</div></div>
+            <div class="cmp-row"><div class="cmp-check no">✗</div><div class="cmp-row-label" style="color:rgba(247,244,238,.85)">Live Instagram on cards</div></div>
+            <div class="cmp-row"><div class="cmp-check no">✗</div><div class="cmp-row-label" style="color:rgba(247,244,238,.85)">Cross-platform reviews</div></div>
+            <div class="cmp-row"><div class="cmp-check part">~</div><div class="cmp-row-label" style="color:rgba(247,244,238,.85)">Wedding website (2012 era)</div></div>
+            <div class="cmp-row"><div class="cmp-check no">✗</div><div class="cmp-row-label" style="color:rgba(247,244,238,.85)">AI concierge</div></div>
+            <div class="cmp-row"><div class="cmp-check no">✗</div><div class="cmp-row-label" style="color:rgba(247,244,238,.85)">Shared couple account</div></div>
+            <div class="cmp-row"><div class="cmp-check part">~</div><div class="cmp-row-label" style="color:rgba(247,244,238,.85)">Wedding planner listings</div></div>
+            <div class="cmp-row cmp-row-warning"><div class="cmp-check warn">!</div><div class="cmp-row-label" style="color:rgba(212,165,160,.8)">FTC + class action 2025</div></div>
+          </div>
+          <div class="cmp-vendor-price" style="background:rgba(255,255,255,.03);border-top-color:rgba(255,255,255,.08)">
+            <div class="cvp-label" style="color:rgba(247,244,238,.65)">Vendors up to</div>
+            <div class="cvp-val" style="color:rgba(212,165,160,.8)"><strong>$1,200</strong>/mo</div>
+          </div>
+        </div>
+
+        <!-- WEDDINGWIRE -->
+        <div class="cmp-card cmp-other">
+          <div class="cmp-card-header">
+            <div class="cmp-logo-wrap">
+              <div style="font-size:13px;letter-spacing:.04em;color:rgba(247,244,238,.7);font-weight:400">WeddingWire</div>
+              <div style="font-size:9px;color:rgba(247,244,238,.3);letter-spacing:.08em;margin-top:2px">Same owner as The Knot</div>
+            </div>
+            <div class="cmp-price-hero">
+              <div class="cmp-price-label" style="color:rgba(247,244,238,.6)">Couples pay</div>
+              <div class="cmp-price-val" style="color:rgba(247,244,238,.9);font-size:20px">Free</div>
+              <div class="cmp-price-sub" style="color:rgba(247,244,238,.58)">same database</div>
+            </div>
+          </div>
+          <div class="cmp-rows">
+            <div class="cmp-row"><div class="cmp-check no">✗</div><div class="cmp-row-label" style="color:rgba(247,244,238,.85)">Swipe vendor discovery</div></div>
+            <div class="cmp-row"><div class="cmp-check no">✗</div><div class="cmp-row-label" style="color:rgba(247,244,238,.85)">AI-drafted outreach</div></div>
+            <div class="cmp-row"><div class="cmp-check no">✗</div><div class="cmp-row-label" style="color:rgba(247,244,238,.85)">Live Instagram on cards</div></div>
+            <div class="cmp-row"><div class="cmp-check no">✗</div><div class="cmp-row-label" style="color:rgba(247,244,238,.85)">Cross-platform reviews</div></div>
+            <div class="cmp-row"><div class="cmp-check part">~</div><div class="cmp-row-label" style="color:rgba(247,244,238,.85)">Wedding website (basic)</div></div>
+            <div class="cmp-row"><div class="cmp-check no">✗</div><div class="cmp-row-label" style="color:rgba(247,244,238,.85)">AI concierge</div></div>
+            <div class="cmp-row"><div class="cmp-check no">✗</div><div class="cmp-row-label" style="color:rgba(247,244,238,.85)">Shared couple account</div></div>
+            <div class="cmp-row"><div class="cmp-check part">~</div><div class="cmp-row-label" style="color:rgba(247,244,238,.85)">Wedding planner listings</div></div>
+            <div class="cmp-row cmp-row-warning"><div class="cmp-check warn">!</div><div class="cmp-row-label" style="color:rgba(212,165,160,.8)">Shared liability with The Knot</div></div>
+          </div>
+          <div class="cmp-vendor-price" style="background:rgba(255,255,255,.03);border-top-color:rgba(255,255,255,.08)">
+            <div class="cvp-label" style="color:rgba(247,244,238,.65)">Vendors up to</div>
+            <div class="cvp-val" style="color:rgba(212,165,160,.8)"><strong>$1,200</strong>/mo</div>
+          </div>
+        </div>
+
+        <!-- ZOLA -->
+        <div class="cmp-card cmp-other">
+          <div class="cmp-card-header">
+            <div class="cmp-logo-wrap">
+              <div style="font-size:15px;letter-spacing:.04em;color:rgba(247,244,238,.7);font-weight:400">Zola</div>
+              <div style="font-size:9px;color:rgba(247,244,238,.3);letter-spacing:.08em;margin-top:2px">Registry-first platform</div>
+            </div>
+            <div class="cmp-price-hero">
+              <div class="cmp-price-label" style="color:rgba(247,244,238,.6)">Couples pay</div>
+              <div class="cmp-price-val" style="color:rgba(247,244,238,.9);font-size:20px">Free</div>
+              <div class="cmp-price-sub" style="color:rgba(247,244,238,.58)">registry model</div>
+            </div>
+          </div>
+          <div class="cmp-rows">
+            <div class="cmp-row"><div class="cmp-check no">✗</div><div class="cmp-row-label" style="color:rgba(247,244,238,.85)">Swipe vendor discovery</div></div>
+            <div class="cmp-row"><div class="cmp-check no">✗</div><div class="cmp-row-label" style="color:rgba(247,244,238,.85)">AI-drafted outreach</div></div>
+            <div class="cmp-row"><div class="cmp-check no">✗</div><div class="cmp-row-label" style="color:rgba(247,244,238,.85)">Live Instagram on cards</div></div>
+            <div class="cmp-row"><div class="cmp-check no">✗</div><div class="cmp-row-label" style="color:rgba(247,244,238,.85)">Cross-platform reviews</div></div>
+            <div class="cmp-row"><div class="cmp-check yes" style="background:rgba(96,122,92,.15);color:var(--sage)">✓</div><div class="cmp-row-label" style="color:rgba(247,244,238,.85)">Wedding website (200+ templates)</div></div>
+            <div class="cmp-row"><div class="cmp-check no">✗</div><div class="cmp-row-label" style="color:rgba(247,244,238,.85)">AI concierge</div></div>
+            <div class="cmp-row"><div class="cmp-check no">✗</div><div class="cmp-row-label" style="color:rgba(247,244,238,.85)">Shared couple account</div></div>
+            <div class="cmp-row"><div class="cmp-check no">✗</div><div class="cmp-row-label" style="color:rgba(247,244,238,.85)">Wedding planner listings</div></div>
+            <div class="cmp-row cmp-row-highlight"><div class="cmp-check yes" style="background:rgba(96,122,92,.15);color:var(--sage)">✓</div><div class="cmp-row-label" style="color:rgba(247,244,238,.85)">No investigations</div></div>
+          </div>
+          <div class="cmp-vendor-price" style="background:rgba(255,255,255,.03);border-top-color:rgba(255,255,255,.08)">
+            <div class="cvp-label" style="color:rgba(247,244,238,.65)">Vendor model</div>
+            <div class="cvp-val" style="color:rgba(247,244,238,.82)">Registry-based</div>
+          </div>
+        </div>
+
+        </div><!-- /cmp-track -->
+      </div><!-- /compare-cards -->
+
+      <!-- DOTS + ARROWS -->
+      <div class="cmp-dots" id="cmpDots">
+        <div class="cmp-dot active" onclick="cmpGoTo(0)"></div>
+        <div class="cmp-dot" onclick="cmpGoTo(1)"></div>
+        <div class="cmp-dot" onclick="cmpGoTo(2)"></div>
+        <div class="cmp-dot" onclick="cmpGoTo(3)"></div>
+      </div>
+      <div class="cmp-arrows">
+        <div class="cmp-arrow" onclick="cmpPrev()">←</div>
+        <div class="cmp-arrow" onclick="cmpNext()">→</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- COMING SOON -->
+<div class="section-wrapper">
+  <div class="sec-opener rv">
+    <span class="so-num">V.</span>
+    <div class="so-rule"></div>
+    <span class="so-label">What's Coming</span>
+  </div>
+  <div class="coming-spread">
+    <div class="coming-head">
+      <h2 class="com-h rv">Features that make<br>every competitor <em>obsolete.</em></h2>
+      <p class="com-intro rv">Twine launches with the core discovery and outreach experience. What follows will systematically dismantle every remaining reason a couple or vendor would choose anyone else.</p>
+    </div>
+    <div class="coming-list">
+      <div class="cl-item rv"><div class="cl-t">Wedding Planners on Twine</div><div class="cl-d">Wedding planners are listed as a vendor category — couples swipe and find their planner just like a photographer. Twine supplements planners, never replaces them. Their clients show up more informed. Everyone wins.</div></div>
+      <div class="cl-item rv" data-d="1"><div class="cl-t">Share With Your Planner</div><div class="cl-d">One tap exports your entire Twine profile — saved vendors, budget allocation, checklist progress, aesthetic preferences — as a beautiful shareable link or PDF. Your planner gets everything they need in seconds.</div></div>
+      <div class="cl-item rv" data-d="1"><div class="cl-t">Vendor Kanban Board</div><div class="cl-d">Saved vendors move through stages: Researching → Inquired → Proposal Received → Booked. Visual, satisfying, and nothing like it exists anywhere. Couples currently track this in spreadsheets.</div></div>
+      <div class="cl-item rv" data-d="2"><div class="cl-t">Featured Placements</div><div class="cl-d">Vendors appear in the first 10 cards couples see in their area. Priority by category and zip code — exclusive per market, not just whoever pays most globally.</div></div>
+      <div class="cl-item rv"><div class="cl-t">In-App Messaging</div><div class="cl-d">Every vendor conversation lives inside Twine — tied to their card and your checklist. Read receipts so you know exactly when they opened your message.</div></div>
+      <div class="cl-item rv" data-d="1"><div class="cl-t">Verified Reviews Only</div><div class="cl-d">Couples upload a wedding photo to leave a Twine review. No anonymous reviews. No fake ones. The direct antidote to The Knot's well-documented review problem.</div></div>
+      <div class="cl-item rv" data-d="2"><div class="cl-t">Aesthetic Match AI</div><div class="cl-d">Your vibe quiz trains an algorithm that scores every vendor's Instagram content against your style. Modern minimalist couples only see photographers who actually shoot that way.</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- TESTIMONIALS -->
+<div class="testi-spread">
+  <div class="section-wrapper">
+    <div class="testi-inner">
+      <div class="testi-over rv">Early Access Voices</div>
+      <div class="testi-layout">
+        <div class="tq rv">
+          <span class="tq-mark">"</span>
+          <p class="tq-text">The swipe feature completely changed how I thought about finding vendors. Found our photographer in 15 minutes. Nothing on The Knot comes close.</p>
+          <div class="tq-rule"></div>
+          <div class="tq-name">Sarah M.</div>
+          <div class="tq-detail">Charleston, SC · Sep 2026</div>
+        </div>
+        <div class="tq rv" data-d="1">
+          <span class="tq-mark">"</span>
+          <p class="tq-text">Twine drafted personalised messages for 10 photographers at once. Three responded within an hour. I've never felt so in control during wedding planning.</p>
+          <div class="tq-rule"></div>
+          <div class="tq-name">Alicia & Tom</div>
+          <div class="tq-detail">Napa Valley, CA · Oct 2026</div>
+        </div>
+        <div class="tq rv" data-d="2">
+          <span class="tq-mark">"</span>
+          <p class="tq-text">I claimed my profile in ten minutes and my Google reviews were already there. Within a week of beta I had three genuine inquiries from couples who loved my style.</p>
+          <div class="tq-rule"></div>
+          <div class="tq-name">Jessica R.</div>
+          <div class="tq-detail">Wild & Bloom Florals · San Francisco</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- COUNTDOWN -->
+<div class="countdown-bar">
+  <span class="cb-label">Launching In</span>
+  <div class="cb-timer">
+    <div class="cb-unit"><div class="cb-n" id="cdD">42</div><div class="cb-l">Days</div></div>
+    <div class="cb-sep">:</div>
+    <div class="cb-unit"><div class="cb-n" id="cdH">08</div><div class="cb-l">Hours</div></div>
+    <div class="cb-sep">:</div>
+    <div class="cb-unit"><div class="cb-n" id="cdM">33</div><div class="cb-l">Mins</div></div>
+    <div class="cb-sep">:</div>
+    <div class="cb-unit"><div class="cb-n" id="cdS">17</div><div class="cb-l">Secs</div></div>
+  </div>
+  <span class="cb-label">Free for Couples · Always</span>
+</div>
+
+<!-- FINAL CTA -->
+<div class="section-wrapper">
+  <div class="final-spread">
+    <div class="final-left rv-l">
+      <div class="final-pre">Your big day deserves the best.</div>
+      <h2 class="final-h">Join the<br>waitlist.<br>Plan with<br><em>confidence.</em></h2>
+    </div>
+    <div class="final-right rv-r">
+      <p class="final-body">Free for couples, always. Be among the first to access Twine when we launch. Vendors — claim your founding profile now and lock in your rate before we go live.</p>
+      <div class="final-form">
+        <div id="finalWrap">
+          <div class="form-grid">
+            <input class="form-email" type="email" id="finalEmail" placeholder="your@email.com">
+            <div class="form-sep"></div>
+            <button class="form-cta" onclick="submitFinal()">Get Early Access</button>
+          </div>
+        </div>
+        <div class="form-success" id="finalSuccess">
+          <div class="fs-t">You're in.</div>
+          <div class="fs-s">Watch your inbox — you'll be first to know when Twine goes live.</div>
+        </div>
+        <div class="final-note">No credit card · Free forever for couples · Launching 2026</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-masthead">
+    <div class="fm-left">
+      <a href="#how" class="fm-link">How It Works</a>
+      <a href="#features" class="fm-link">Features</a>
+      <a href="#compare" class="fm-link">Compare</a>
+    </div>
+    <div class="fm-center">
+      <div class="fm-logo">Twine</div>
+      <div class="fm-sub">Wedding Discovery Platform</div>
+    </div>
+    <div class="fm-right">
+      <a href="#" class="fm-link">For Vendors</a>
+      <a href="#" class="fm-link">Privacy</a>
+      <a href="#" class="fm-link">Terms</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Twine. All rights reserved. Scripps Labs LLC.</span>
+    <span>Made with love for every love story.</span>
+  </div>
+</footer>
+
+<script>
+// CURSOR
+const cur=document.getElementById('cur'),curR=document.getElementById('curR');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY});
+(function a(){cur.style.left=mx+'px';cur.style.top=my+'px';rx+=(mx-rx)*.13;ry+=(my-ry)*.13;curR.style.left=rx+'px';curR.style.top=ry+'px';requestAnimationFrame(a)})();
+document.querySelectorAll('a,button,input').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{cur.classList.add('h');curR.classList.add('h')});
+  el.addEventListener('mouseleave',()=>{cur.classList.remove('h');curR.classList.remove('h')});
+});
+
+// NAV SCROLL
+window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('sc',scrollY>60));
+
+// MODE TOGGLE
+function setMode(m){
+  document.getElementById('mtCouple').classList.toggle('active',m==='couple');
+  document.getElementById('mtVendor').classList.toggle('active',m==='vendor');
+  document.body.classList.toggle('vm',m==='vendor');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// Auto-switch to vendor mode if URL param present
+if(window.location.search.includes('v=1')||window.location.search.includes('vendor')){
+  setMode('vendor');
+}
+
+// Hover to unblur competitor cards
+document.querySelectorAll('.cmp-tease').forEach(card=>{
+  card.addEventListener('mouseenter',()=>{
+    card.querySelector('.cmp-rows').style.filter='none';
+    card.querySelector('.cmp-rows').style.opacity='1';
+    const vp=card.querySelector('.cmp-vendor-price');
+    if(vp){vp.style.filter='none';vp.style.opacity='1';}
+    const overlay=card.querySelector('.cmp-tease-overlay');
+    if(overlay)overlay.style.opacity='0';
+  });
+  card.addEventListener('mouseleave',()=>{
+    card.querySelector('.cmp-rows').style.filter='blur(1.2px)';
+    card.querySelector('.cmp-rows').style.opacity='.8';
+    const vp=card.querySelector('.cmp-vendor-price');
+    if(vp){vp.style.filter='blur(1px)';vp.style.opacity='.75';}
+    const overlay=card.querySelector('.cmp-tease-overlay');
+    if(overlay)overlay.style.opacity='1';
+  });
+});
+
+// SCROLL REVEAL
+const io=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('up')});
+},{threshold:.08});
+document.querySelectorAll('.rv,.rv-l,.rv-r').forEach(el=>io.observe(el));
+
+// FORMS
+function validate(id){
+  const inp=document.getElementById(id);
+  const v=inp?.value.trim();
+  if(!v||!v.includes('@')){
+    if(inp){inp.style.outline='1px solid var(--rose)';setTimeout(()=>inp.style.outline='',1500)}
+    return false;
+  }
+  return true;
+}
+
+function submitCouple(){
+  if(!validate('cEmail'))return;
+  document.getElementById('cFormWrap').style.display='none';
+  document.getElementById('cSuccess').classList.add('show');
+}
+function submitVendor(){
+  if(!validate('vEmail'))return;
+  document.getElementById('vFormWrap').style.display='none';
+  document.getElementById('vSuccess').classList.add('show');
+}
+function submitFinal(){
+  if(!validate('finalEmail'))return;
+  document.getElementById('finalWrap').style.display='none';
+  document.getElementById('finalSuccess').classList.add('show');
+}
+
+// COUNTDOWN
+const launch=new Date(Date.now()+42*24*60*60*1000);
+function tick(){
+  const d=launch-Date.now();if(d<=0)return;
+  document.getElementById('cdD').textContent=String(Math.floor(d/86400000)).padStart(2,'0');
+  document.getElementById('cdH').textContent=String(Math.floor(d%86400000/3600000)).padStart(2,'0');
+  document.getElementById('cdM').textContent=String(Math.floor(d%3600000/60000)).padStart(2,'0');
+  document.getElementById('cdS').textContent=String(Math.floor(d%60000/1000)).padStart(2,'0');
+}
+tick();setInterval(tick,1000);
+
+// ── COMPARISON CAROUSEL ──
+(function(){
+  const track = document.getElementById('cmpTrack');
+  const dots  = document.querySelectorAll('.cmp-dot');
+  if(!track) return;
+
+  const cards = track.querySelectorAll('.cmp-card');
+  const count = cards.length;
+  let current = 0;
+  let startX = 0, isDragging = false, dragOffset = 0;
+
+  function cardWidth() {
+    const card = cards[0];
+    const gap = 14;
+    return card.getBoundingClientRect().width + gap;
+  }
+
+  function getOffset(index) {
+    // Centre the active card in the container
+    const containerW = track.parentElement.getBoundingClientRect().width;
+    const cw = cardWidth();
+    const centre = (containerW - (cw - 14)) / 2;
+    return -(index * cw) + centre;
+  }
+
+  function goTo(index, animated = true) {
+    current = Math.max(0, Math.min(count - 1, index));
+    track.style.transition = animated ? 'transform .45s cubic-bezier(.22,1,.36,1)' : 'none';
+    track.style.transform = `translateX(${getOffset(current)}px)`;
+    dots.forEach((d, i) => d.classList.toggle('active', i === current));
+  }
+
+  // Init position (no animation)
+  goTo(0, false);
+  window.addEventListener('resize', () => goTo(current, false));
+
+  // TOUCH
+  track.addEventListener('touchstart', e => {
+    startX = e.touches[0].clientX;
+    isDragging = true;
+    track.style.transition = 'none';
+  }, {passive:true});
+
+  track.addEventListener('touchmove', e => {
+    if(!isDragging) return;
+    dragOffset = e.touches[0].clientX - startX;
+    track.style.transform = `translateX(${getOffset(current) + dragOffset}px)`;
+  }, {passive:true});
+
+  track.addEventListener('touchend', () => {
+    isDragging = false;
+    if(dragOffset < -60) goTo(current + 1);
+    else if(dragOffset > 60) goTo(current - 1);
+    else goTo(current);
+    dragOffset = 0;
+  });
+
+  // MOUSE DRAG
+  track.addEventListener('mousedown', e => {
+    startX = e.clientX; isDragging = true;
+    track.classList.add('dragging');
+    track.style.transition = 'none';
+    e.preventDefault();
+  });
+  window.addEventListener('mousemove', e => {
+    if(!isDragging) return;
+    dragOffset = e.clientX - startX;
+    track.style.transform = `translateX(${getOffset(current) + dragOffset}px)`;
+  });
+  window.addEventListener('mouseup', () => {
+    if(!isDragging) return;
+    isDragging = false;
+    track.classList.remove('dragging');
+    if(dragOffset < -60) goTo(current + 1);
+    else if(dragOffset > 60) goTo(current - 1);
+    else goTo(current);
+    dragOffset = 0;
+  });
+
+  // KEYBOARD
+  document.addEventListener('keydown', e => {
+    const inView = document.getElementById('compare')?.getBoundingClientRect();
+    if(!inView || inView.bottom < 0 || inView.top > window.innerHeight) return;
+    if(e.key === 'ArrowRight') goTo(current + 1);
+    if(e.key === 'ArrowLeft') goTo(current - 1);
+  });
+
+  // Expose for buttons/dots
+  window.cmpGoTo = (i) => goTo(i);
+  window.cmpNext = () => goTo(current + 1);
+  window.cmpPrev = () => goTo(current - 1);
+})();
+</script>
+</body>
+</html>
