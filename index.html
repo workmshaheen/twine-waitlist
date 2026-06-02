@@ -2,21 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Twine — Early Access · The Modern Wedding Platform</title>
-<meta name="description" content="Wedding planning reimagined. Swipe to discover verified vendors, let AI draft your outreach, and build your wedding website in seconds. Free forever for couples. Join the early-access waitlist.">
-<meta name="theme-color" content="#0D0B09">
-<meta name="author" content="Twine">
-<link rel="canonical" href="https://twine.wedding/">
-<!-- Open Graph / social -->
-<meta property="og:type" content="website">
-<meta property="og:title" content="Twine — Wedding Planning, Reimagined">
-<meta property="og:description" content="Swipe to discover verified vendors, let AI draft your outreach, and build your wedding website in seconds. Free forever for couples.">
-<meta property="og:site_name" content="Twine">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Twine — Wedding Planning, Reimagined">
-<meta name="twitter:description" content="Swipe to discover verified vendors, let AI draft your outreach, and build your wedding website in seconds. Free forever for couples.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230D0B09'/%3E%3Ctext x='50' y='50' font-family='Georgia,serif' font-size='62' font-style='italic' fill='%23B8756C' text-anchor='middle' dominant-baseline='central'%3ET%3C/text%3E%3C/svg%3E">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Twine — Early Access</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
@@ -92,9 +79,33 @@ nav.sc .nav-inner{padding:14px 48px}
 
 .nav-right{display:flex;align-items:center;justify-content:flex-end;gap:32px}
 
-/* MODE TOGGLE */
+/* ── VENDOR MODE NAV — light colours on dark background ── */
+body.vm nav{background:transparent;border-bottom-color:rgba(247,244,238,.08)}
+body.vm nav.sc{background:rgba(13,11,9,.92);border-bottom-color:rgba(247,244,238,.08)}
+body.vm .nav-logo{color:rgba(247,244,238,.92)}
+body.vm .nav-logo-sub{color:rgba(247,244,238,.3)}
+body.vm .nav-item{color:rgba(247,244,238,.45)}
+body.vm .nav-item:hover{color:rgba(247,244,238,.9)}
+body.vm .mode-toggle{
+  border-color:rgba(247,244,238,.2);
+  display:flex;
+  flex-direction:row;
+  flex-wrap:nowrap;
+  white-space:nowrap;
+}
+body.vm .mt-sep{background:rgba(247,244,238,.2)}
+body.vm .mt-btn{color:rgba(247,244,238,.5)}
+body.vm .mt-btn.active{
+  background:rgba(247,244,238,.15);
+  color:rgba(247,244,238,.95);
+  border:none;
+}
+body.vm .mt-btn:not(.active):hover{color:rgba(247,244,238,.9)}
+
 .mode-toggle{
-  display:flex;align-items:center;gap:0;
+  display:flex;align-items:center;
+  flex-direction:row;flex-wrap:nowrap;
+  white-space:nowrap;gap:0;
   border:1px solid var(--rule);
 }
 .mt-btn{
@@ -477,12 +488,15 @@ h1.vh-h em{font-style:italic;color:var(--gold)}
 /* ══════════════════════════════════
    COMPARISON CARDS — high contrast
 ══════════════════════════════════ */
+/* ── CAROUSEL OVERFLOW FIX ── */
+html, body{
+  overflow-x:hidden;
+  max-width:100vw;
+}
 .compare-cards{
   position:relative;
   width:100%;
-  margin-top:8px;
   overflow:hidden;
-  /* no grid — carousel handles layout */
 }
 
 /* CAROUSEL TRACK */
@@ -494,6 +508,7 @@ h1.vh-h em{font-style:italic;color:var(--gold)}
   padding:12px 4px 20px;
   cursor:grab;
   user-select:none;
+  touch-action:pan-y;
 }
 .cmp-track.dragging{cursor:grabbing;transition:none}
 
@@ -692,12 +707,12 @@ h1.vh-h em{font-style:italic;color:var(--gold)}
   padding:48px;display:flex;align-items:center;justify-content:space-between;
   flex-wrap:wrap;gap:32px;
 }
-.cb-label{font-size:9px;letter-spacing:.32em;text-transform:uppercase;color:rgba(247,244,238,.2)}
+.cb-label{font-size:9px;letter-spacing:.32em;text-transform:uppercase;color:rgba(247,244,238,.6)}
 .cb-timer{display:flex;align-items:baseline;gap:4px}
 .cb-unit{text-align:center}
-.cb-n{font-family:'Cormorant',serif;font-size:52px;font-weight:300;color:rgba(247,244,238,.85);line-height:1}
-.cb-l{font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:rgba(247,244,238,.2);margin-top:3px}
-.cb-sep{font-family:'Cormorant',serif;font-size:44px;color:rgba(247,244,238,.12);padding-bottom:4px;line-height:1;align-self:flex-end;margin-bottom:16px}
+.cb-n{font-family:'Cormorant',serif;font-size:52px;font-weight:300;color:rgba(247,244,238,.95);line-height:1}
+.cb-l{font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:rgba(247,244,238,.55);margin-top:3px}
+.cb-sep{font-family:'Cormorant',serif;font-size:44px;color:rgba(247,244,238,.35);padding-bottom:4px;line-height:1;align-self:flex-end;margin-bottom:16px}
 
 /* ══════════════════════════════════
    FINAL CTA
@@ -745,30 +760,9 @@ footer{
   font-size:9px;letter-spacing:.1em;color:rgba(247,244,238,.15);
 }
 
-/* ══════════════════════════════════
-   COMPARE — DARK FULL BLEED
-══════════════════════════════════ */
-.compare-spread{
-  background:var(--ink2);
-  margin:0 -48px;padding-left:48px;padding-right:48px;
-  position:relative;overflow:hidden;
-}
-.compare-inner{padding:120px 0;position:relative;z-index:1}
-.cs-over{
-  font-size:9px;letter-spacing:.32em;text-transform:uppercase;
-  color:var(--rose);margin-bottom:24px;
-  display:flex;align-items:center;gap:14px;
-}
-.cs-over::before{content:'';width:28px;height:1px;background:var(--rose)}
-.cs-h{
-  font-family:'Cormorant',serif;
-  font-size:clamp(34px,4.5vw,60px);
-  font-weight:300;line-height:1.1;letter-spacing:-.01em;
-  color:rgba(247,244,238,.92);margin-bottom:28px;
-}
-.cs-h em{font-style:italic;color:var(--rose)}
+/* ── COMPREHENSIVE READABILITY & CLARITY PASS ── */
 
-/* ── READABILITY FIXES ── */
+/* Body text — darker and clearer everywhere */
 .ps-text{font-size:15px;font-weight:300;line-height:2;color:var(--ash);letter-spacing:.02em}
 .ps-fact-l{font-size:13px;font-weight:300;line-height:1.8;color:var(--ash);margin-top:8px}
 .ps-fact-s{font-size:9px;letter-spacing:.16em;color:var(--linen);margin-top:5px;text-transform:uppercase}
@@ -780,20 +774,59 @@ footer{
 .cl-d{font-size:13px;font-weight:300;line-height:1.85;color:var(--ash);letter-spacing:.02em}
 .tq-text{font-family:'Cormorant Garamond',serif;font-size:19px;font-style:italic;font-weight:300;line-height:1.75;color:var(--ink2);margin-bottom:28px}
 .final-body{font-size:15px;font-weight:300;line-height:1.9;color:var(--ash);letter-spacing:.03em;margin-bottom:36px}
+
+/* Nav items — more visible */
 .so-label{font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:var(--ash)}
 .nav-item{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--ash);text-decoration:none;transition:color .3s}
+.nav-item:hover{color:var(--ink);font-weight:400}
 .mt-btn{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--ash);background:none;border:none;padding:7px 16px;cursor:none;transition:all .3s;font-family:'Jost',sans-serif;font-weight:400}
 
-/* Dark section text fixes */
-.cs-sub{font-size:14px;font-weight:300;line-height:1.9;color:rgba(247,244,238,.55);letter-spacing:.03em;max-width:520px;margin-bottom:64px}
-.vh-body{font-size:15px;font-weight:300;line-height:1.9;color:rgba(247,244,238,.55);letter-spacing:.03em;margin-bottom:36px;max-width:480px}
-.ps-body{font-size:14px;color:rgba(255,255,255,.5);line-height:1.9;margin-top:20px;letter-spacing:.02em}
-.vp-desc{font-size:11px;letter-spacing:.06em;color:rgba(247,244,238,.82)}
-.vp-name{font-family:'Cormorant',serif;font-size:21px;font-style:italic;color:rgba(247,244,238,.88);margin-bottom:3px}
-.ct td{padding:16px 0;font-size:13px;font-weight:300;color:rgba(247,244,238,.55);letter-spacing:.03em;vertical-align:middle}
-.ct td.feat-col{color:rgba(247,244,238,.75)}
-.vps-label{font-size:10px;letter-spacing:.12em;color:rgba(247,244,238,.4)}
-.v-form-note{font-size:10px;letter-spacing:.08em;color:rgba(247,244,238,.38)}
+/* Dark section text — brighter for readability */
+.cs-sub{font-size:15px;font-weight:300;line-height:1.9;color:rgba(247,244,238,.65);letter-spacing:.03em;max-width:520px;margin-bottom:64px}
+.vh-body{font-size:15px;font-weight:300;line-height:1.9;color:rgba(247,244,238,.65);letter-spacing:.03em;margin-bottom:36px;max-width:480px}
+.ps-body{font-size:14px;color:rgba(255,255,255,.6);line-height:1.9;margin-top:20px;letter-spacing:.02em}
+.vp-desc{font-size:11px;letter-spacing:.06em;color:rgba(247,244,238,.85)}
+.vp-name{font-family:'Cormorant',serif;font-size:21px;font-style:italic;color:rgba(247,244,238,.92);margin-bottom:3px}
+.ct td{padding:16px 0;font-size:13px;font-weight:300;color:rgba(247,244,238,.65);letter-spacing:.03em;vertical-align:middle}
+.ct td.feat-col{color:rgba(247,244,238,.85);font-weight:400}
+.vps-label{font-size:10px;letter-spacing:.12em;color:rgba(247,244,238,.5)}
+.v-form-note{font-size:10px;letter-spacing:.08em;color:rgba(247,244,238,.42)}
+
+/* Section numbers — clearer */
+.sec-n{font-family:'Cormorant',serif;font-size:13px;font-style:italic;color:var(--rose);letter-spacing:.08em;margin-bottom:4px}
+.sec-opener-t{font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--ash);font-weight:400}
+
+/* Stats source labels — slightly more visible */
+.ch-stat-s{font-size:9px;letter-spacing:.1em;color:var(--linen);margin-top:3px;font-style:italic}
+.ch-stat-l{font-size:13px;font-weight:300;letter-spacing:.03em;color:var(--ash);margin-top:6px;line-height:1.6}
+
+/* Vendor tier descriptions */
+.vp-tier:not(.featured){opacity:.65}
+.vp-tier:not(.featured):hover{opacity:.9}
+
+/* Coming soon list — clearer labels */
+.cl-t{font-family:'Cormorant',serif;font-size:23px;font-weight:400;color:var(--ink);letter-spacing:-.01em}
+
+/* Footer links — more visible */
+.fm-link{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:rgba(247,244,238,.5);text-decoration:none;transition:color .3s}
+.fm-link:hover{color:rgba(247,244,238,.85)}
+.footer-bottom{padding:24px 48px;display:flex;justify-content:space-between;font-size:9px;letter-spacing:.1em;color:rgba(247,244,238,.25)}
+
+/* Comparison section — clearer row labels on dark background */
+.cmp-row-label{font-size:12px;font-weight:300;color:var(--ink);letter-spacing:.02em;line-height:1.4;font-weight:400}
+
+/* Badge text — sharper */
+.vp-badge-hot{background:rgba(196,145,58,.2);color:var(--gold);border:1px solid rgba(196,145,58,.35);font-weight:400}
+.vp-badge-found{background:rgba(96,122,92,.18);color:#8AAA86;border:1px solid rgba(96,122,92,.3);font-weight:400}
+
+/* Form placeholder — slightly more visible */
+.form-email::placeholder{color:var(--linen);font-style:italic}
+.v-form-email::placeholder{color:rgba(247,244,238,.3);font-style:italic}
+
+/* Scroll reveal — ensure content never permanently hidden on slow connections */
+@media(prefers-reduced-motion:reduce){
+  .rv,.rv-l,.rv-r{opacity:1!important;transform:none!important;transition:none!important}
+}
 .rv{opacity:0;transform:translateY(28px);transition:opacity .9s cubic-bezier(.22,1,.36,1),transform .9s cubic-bezier(.22,1,.36,1)}
 .rv-l{opacity:0;transform:translateX(-28px);transition:opacity .9s cubic-bezier(.22,1,.36,1),transform .9s cubic-bezier(.22,1,.36,1)}
 .rv-r{opacity:0;transform:translateX(28px);transition:opacity .9s cubic-bezier(.22,1,.36,1),transform .9s cubic-bezier(.22,1,.36,1)}
@@ -820,124 +853,550 @@ footer{
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 @keyframes edScroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 
-/* RESPONSIVE */
+/* ══════════════════════════════════════════════════════
+   RESPONSIVE — MOBILE FIRST, EDITORIAL AT EVERY SIZE
+══════════════════════════════════════════════════════ */
+
+/* ── TABLET 1100px ── */
 @media(max-width:1100px){
   .nav-inner{grid-template-columns:auto 1fr auto;gap:20px}
-  .problem-spread{grid-template-columns:1fr;gap:48px}.ps-vr{display:none}
-  .how-step{grid-template-columns:60px 1fr;gap:24px}.hs-aside{display:none}
-  .compare-spread .ct td:nth-child(3),.compare-spread .ct th:nth-child(3){display:none}
-  .coming-list .cl-item{grid-template-columns:100px 1fr;gap:20px}.cl-d{grid-column:2}
-  .testi-layout{grid-template-columns:1fr}.tq{padding:36px 0;border-right:none;border-bottom:1px solid var(--rule)}
-  .final-spread{grid-template-columns:1fr;gap:48px}
-  .footer-masthead{grid-template-columns:1fr;text-align:center;gap:20px}.fm-left,.fm-right{justify-content:center}
-  nav .nav-inner{padding:16px 28px}nav.sc .nav-inner{padding:14px 28px}
-  .c-hero-content,.section-wrapper{padding-left:28px;padding-right:28px}
-  .c-hero-img{width:42%}
-  .c-hero-stats{right:28px}
-  .countdown-bar,.footer-masthead,.footer-bottom,.compare-inner,.testi-inner{padding-left:28px;padding-right:28px}
-  .testi-spread,.compare-spread{margin:0 -28px;padding-left:28px;padding-right:28px}
-  .ai-web-grid,.vera-grid{grid-template-columns:1fr!important;gap:48px!important}
-  .how-head{grid-template-columns:1fr}
-  .coming-head{grid-template-columns:1fr}
+  nav .nav-inner{padding:16px 32px}
+  nav.sc .nav-inner{padding:14px 32px}
+
+  .c-hero-content,.section-wrapper{padding-left:32px;padding-right:32px}
+  .c-hero-img{width:44%}
+  .c-hero-stats{right:32px}
+
+  .problem-spread{grid-template-columns:1fr;gap:48px}
+  .ps-vr{display:none}
+  .how-head,.coming-head{grid-template-columns:1fr;gap:24px}
+  .how-step{grid-template-columns:60px 1fr;gap:28px}
+  .hs-aside{display:none}
+  .coming-list .cl-item{grid-template-columns:160px 1fr;gap:24px}
+
+  .final-spread{grid-template-columns:1fr;gap:56px}
+  .footer-masthead{grid-template-columns:1fr;text-align:center;gap:24px}
+  .fm-left,.fm-right{justify-content:center}
+
+  .countdown-bar,.footer-masthead,.footer-bottom,
+  .compare-inner,.testi-inner{padding-left:32px;padding-right:32px}
+  .testi-spread,.compare-spread{margin:0 -32px;padding-left:32px;padding-right:32px}
+  .ai-web-grid,.vera-grid{grid-template-columns:1fr!important;gap:56px!important}
 }
 
+/* ── MOBILE 768px — PRIMARY MOBILE BREAKPOINT ── */
 @media(max-width:768px){
-  /* hero */
-  .c-hero-img{display:none}
-  .c-hero-stats{position:static;width:auto;display:grid;grid-template-columns:1fr 1fr;gap:0;margin-top:40px;right:auto}
-  .ch-stat{padding:16px 0;border-bottom:1px solid var(--rule)}.ch-stat:last-child{border:none}
-  .c-hero-content{max-width:100%;padding:100px 24px 60px!important}
-  h1.c-hero-title{font-size:clamp(52px,14vw,90px)}
-  /* vendor hero */
-  .v-hero-top{grid-template-columns:1fr!important;padding:100px 24px 60px!important}
-  /* sections */
-  .how-step{grid-template-columns:1fr}.hs-n{display:none}
-  .coming-list .cl-item{grid-template-columns:1fr}
-  .how-head,.coming-head{grid-template-columns:1fr}
-  .compare-inner{padding:80px 24px}
-  .testi-inner{padding:80px 24px}
-  /* countdown */
-  .cb-timer{gap:4px}.cb-n{font-size:38px}.cb-sep{font-size:32px}
-  .countdown-bar{padding:36px 24px;flex-direction:column;gap:20px;text-align:center}
-  /* footer */
-  .footer-masthead{padding:40px 24px 32px}
-  .footer-bottom{padding:16px 24px;flex-direction:column;gap:6px;text-align:center}
-  .fm-left,.fm-right{flex-wrap:wrap;justify-content:center;gap:16px}
-  /* nav */
-  nav .nav-inner{grid-template-columns:1fr auto;padding:14px 20px}
+
+  /* ── NAV ── */
+  nav .nav-inner{
+    grid-template-columns:1fr auto;
+    padding:14px 20px;
+    gap:12px;
+  }
   nav.sc .nav-inner{padding:12px 20px}
   .nav-left{display:none}
-  .nav-logo{font-size:22px;letter-spacing:.2em}
-  /* section wrapper */
-  .section-wrapper{padding-left:20px!important;padding-right:20px!important}
-  /* forms */
-  .form-grid{grid-template-columns:1fr}.form-sep{display:none}.form-cta{width:100%;height:48px;margin-top:8px}
-  .v-form-grid{grid-template-columns:1fr}.v-form-btn{width:100%;height:48px;margin-top:8px}
-  /* problem */
-  .problem-spread{padding:80px 0}
-  .ps-fact-n{font-size:40px}
-  /* ai web & vera grids */
-  .ai-web-grid,.vera-grid{grid-template-columns:1fr!important;gap:40px!important}
-  /* compare table - show only 2 cols */
-  .compare-spread .ct td:nth-child(4),.compare-spread .ct th:nth-child(4){display:none}
-  /* testi */
-  .testi-spread{margin:0 -20px;padding-left:20px;padding-right:20px}
-  .compare-spread{margin:0 -20px;padding-left:20px;padding-right:20px}
-  /* section opener */
-  .sec-opener{padding:52px 0 36px}
-  /* misc */
-  body{cursor:auto}.cur,.cur-r{display:none}
+  .nav-logo{font-size:20px;letter-spacing:.22em}
+  .nav-logo-sub{font-size:6px;letter-spacing:.32em}
+  .nav-center{text-align:left}
+  .mt-btn{padding:7px 13px;font-size:8px;letter-spacing:.14em}
+  body{cursor:auto}
+  .cur,.cur-r{display:none}
+
+  /* ── COUPLE HERO — full editorial on mobile ── */
+  .c-hero{min-height:100svh;justify-content:flex-end}
+  .c-hero-img{
+    display:block;
+    width:100%;height:38%;
+    top:0;right:0;left:0;
+    bottom:auto;
+    background:
+      radial-gradient(ellipse 80% 70% at 70% 30%, rgba(184,117,108,.45) 0%, transparent 55%),
+      radial-gradient(ellipse 60% 80% at 20% 70%, rgba(96,122,92,.2) 0%, transparent 60%),
+      linear-gradient(160deg, #E8D8D0 0%, #D4B4A8 25%, #C29080 55%, #9A6860 80%, #7A4840 100%);
+  }
+  .c-hero-img::after{
+    background:
+      linear-gradient(to bottom, rgba(247,244,238,0) 0%, rgba(247,244,238,.3) 50%, var(--paper) 88%),
+      linear-gradient(to right, var(--paper) 0%, transparent 40%);
+  }
+  .c-hero-content{
+    max-width:100%;
+    padding:20px 24px 32px!important;
+    position:relative;z-index:2;
+  }
+  .c-hero-kicker{margin-bottom:10px;font-size:7px;letter-spacing:.18em;white-space:nowrap}
+  .urgency-badge{margin-bottom:14px;font-size:8px}
+  h1.c-hero-title{
+    font-size:clamp(52px,13vw,80px);
+    line-height:.9;
+    margin-bottom:0;
+  }
+  h1.c-hero-title .sub{
+    font-size:.36em;
+    margin-top:6px;
+  }
+  .rule-line{margin:20px 0}
+  .c-hero-form{max-width:100%}
+  .form-grid{
+    display:flex;flex-direction:column;
+    border:1px solid var(--ink);
+    gap:0;
+  }
+  .form-email{
+    padding:13px 16px;
+    border-bottom:1px solid var(--rule);
+    font-size:15px;
+  }
+  .form-sep{display:none}
+  .form-cta{
+    width:100%;padding:14px 16px;
+    font-size:9px;letter-spacing:.2em;
+  }
+  .form-note{font-size:8px;margin-top:10px}
   .issue-line{display:none}
-  .c-hero-stats .ch-stat{padding:14px 0}
+
+  /* Stats — clean 3-column grid on mobile */
+  .c-hero-stats{
+    position:static;
+    width:100%;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:0;
+    margin-top:36px;
+    right:auto;
+    border-top:1px solid var(--rule);
+    padding:0 24px;
+    box-sizing:border-box;
+  }
+  .c-hero-stats::-webkit-scrollbar{display:none}
+  .ch-stat{
+    flex:none;
+    border-bottom:none;
+    border-right:1px solid var(--rule);
+    text-align:center;
+    padding:16px 6px;
+  }
+  .ch-stat:last-child{border-right:none}
+  .ch-stat-n{font-size:28px;line-height:1}
+  .ch-stat-l{font-size:10px;line-height:1.5;margin-top:4px}
+  .ch-stat-s{font-size:8px;margin-top:3px}
+
+  /* ── VENDOR HERO ── */
+  .v-hero-top{
+    grid-template-columns:1fr!important;
+    padding:96px 24px 52px!important;
+    gap:48px!important;
+  }
+  h1.vh-h{font-size:clamp(44px,12vw,72px);line-height:.92}
+  .v-form-grid{
+    display:flex;flex-direction:column;
+    border:1px solid rgba(247,244,238,.15);
+  }
+  .v-form-email{
+    padding:14px 18px;
+    border-bottom:1px solid rgba(247,244,238,.1);
+    font-size:15px;
+  }
+  .v-form-btn{
+    width:100%;padding:15px 18px;
+    font-size:10px;letter-spacing:.2em;
+  }
+  .vp-tier{
+    grid-template-columns:1fr auto;
+    padding:18px 0;
+    gap:12px;
+  }
+  .vp-price{font-size:28px}
+
+  /* ── SECTION WRAPPERS — consistent breathing room ── */
+  .section-wrapper,
+  div.section-wrapper{
+    padding-left:24px!important;
+    padding-right:24px!important;
+    box-sizing:border-box;
+    width:100%;
+  }
+
+  /* Final CTA inner padding */
+  .final-spread > *{padding-left:0;padding-right:0}
+
+  /* Vendor sections — same 24px margin */
+  .vendor-only .section-wrapper,
+  .v-how-steps,
+  .v-faq,
+  .math-block,
+  .v-props-grid{margin-left:0;margin-right:0}
+
+  /* Countdown — centre everything with padding */
+  .countdown-bar{
+    padding:40px 24px;
+    flex-direction:column;
+    gap:16px;
+    text-align:center;
+    align-items:center;
+  }
+
+  /* Compare inner */
+  .compare-inner{padding:72px 24px}
+
+  /* Dark features section */
+  #features .section-wrapper{padding-left:24px!important;padding-right:24px!important}
+
+  /* How it works steps */
+  .how-step{padding-left:0;padding-right:0}
+
+  /* Coming list */
+  .cl-item{padding-left:0;padding-right:0}
+
+  /* Final CTA */
+  .final-inner{padding:0}
+  .final-spread{padding:80px 24px}
+
+  /* Footer */
+  .footer-masthead{padding:44px 24px 36px}
+  .footer-bottom{padding:16px 24px;flex-direction:column;gap:8px;text-align:center;font-size:8px}
+
+  /* ── PROBLEM SECTION ── */
+  .problem-spread{
+    padding:72px 0;
+    grid-template-columns:1fr;
+    gap:40px;
+  }
+  .ps-vr{display:none}
+  .ps-fact-n{font-size:44px}
+  .ps-fact{padding:20px 0}
+
+  /* ── HOW IT WORKS ── */
+  .how-head{grid-template-columns:1fr;gap:20px;margin-bottom:48px}
+  .how-h{font-size:clamp(32px,8vw,52px)}
+  .how-spread{padding:0 0 80px}
+  
+  /* Explicit padding on every major content block */
+  .how-head,.how-steps,.how-step,
+  .coming-head,.coming-list,.cl-item,
+  .sec-opener,.v-sec-opener,
+  .v-how-steps,.v-how-step,
+  .v-faq,.v-faq-item,
+  .final-inner,.final-spread{
+    padding-left:0;
+    padding-right:0;
+  }
+  .how-step{
+    grid-template-columns:1fr;
+    padding:32px 0;
+    gap:12px;
+  }
+  .hs-n{display:none}
+  .hs-t{font-size:22px}
+  .hs-d{font-size:14px;line-height:1.85}
+  .hs-tags{flex-wrap:wrap}
+
+  /* ── AI WEB & VERA ── */
+  .ai-web-grid,.vera-grid{grid-template-columns:1fr!important;gap:40px!important}
+  .cs-h{font-size:clamp(32px,8vw,52px)}
+
+  /* ── COMPARE ── */
+  .compare-inner{padding:72px 24px}
+  .cmp-hint{font-size:8px;margin-bottom:8px}
+  .cmp-card{flex:0 0 min(320px,82vw)}
+  .cmp-row{padding:9px 14px}
+  .cmp-row-label{font-size:11px}
+  .cmp-card-header{padding:16px 14px 12px}
+  .cmp-price-val{font-size:22px}
+  .compare-spread{margin:0 -24px;padding-left:0;padding-right:0}
+  .cmp-track{padding-left:24px;padding-right:24px}
+
+  /* ── COMING SOON ── */
+  .coming-head{grid-template-columns:1fr;gap:20px;margin-bottom:48px}
+  .com-h{font-size:clamp(32px,8vw,52px)}
+  .coming-list .cl-item{
+    grid-template-columns:1fr;
+    padding:24px 0;
+    gap:10px;
+  }
+  .cl-t{font-size:20px}
+  .cl-d{font-size:13px}
+
+  /* ── COUNTDOWN ── */
+  .countdown-bar{
+    padding:40px 24px;
+    flex-direction:column;
+    gap:16px;
+    text-align:center;
+  }
+  .cb-timer{gap:6px}
+  .cb-n{font-size:44px}
+  .cb-sep{font-size:36px;margin-bottom:20px}
+  .cb-l{font-size:7px;letter-spacing:.16em}
+
+  /* ── FINAL CTA ── */
+  .final-spread{
+    padding:96px 0;
+    grid-template-columns:1fr;
+    gap:40px;
+  }
+  .final-h{font-size:clamp(44px,10vw,72px);line-height:.92}
+  .final-pre{font-size:14px;margin-bottom:14px}
+  .final-note{font-size:9px}
+
+  /* ── FOOTER ── */
+  .footer-masthead{
+    padding:44px 24px 36px;
+    grid-template-columns:1fr;
+    text-align:center;
+    gap:20px;
+  }
+  .fm-left,.fm-right{
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:16px;
+  }
+  .fm-logo{font-size:26px;letter-spacing:.24em}
+  .footer-bottom{
+    padding:16px 24px;
+    flex-direction:column;
+    gap:8px;
+    text-align:center;
+    font-size:8px;
+  }
+  .footer-bottom span:last-child{flex-direction:row;gap:16px}
+
+  /* ── EDITORIAL SCROLL STRIP ── */
+  .ed-strip{padding:14px 0}
+  .ed-strip-text{font-size:10px;letter-spacing:.2em}
 }
 
+/* ── SMALL MOBILE 480px ── */
 @media(max-width:480px){
-  /* Prevent scroll reveals blocking content on small screens */
+  /* Never hide scroll-reveal content */
   .rv,.rv-l,.rv-r{opacity:1!important;transform:none!important;transition:none!important}
-  /* hero title */
-  h1.c-hero-title{font-size:52px;line-height:.92}
-  h1.vh-h{font-size:42px}
-  /* stats grid to single col */
-  .c-hero-stats{grid-template-columns:1fr}
-  /* how steps */
-  .how-step{padding:32px 0}
+
+  /* Hero */
+  h1.c-hero-title{font-size:52px;line-height:.9}
+  h1.c-hero-title .sub{font-size:18px}
+  h1.vh-h{font-size:40px}
+
+  /* Stats — keep 3-column even on small screens */
+  .c-hero-stats{
+    grid-template-columns:repeat(3,1fr);
+    display:grid;
+  }
+  .ch-stat{
+    border-right:1px solid var(--rule);
+    border-bottom:none;
+    padding:12px 8px;
+    width:auto;flex:none;
+    text-align:center;
+  }
+  .ch-stat:last-child{border-right:none}
+  .ch-stat-n{font-size:24px}
+  .ch-stat-l{font-size:9px;line-height:1.35}
+  .ch-stat-s{font-size:7px}
+
+  /* Nav toggle */
+  .mt-btn{padding:6px 11px;font-size:7px;letter-spacing:.12em}
+
+  /* Compare carousel — full width cards */
+  .cmp-card{flex:0 0 calc(92vw - 48px)}
+
+  /* Countdown */
+  .cb-n{font-size:36px}
+  .cb-sep{font-size:30px}
+
+  /* Vendor tiers */
+  .vp-name{font-size:18px}
+  .vp-price{font-size:26px}
+  .vp-badge{display:block;margin-left:0;margin-top:4px}
+
+  /* Final */
+  .final-h{font-size:44px}
+  .final-spread{padding:72px 0}
+
+  /* How */
   .hs-t{font-size:20px}
-  /* coming list */
+  .how-step{padding:24px 0}
+
+  /* Coming */
   .cl-t{font-size:18px}
-  /* compare table - single extra column hide */
-  .compare-spread .ct td:nth-child(3),.compare-spread .ct th:nth-child(3){display:none}
-  /* vp tiers */
-  .vp-tier{flex-direction:column;gap:8px}
-  /* countdown */
-  .cb-n{font-size:32px}.cd-sep{font-size:28px}
-  /* form grid */
-  .form-grid,.v-form-grid{display:flex;flex-direction:column}
-  /* nav toggle text shorter */
-  .mt-btn{padding:6px 12px;font-size:8px}
+  .coming-spread{padding:0 0 80px}
 }
 
-/* ── EXTRA-SMALL / NARROW PHONES ── */
+/* ── VERY SMALL 380px ── */
 @media(max-width:380px){
   h1.c-hero-title{font-size:46px}
   h1.vh-h{font-size:36px}
-  .nav-logo{font-size:20px}
-  .mt-btn{padding:6px 10px;letter-spacing:.12em}
-  .section-wrapper{padding-left:16px!important;padding-right:16px!important}
-  .c-hero-content{padding:96px 16px 52px!important}
+  .nav-logo{font-size:18px;letter-spacing:.18em}
+  .cb-n{font-size:32px}
+  .final-h{font-size:38px}
 }
 
-/* ── ACCESSIBILITY: respect reduced-motion ── */
-@media(prefers-reduced-motion:reduce){
-  *,*::before,*::after{
-    animation-duration:.001ms!important;
-    animation-iteration-count:1!important;
-    transition-duration:.001ms!important;
-    scroll-behavior:auto!important;
-  }
-  .rv,.rv-l,.rv-r{opacity:1!important;transform:none!important}
-  .ed-track{animation:none!important}
+/* ── MOBILE STICKY CTA BAR ── */
+.mobile-cta-bar{
+  display:none;
+  position:fixed;bottom:0;left:0;right:0;
+  background:white;border-top:1px solid var(--rule);
+  padding:10px 20px 18px;z-index:200;
+  box-shadow:0 -8px 32px rgba(13,11,9,.1);
+  transform:translateY(0);transition:transform .4s cubic-bezier(.22,1,.36,1);
+}
+.mobile-cta-bar.hidden{transform:translateY(100%)}
+.mcb-inner{display:flex;gap:8px}
+.mcb-input{
+  flex:1;padding:13px 14px;
+  border:1px solid var(--ink);
+  font-family:'Jost',sans-serif;font-size:15px;
+  color:var(--ink);background:white;outline:none;border-radius:0;
+  -webkit-appearance:none;
+}
+.mcb-input::placeholder{color:var(--linen)}
+.mcb-btn{
+  padding:13px 18px;background:var(--ink);color:white;
+  border:none;font-family:'Jost',sans-serif;
+  font-size:9px;letter-spacing:.16em;text-transform:uppercase;
+  cursor:pointer;white-space:nowrap;
+}
+.mcb-note{font-size:8px;color:var(--linen);text-align:center;margin-top:7px;letter-spacing:.08em}
+@media(max-width:768px){
+  .mobile-cta-bar{display:block}
+  /* Only show when in couple mode */
+  body.vm .mobile-cta-bar{display:none}
 }
 
+/* ── URGENCY BADGE ── */
+.urgency-badge{
+  display:inline-flex;align-items:center;gap:7px;
+  padding:5px 13px;border-radius:20px;
+  background:rgba(184,117,108,.1);
+  border:1px solid rgba(184,117,108,.22);
+  font-size:9px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--rose);margin-bottom:20px;
+}
+.ub-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--rose);flex-shrink:0;
+  animation:ubPulse .9s ease-in-out infinite;
+}
+@keyframes ubPulse{0%,100%{opacity:.35}50%{opacity:1}}
+
+/* ── "WHY TWINE" QUICK WINS STRIP ── */
+.why-strip{
+  background:var(--ink);
+  padding:0 48px;
+  display:grid;grid-template-columns:repeat(4,1fr);
+  border-bottom:1px solid rgba(255,255,255,.06);
+}
+.ws-item{
+  padding:28px 0 28px 28px;
+  border-left:1px solid rgba(255,255,255,.06);
+  display:flex;flex-direction:column;gap:6px;
+}
+.ws-item:first-child{padding-left:0;border-left:none}
+.ws-icon{font-size:20px;margin-bottom:2px}
+.ws-title{font-size:13px;color:rgba(247,244,238,.85);font-weight:400;letter-spacing:.01em}
+.ws-desc{font-size:11px;color:rgba(247,244,238,.35);line-height:1.5;letter-spacing:.02em}
+@media(max-width:768px){
+  .why-strip{grid-template-columns:1fr 1fr;padding:0 20px}
+  .ws-item{padding:20px 0 20px 20px}
+  .ws-item:nth-child(odd){padding-left:0;border-left:none}
+  .ws-item:nth-child(even){border-left:1px solid rgba(255,255,255,.06)}
+  .ws-item:nth-child(3),.ws-item:nth-child(4){border-top:1px solid rgba(255,255,255,.06)}
+}
+@media(max-width:480px){
+  .why-strip{grid-template-columns:1fr;padding:0 20px}
+  .ws-item{padding:16px 0;border-left:none!important;border-top:1px solid rgba(255,255,255,.06)}
+  .ws-item:first-child{border-top:none}
+}
+
+/* ══════════════════════════════════
+   VENDOR MODE — CONTENT SWITCHING
+══════════════════════════════════ */
+.couple-only{display:block}
+.vendor-only{display:none}
+body.vm .couple-only{display:none!important}
+body.vm .vendor-only{display:block}
+.couple-only-grid{display:grid}
+.vendor-only-grid{display:none}
+body.vm .couple-only-grid{display:none!important}
+body.vm .vendor-only-grid{display:grid}
+
+/* Vendor section opener */
+.v-sec-opener{
+  display:flex;align-items:center;gap:12px;
+  padding:60px 0 24px;
+  border-bottom:1px solid var(--rule);
+  margin-bottom:56px;
+  font-size:8px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);
+}
+.v-sec-opener::before{content:'';width:20px;height:1px;background:var(--gold)}
+.v-sec-num{font-family:'Cormorant',serif;font-size:14px;font-style:italic;color:var(--gold)}
+
+/* Vendor how it works steps */
+.v-how-steps{display:flex;flex-direction:column}
+.v-how-step{
+  display:grid;grid-template-columns:64px 1fr;gap:36px;
+  padding:40px 0;border-top:1px solid var(--rule);align-items:start;
+}
+.v-hs-n{font-family:'Cormorant',serif;font-size:64px;font-weight:300;color:var(--paper3);line-height:1;font-style:italic}
+.v-hs-t{font-family:'Cormorant',serif;font-size:24px;font-weight:400;color:var(--ink);margin-bottom:10px}
+.v-hs-d{font-size:13px;font-weight:300;line-height:1.9;color:var(--ash);letter-spacing:.02em;margin-bottom:12px}
+.v-hs-tag{display:inline-block;font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:var(--sage);border-bottom:1px solid var(--sage);padding-bottom:2px}
+
+/* Vendor value props grid */
+.v-props-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:2px;background:var(--rule);margin:0 0 80px;
+}
+.v-prop{background:var(--paper);padding:32px 28px;transition:background .25s}
+.v-prop:hover{background:white}
+.vp-em-icon{font-size:26px;margin-bottom:14px;display:block}
+.vp-em-t{font-family:'Cormorant',serif;font-size:20px;font-weight:400;color:var(--ink);margin-bottom:8px}
+.vp-em-d{font-size:12px;font-weight:300;line-height:1.75;color:var(--ash);letter-spacing:.02em}
+
+/* The Knot vs Twine math */
+.math-block{
+  background:var(--ink2);border-radius:8px;
+  padding:44px 48px;margin:0 0 80px;
+  display:grid;grid-template-columns:1fr auto 1fr;
+  gap:40px;align-items:center;
+  position:relative;overflow:hidden;
+}
+.math-block::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 60% 80% at 80% 50%,rgba(196,145,58,.08) 0%,transparent 60%);
+}
+.mb-side{text-align:center;position:relative;z-index:1}
+.mb-platform{font-size:8px;letter-spacing:.24em;text-transform:uppercase;color:rgba(247,244,238,.3);margin-bottom:14px}
+.mb-price{font-family:'Cormorant',serif;font-size:60px;font-weight:300;line-height:1}
+.mb-price.bad{color:rgba(184,117,108,.65)}
+.mb-price.good{color:var(--gold)}
+.mb-period{font-size:10px;letter-spacing:.14em;color:rgba(247,244,238,.25);margin-top:4px;text-transform:uppercase}
+.mb-desc{font-size:12px;color:rgba(247,244,238,.35);line-height:1.65;margin-top:16px;letter-spacing:.02em;max-width:200px;margin-left:auto;margin-right:auto}
+.mb-vs{font-family:'Cormorant',serif;font-size:36px;font-style:italic;color:rgba(247,244,238,.12);text-align:center;position:relative;z-index:1}
+
+/* Vendor FAQ strip */
+.v-faq{display:flex;flex-direction:column}
+.v-faq-item{padding:24px 0;border-bottom:1px solid var(--rule);cursor:pointer}
+.v-faq-q{font-family:'Cormorant',serif;font-size:20px;font-weight:400;color:var(--ink);display:flex;justify-content:space-between;align-items:center;gap:20px}
+.v-faq-icon{font-size:16px;color:var(--linen);flex-shrink:0;transition:transform .3s}
+.v-faq-a{font-size:13px;font-weight:300;line-height:1.85;color:var(--ash);letter-spacing:.02em;margin-top:12px;display:none}
+.v-faq-item.open .v-faq-a{display:block}
+.v-faq-item.open .v-faq-icon{transform:rotate(45deg);color:var(--rose)}
+
+@media(max-width:768px){
+  .v-props-grid{grid-template-columns:1fr 1fr}
+  .math-block{grid-template-columns:1fr;gap:24px;padding:28px 24px}
+  .mb-vs{font-size:24px}
+  .mb-price{font-size:48px}
+  .mb-desc{max-width:100%}
+  .v-how-step{grid-template-columns:1fr;gap:10px}
+  .v-hs-n{font-size:44px}
+  .v-sec-opener{padding:40px 0 20px}
+  .v-faq-item{padding:20px 0}
+  .v-faq-q{font-size:17px}
+}
+@media(max-width:480px){
+  .v-props-grid{grid-template-columns:1fr}
+}
 </style>
 </head>
 <body id="body">
@@ -971,12 +1430,13 @@ footer{
 <section class="c-hero" id="cHero">
   <div class="c-hero-img"></div>
   <div class="issue-line">
-    <span>Twine — Early Access 2026</span>
+    <span>Twine — Launching in 1–2 Weeks</span>
     <span>The Modern Wedding Platform</span>
     <span>Free for Couples · Always</span>
   </div>
   <div class="c-hero-content" style="padding:140px 48px 80px;max-width:760px">
-    <div class="c-hero-kicker">Early Access · Limited to First 500 Couples</div>
+    <div class="c-hero-kicker">Launching in 1–2 Weeks · Waitlist Open Now</div>
+    <div class="urgency-badge"><div class="ub-dot"></div>Free forever for couples — no catch</div>
     <h1 class="c-hero-title">
       Wedding<br>planning
       <span class="em">reimagined.</span>
@@ -984,7 +1444,7 @@ footer{
     </h1>
     <div class="rule-line">
       <div class="rl-rule"></div>
-      <span class="rl-text">Join the Waitlist</span>
+      <span class="rl-text">Get Early Access</span>
       <div class="rl-rule"></div>
     </div>
     <div class="c-hero-form">
@@ -992,13 +1452,13 @@ footer{
         <div class="form-grid">
           <input class="form-email" type="email" id="cEmail" placeholder="your@email.com" autocomplete="email">
           <div class="form-sep"></div>
-          <button class="form-cta" onclick="submitCouple()">Get Early Access</button>
+          <button class="form-cta" onclick="submitCouple()">Join Waitlist</button>
         </div>
-        <div class="form-note">Free forever · No credit card · Be first when we launch</div>
+        <div class="form-note">Free forever · No credit card · App launching in 1–2 weeks</div>
       </div>
       <div class="form-success" id="cSuccess">
         <div class="fs-t">You're on the list.</div>
-        <div class="fs-s">We'll email you the moment Twine launches. You're among the first.</div>
+        <div class="fs-s">Twine launches in 1–2 weeks. You'll be first to know — watch your inbox.</div>
       </div>
     </div>
   </div>
@@ -1026,22 +1486,34 @@ footer{
   <div class="v-hero-bg"></div>
   <div class="v-hero-top">
     <div>
-      <div class="vh-kicker">Founding Vendor Program · Limited Spots</div>
+      <div class="vh-kicker">Founding Vendor Program · Launching in 1–2 Weeks</div>
       <h1 class="vh-h">
         You've been paying<br>The Knot to<br><em>ghost you.</em>
       </h1>
-      <p class="vh-body">In 2025, The New Yorker, Forbes, and US Senator Chuck Grassley exposed what vendors already knew — The Knot's leads are widely alleged to be fake, their pricing is predatory, and their own insiders say it doesn't work for 80% of vendors. Twine is the alternative the wedding industry has been waiting for.</p>
+      <p class="vh-body">The Knot charges up to $1,200/month for leads sent to 15 vendors at once. Twine sends you inquiries from couples who swiped right specifically on your Instagram portfolio. Higher intent. Better fit. $29/month — locked forever for the first 100 vendors.</p>
+
+      <!-- PRIMARY CTA — email to secure spot -->
       <div id="vFormWrap">
         <div class="v-form-grid">
-          <input class="v-form-email" type="email" id="vEmail" placeholder="your@business.com">
-          <button class="v-form-btn" onclick="submitVendor()">Claim My Profile</button>
+          <input class="v-form-email" type="email" id="vEmail" placeholder="your@business.com" autocomplete="email">
+          <button class="v-form-btn" onclick="submitVendor()">Secure My Founding Spot</button>
         </div>
-        <div class="v-form-note" style="margin-top:8px">30-day free trial · Founding pricing locked in forever · Cancel anytime</div>
+        <div class="v-form-note" style="margin-top:10px">No card needed now · We'll email your payment link before launch · Founding rate locked forever</div>
       </div>
       <div class="v-success" id="vSuccess">
-        <div class="v-success-t">Profile reserved.</div>
-        <div class="v-success-s">Your founding spot is locked in. We'll email you to complete your profile before launch.</div>
+        <div class="v-success-t">Spot reserved.</div>
+        <div class="v-success-s">Check your inbox — your founding rate confirmation is on its way. We'll send your payment link before launch so you're live on day one.</div>
       </div>
+
+      <!-- SECONDARY CTA — pay now for warm traffic -->
+      <div id="vPayNow" style="margin-top:20px;padding-top:20px;border-top:1px solid rgba(247,244,238,.08)">
+        <div style="font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:rgba(247,244,238,.28);margin-bottom:10px">Already convinced? Skip the waitlist</div>
+        <a href="#" onclick="handlePayNow(event)" style="display:inline-flex;align-items:center;gap:8px;padding:11px 20px;border:1px solid rgba(196,145,58,.35);border-radius:4px;font-family:'Jost',sans-serif;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);text-decoration:none;transition:all .3s" onmouseover="this.style.background='rgba(196,145,58,.1)'" onmouseout="this.style.background='transparent'">
+          Pay Now — $29/month →
+        </a>
+        <div style="font-size:9px;color:rgba(247,244,238,.2);margin-top:8px;letter-spacing:.06em">Secure checkout · Cancel anytime · Locks in before public launch</div>
+      </div>
+
     </div>
     <div>
       <div class="v-pricing">
@@ -1083,6 +1555,26 @@ footer{
           <div class="vps-bar-wrap"><div class="vps-bar" id="foundingBar" style="width:62%"></div></div>
           <span class="vps-n" id="foundingCount">62 / 100</span>
         </div>
+
+        <!-- What happens next — reassurance block -->
+        <div style="margin-top:28px;padding:20px;background:rgba(255,255,255,.04);border:1px solid rgba(247,244,238,.07);border-radius:8px">
+          <div style="font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:rgba(247,244,238,.3);margin-bottom:12px">What happens after you sign up</div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div style="display:flex;gap:10px;align-items:flex-start">
+              <div style="width:18px;height:18px;border-radius:50%;background:rgba(196,145,58,.15);border:1px solid rgba(196,145,58,.25);display:flex;align-items:center;justify-content:center;font-size:9px;color:var(--gold);flex-shrink:0;margin-top:1px">1</div>
+              <div style="font-size:12px;color:rgba(247,244,238,.55);line-height:1.6">You receive a confirmation email with your founding rate locked in</div>
+            </div>
+            <div style="display:flex;gap:10px;align-items:flex-start">
+              <div style="width:18px;height:18px;border-radius:50%;background:rgba(196,145,58,.15);border:1px solid rgba(196,145,58,.25);display:flex;align-items:center;justify-content:center;font-size:9px;color:var(--gold);flex-shrink:0;margin-top:1px">2</div>
+              <div style="font-size:12px;color:rgba(247,244,238,.55);line-height:1.6">Within 48 hours we email your payment link to activate before launch</div>
+            </div>
+            <div style="display:flex;gap:10px;align-items:flex-start">
+              <div style="width:18px;height:18px;border-radius:50%;background:rgba(196,145,58,.15);border:1px solid rgba(196,145,58,.25);display:flex;align-items:center;justify-content:center;font-size:9px;color:var(--gold);flex-shrink:0;margin-top:1px">3</div>
+              <div style="font-size:12px;color:rgba(247,244,238,.55);line-height:1.6">Your profile goes live on launch day — couples start discovering you immediately</div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>
@@ -1102,51 +1594,202 @@ footer{
   </div>
 </div>
 
-<!-- ══ MAIN CONTENT ══ -->
-<div class="section-wrapper">
+<!-- ══ WHY TWINE — INSTANT CLARITY STRIP (COUPLES) ══ -->
+<div class="why-strip couple-only">
+  <div class="ws-item">
+    <div class="ws-icon">💝</div>
+    <div class="ws-title">Swipe to find vendors</div>
+    <div class="ws-desc">See their real Instagram work on every card. Save or skip in a second.</div>
+  </div>
+  <div class="ws-item">
+    <div class="ws-icon">✉️</div>
+    <div class="ws-title">AI writes your outreach</div>
+    <div class="ws-desc">Personalised emails to every saved vendor — sent in one tap.</div>
+  </div>
+  <div class="ws-item">
+    <div class="ws-icon">✨</div>
+    <div class="ws-title">Vera plans with you</div>
+    <div class="ws-desc">Your AI concierge knows your date, budget, and local market pricing.</div>
+  </div>
+  <div class="ws-item">
+    <div class="ws-icon">🌐</div>
+    <div class="ws-title">Wedding website in seconds</div>
+    <div class="ws-desc">Describe your day. AI generates a stunning site instantly.</div>
+  </div>
+</div>
 
-  <!-- PROBLEM -->
-  <div class="sec-opener rv">
-    <span class="so-num">I.</span>
-    <div class="so-rule"></div>
-    <span class="so-label">The Problem</span>
+<!-- ══ WHY TWINE — VENDOR STRIP ══ -->
+<div class="why-strip vendor-only">
+  <div class="ws-item">
+    <div class="ws-icon">💝</div>
+    <div class="ws-title">Intent-based leads</div>
+    <div class="ws-desc">Couples swipe your Instagram work and choose you specifically — not a mass form.</div>
   </div>
-  <div class="problem-spread">
-    <div class="rv-l">
-      <div class="ps-overline">The State of Wedding Planning</div>
-      <blockquote class="ps-pull">Wedding planning in 2026 still means <span>hours of searching,</span> unresponsive vendors, and a platform facing federal scrutiny.</blockquote>
-      <p class="ps-text">The Knot was built in 1996. Their experience hasn't kept pace with how couples actually discover and decide in 2025 — visually, quickly, and on mobile. Meanwhile, vendors pay up to $1,200 a month for leads widely reported as unqualified. Twine was built to fix both sides of this broken equation.</p>
-    </div>
-    <div class="ps-vr"></div>
-    <div class="rv-r">
-      <div class="ps-fact">
-        <div class="ps-fact-n">2.5M</div>
-        <div class="ps-fact-l">Couples get engaged in the US every year — 200,000 entering the planning window every single month</div>
-        <div class="ps-fact-s">Signet Jewelers, 2024</div>
+  <div class="ws-item">
+    <div class="ws-icon">📸</div>
+    <div class="ws-title">Your portfolio on every card</div>
+    <div class="ws-desc">Live Instagram feed pulled directly onto your swipe card. Your work sells itself.</div>
+  </div>
+  <div class="ws-item">
+    <div class="ws-icon">💰</div>
+    <div class="ws-title">93% cheaper than The Knot</div>
+    <div class="ws-desc">$29/month founding rate vs up to $1,200/month. Lock it in before we launch.</div>
+  </div>
+  <div class="ws-item">
+    <div class="ws-icon">📊</div>
+    <div class="ws-title">Real analytics dashboard</div>
+    <div class="ws-desc">See profile views, save rate, inquiry conversion, and aesthetic match score.</div>
+  </div>
+</div>
+
+<!-- ══ VENDOR MAIN CONTENT ══ -->
+<div class="vendor-only">
+
+  <!-- VENDOR HOW IT WORKS -->
+  <div class="section-wrapper">
+    <div class="v-sec-opener rv"><span class="v-sec-num">I.</span>How Twine Works for Vendors</div>
+    <div class="how-spread">
+      <div class="how-head">
+        <h2 class="how-h rv">Better leads.<br>Less noise.<br><em>$29 a month.</em></h2>
+        <p class="how-intro rv">The Knot sends your inquiry to 15 vendors at once. Twine sends couples who swiped right on your specific portfolio. The difference in lead quality is not subtle.</p>
       </div>
-      <div class="ps-fact">
-        <div class="ps-fact-n">$36k</div>
-        <div class="ps-fact-l">Average US wedding cost in 2026, spread across an average of 14 vendors — all of whom need to be found, vetted, and booked</div>
-        <div class="ps-fact-s">Zola, 2026</div>
-      </div>
-      <div class="ps-fact">
-        <div class="ps-fact-n">78%</div>
-        <div class="ps-fact-l">Of couples now create a wedding website, up from 52% in 2019 — the digital planning shift is permanent</div>
-        <div class="ps-fact-s">The Knot Real Weddings Study, 2023</div>
+      <div class="v-how-steps">
+        <div class="v-how-step rv">
+          <div class="v-hs-n">01</div>
+          <div>
+            <div class="v-hs-t">Your profile is pre-built from Google</div>
+            <p class="v-hs-d">We pull your business name, location, Google rating, and reviews automatically from Google Places. Claim your profile in under 10 minutes — add your Instagram, pricing packages, and bio. Your Google and Yelp reviews are already there waiting for you.</p>
+            <span class="v-hs-tag">No starting from scratch</span>
+          </div>
+        </div>
+        <div class="v-how-step rv" data-d="1">
+          <div class="v-hs-n">02</div>
+          <div>
+            <div class="v-hs-t">Couples swipe your Instagram portfolio</div>
+            <p class="v-hs-d">Every couple sees your live Instagram work on your swipe card — not a stock photo or a logo. When they swipe right and save you, they've already seen your style and chosen it. These aren't cold leads. These are couples who specifically like your aesthetic.</p>
+            <span class="v-hs-tag">Aesthetic-matched discovery</span>
+          </div>
+        </div>
+        <div class="v-how-step rv" data-d="2">
+          <div class="v-hs-n">03</div>
+          <div>
+            <div class="v-hs-t">AI drafts a personalised inquiry for each couple</div>
+            <p class="v-hs-d">When a couple saves you, Twine's AI writes them a personalised message using their specific wedding date, location, budget, and style preferences — then sends it to you. Not a copy-paste form. A real inquiry from a couple who already loves your work.</p>
+            <span class="v-hs-tag">Higher intent, better conversations</span>
+          </div>
+        </div>
+        <div class="v-how-step rv" data-d="3">
+          <div class="v-hs-n">04</div>
+          <div>
+            <div class="v-hs-t">Manage everything from your dashboard</div>
+            <p class="v-hs-d">Your vendor dashboard shows profile views, saves, inquiries, response time ranking, and aesthetic match score. See exactly how your profile is performing and what type of couples are finding you — real data, not vanity metrics.</p>
+            <span class="v-hs-tag">Analytics that actually mean something</span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
+
+  <!-- THE MATH -->
+  <div class="section-wrapper">
+    <div class="v-sec-opener rv"><span class="v-sec-num">II.</span>The Math is Pretty Clear</div>
+    <div class="math-block rv">
+      <div class="mb-side">
+        <div class="mb-platform">The Knot / WeddingWire</div>
+        <div class="mb-price bad">$1,200</div>
+        <div class="mb-period">per month</div>
+        <div class="mb-desc">Leads sent to 15 vendors at once. Under federal investigation. 80% of vendors say it doesn't work.</div>
+      </div>
+      <div class="mb-vs">vs</div>
+      <div class="mb-side">
+        <div class="mb-platform">Twine — Founding Rate</div>
+        <div class="mb-price good">$29</div>
+        <div class="mb-period">per month · locked forever</div>
+        <div class="mb-desc">Leads from couples who specifically chose your portfolio. Intent-based. Personalised. Yours alone.</div>
+      </div>
+    </div>
+
+    <!-- Value props -->
+    <div class="v-props-grid rv">
+      <div class="v-prop">
+        <span class="vp-em-icon">📷</span>
+        <div class="vp-em-t">Instagram-first discovery</div>
+        <div class="vp-em-d">Couples see your live Instagram feed on every card. Your portfolio is the pitch — no stock photos, no generic bios.</div>
+      </div>
+      <div class="v-prop">
+        <span class="vp-em-icon">⭐</span>
+        <div class="vp-em-t">Reviews from everywhere</div>
+        <div class="vp-em-d">Google, Yelp, and native Twine reviews aggregated on your profile automatically. No manual importing.</div>
+      </div>
+      <div class="v-prop">
+        <span class="vp-em-icon">📊</span>
+        <div class="vp-em-t">Real analytics</div>
+        <div class="vp-em-d">Profile views, save rate, inquiry conversion, aesthetic match score, and response time ranking. Data that actually tells you something.</div>
+      </div>
+      <div class="v-prop">
+        <span class="vp-em-icon">🎯</span>
+        <div class="vp-em-t">Featured placements</div>
+        <div class="vp-em-d">Upgrade to appear in the first 10 cards couples see in your area. Category-exclusive per zip code — not just whoever pays most globally.</div>
+      </div>
+      <div class="v-prop">
+        <span class="vp-em-icon">🔒</span>
+        <div class="vp-em-t">Founding rate locked forever</div>
+        <div class="vp-em-d">The first 100 vendors in each category lock in $29/month permanently. Standard pricing goes to $79/month after launch. This rate never increases.</div>
+      </div>
+      <div class="v-prop">
+        <span class="vp-em-icon">🚀</span>
+        <div class="vp-em-t">Live on launch day</div>
+        <div class="vp-em-d">Secure your spot now. When Twine launches in 1–2 weeks, couples in your market start discovering you immediately. Early vendors get the first wave of inquiries.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- VENDOR FAQ -->
+  <div class="section-wrapper">
+    <div class="v-sec-opener rv"><span class="v-sec-num">III.</span>Common Questions</div>
+    <div class="v-faq rv" style="margin-bottom:80px">
+      <div class="v-faq-item" onclick="toggleFaq(this)">
+        <div class="v-faq-q">Do couples pay anything to use Twine? <span class="v-faq-icon">+</span></div>
+        <div class="v-faq-a">No. Twine is completely free for couples — always. This is intentional. It means more couples join, which means more discovery for you. We make money from vendor subscriptions, not from couples.</div>
+      </div>
+      <div class="v-faq-item" onclick="toggleFaq(this)">
+        <div class="v-faq-q">What's the difference between Twine leads and The Knot leads? <span class="v-faq-icon">+</span></div>
+        <div class="v-faq-a">On The Knot, a couple submits a generic form and it goes to every vendor in the category within their budget — typically 10-15 vendors at once. On Twine, a couple swipes through your actual Instagram portfolio, specifically saves you, and our AI writes them a personalised inquiry just to you. One vendor. Chosen intentionally. The conversion rate is dramatically different.</div>
+      </div>
+      <div class="v-faq-item" onclick="toggleFaq(this)">
+        <div class="v-faq-q">What does $29/month actually include? <span class="v-faq-icon">+</span></div>
+        <div class="v-faq-a">Everything. Your full vendor profile with live Instagram integration, Google and Yelp review aggregation, your pricing packages, inquiry inbox, analytics dashboard, and couple discovery. No feature tiers, no hidden costs. Featured placements ($149/month) are available separately if you want to appear first in your area.</div>
+      </div>
+      <div class="v-faq-item" onclick="toggleFaq(this)">
+        <div class="v-faq-q">What happens after I sign up today? <span class="v-faq-icon">+</span></div>
+        <div class="v-faq-a">You receive a confirmation email locking in your founding rate. Within 48 hours we send your payment link to activate your subscription. When Twine launches in 1–2 weeks, your profile goes live and couples in your area start discovering you. The whole process takes about 10 minutes to set up.</div>
+      </div>
+      <div class="v-faq-item" onclick="toggleFaq(this)">
+        <div class="v-faq-q">Can I cancel anytime? <span class="v-faq-icon">+</span></div>
+        <div class="v-faq-a">Yes. No contracts, no lock-in beyond the monthly billing cycle. That said — founding members who cancel lose their rate permanently. If you return later, you pay the standard $79/month. We think the $29 rate is worth keeping.</div>
+      </div>
+      <div class="v-faq-item" onclick="toggleFaq(this)">
+        <div class="v-faq-q">Does Twine work for all wedding vendor categories? <span class="v-faq-icon">+</span></div>
+        <div class="v-faq-a">Yes. Photography, videography, content creators, florals, venues, catering, DJs and bands, hair and makeup, wedding planners, officiants, wedding cakes, stationery, transportation, and jewellery. Every category couples need, discoverable by swiping.</div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /vendor-only -->
+
+<!-- ══ COUPLE MAIN CONTENT ══ -->
 
   <!-- HOW IT WORKS -->
   <div class="sec-opener rv" id="how">
-    <span class="so-num">II.</span>
+    <span class="so-num">I.</span>
     <div class="so-rule"></div>
     <span class="so-label">How It Works</span>
   </div>
   <div class="how-spread">
     <div class="how-head">
       <h2 class="how-h rv">Three steps to your<br>dream vendor <em>team.</em></h2>
-      <p class="how-intro rv">Twine replaces the spreadsheets, the browser tabs, and the anxious waiting. From personalised planning timeline to swipe discovery to AI-drafted outreach — everything flows in sequence, beautifully.</p>
+      <p class="how-intro rv">No more browser tabs. No more copy-paste emails. No more wondering if anyone read your inquiry. Twine handles the finding, the vetting, and the outreach — you just make the decisions.</p>
     </div>
     <div class="how-steps">
       <div class="how-step rv">
@@ -1190,8 +1833,9 @@ footer{
 
 </div><!-- /section-wrapper -->
 
-<!-- AI WEBSITE BUILDER TEASER — full bleed -->
-<div id="features" style="background:var(--ink2);padding:120px 0;position:relative;overflow:hidden">
+<!-- AI WEBSITE BUILDER — couple only -->
+<!-- NOTE: starts inside couple-only div opened above -->
+<div id="features" class="couple-only" style="background:var(--ink2);padding:120px 0;position:relative;overflow:hidden">
   <div style="position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 80% 50%,rgba(96,122,92,.1) 0%,transparent 60%),radial-gradient(ellipse 40% 60% at 20% 30%,rgba(184,117,108,.08) 0%,transparent 55%);pointer-events:none"></div>
   <div class="section-wrapper" style="position:relative;z-index:1">
     <div class="sec-opener rv" style="border-bottom-color:rgba(247,244,238,.08)">
@@ -1306,19 +1950,19 @@ footer{
   </div>
 </div>
 
-<!-- COMPARE — DARK FULL BLEED -->
-<div class="compare-spread" id="compare">
+<!-- COMPARE — couple only -->
+<div class="compare-spread couple-only" id="compare">
   <div class="section-wrapper">
     <div class="compare-inner">
       <div class="sec-opener rv" style="border-bottom-color:rgba(247,244,238,.08);padding-top:0">
-        <span class="so-num" style="color:rgba(247,244,238,.78)">IV.</span>
+        <span class="so-num" style="color:rgba(247,244,238,.78)">III.</span>
         <div class="so-rule" style="background:rgba(247,244,238,.08)"></div>
         <span class="so-label" style="color:rgba(247,244,238,.78)">The Honest Comparison</span>
       </div>
       <div class="rv">
-        <div class="cs-over">The Knot — 2025–26</div>
-        <h2 class="cs-h">Federal investigation.<br>Class action lawsuit.<br><em>Couples deserve better.</em></h2>
-        <p class="cs-sub">In March 2025, The New Yorker exposed The Knot's fake leads allegations. Senator Chuck Grassley called for a federal investigation. A nationwide class action lawsuit was filed. Whistleblowers with 60 years combined inside experience confirmed the platform "does not work for 80% of vendors."</p>
+        <div class="cs-over">Why couples and vendors are leaving The Knot</div>
+        <h2 class="cs-h">Federal investigation.<br>Class action lawsuit.<br><em>There's a better way.</em></h2>
+        <p class="cs-sub">In March 2025, The New Yorker exposed The Knot's fake leads allegations. Senator Chuck Grassley called for a federal investigation. A nationwide class action lawsuit was filed. Whistleblowers with 60 years combined inside experience confirmed the platform "does not work for 80% of vendors." Twine was built as the alternative.</p>
       </div>
 
       <!-- COMPARISON CAROUSEL -->
@@ -1465,73 +2109,41 @@ footer{
   </div>
 </div>
 
-<!-- COMING SOON -->
-<div class="section-wrapper">
+<!-- COMING SOON — couple only -->
+<div class="section-wrapper couple-only">
   <div class="sec-opener rv">
-    <span class="so-num">V.</span>
+    <span class="so-num">IV.</span>
     <div class="so-rule"></div>
-    <span class="so-label">What's Coming</span>
+    <span class="so-label">Everything Included at Launch</span>
   </div>
   <div class="coming-spread">
     <div class="coming-head">
-      <h2 class="com-h rv">Features that make<br>every competitor <em>obsolete.</em></h2>
-      <p class="com-intro rv">Twine launches with the core discovery and outreach experience. What follows will systematically dismantle every remaining reason a couple or vendor would choose anyone else.</p>
+      <h2 class="com-h rv">Not a feature.<br>A complete <em>planning suite.</em></h2>
+      <p class="com-intro rv">Every tool a couple needs from the moment they get engaged to the moment they say "I do" — built into one free app. Nothing to pay for. Nothing to stitch together.</p>
     </div>
     <div class="coming-list">
-      <div class="cl-item rv"><div class="cl-t">Wedding Planners on Twine</div><div class="cl-d">Wedding planners are listed as a vendor category — couples swipe and find their planner just like a photographer. Twine supplements planners, never replaces them. Their clients show up more informed. Everyone wins.</div></div>
-      <div class="cl-item rv" data-d="1"><div class="cl-t">Share With Your Planner</div><div class="cl-d">One tap exports your entire Twine profile — saved vendors, budget allocation, checklist progress, aesthetic preferences — as a beautiful shareable link or PDF. Your planner gets everything they need in seconds.</div></div>
-      <div class="cl-item rv" data-d="1"><div class="cl-t">Vendor Kanban Board</div><div class="cl-d">Saved vendors move through stages: Researching → Inquired → Proposal Received → Booked. Visual, satisfying, and nothing like it exists anywhere. Couples currently track this in spreadsheets.</div></div>
-      <div class="cl-item rv" data-d="2"><div class="cl-t">Featured Placements</div><div class="cl-d">Vendors appear in the first 10 cards couples see in their area. Priority by category and zip code — exclusive per market, not just whoever pays most globally.</div></div>
-      <div class="cl-item rv"><div class="cl-t">In-App Messaging</div><div class="cl-d">Every vendor conversation lives inside Twine — tied to their card and your checklist. Read receipts so you know exactly when they opened your message.</div></div>
-      <div class="cl-item rv" data-d="1"><div class="cl-t">Verified Reviews Only</div><div class="cl-d">Couples upload a wedding photo to leave a Twine review. No anonymous reviews. No fake ones. The direct antidote to The Knot's well-documented review problem.</div></div>
-      <div class="cl-item rv" data-d="2"><div class="cl-t">Aesthetic Match AI</div><div class="cl-d">Your vibe quiz trains an algorithm that scores every vendor's Instagram content against your style. Modern minimalist couples only see photographers who actually shoot that way.</div></div>
-    </div>
-  </div>
-</div>
-
-<!-- TESTIMONIALS -->
-<div class="testi-spread">
-  <div class="section-wrapper">
-    <div class="testi-inner">
-      <div class="testi-over rv">Early Access Voices</div>
-      <div class="testi-layout">
-        <div class="tq rv">
-          <span class="tq-mark">"</span>
-          <p class="tq-text">The swipe feature completely changed how I thought about finding vendors. Found our photographer in 15 minutes. Nothing on The Knot comes close.</p>
-          <div class="tq-rule"></div>
-          <div class="tq-name">Sarah M.</div>
-          <div class="tq-detail">Charleston, SC · Sep 2026</div>
-        </div>
-        <div class="tq rv" data-d="1">
-          <span class="tq-mark">"</span>
-          <p class="tq-text">Twine drafted personalised messages for 10 photographers at once. Three responded within an hour. I've never felt so in control during wedding planning.</p>
-          <div class="tq-rule"></div>
-          <div class="tq-name">Alicia & Tom</div>
-          <div class="tq-detail">Napa Valley, CA · Oct 2026</div>
-        </div>
-        <div class="tq rv" data-d="2">
-          <span class="tq-mark">"</span>
-          <p class="tq-text">I claimed my profile in ten minutes and my Google reviews were already there. Within a week of beta I had three genuine inquiries from couples who loved my style.</p>
-          <div class="tq-rule"></div>
-          <div class="tq-name">Jessica R.</div>
-          <div class="tq-detail">Wild & Bloom Florals · San Francisco</div>
-        </div>
-      </div>
+      <div class="cl-item rv"><div class="cl-t">Swipe Vendor Discovery</div><div class="cl-d">Browse vendors by swiping through their real Instagram portfolio — photographers, florists, venues, caterers, DJs, hair & makeup, officiants, and more. Save your favourites, skip the rest.</div></div>
+      <div class="cl-item rv" data-d="1"><div class="cl-t">AI Outreach in One Tap</div><div class="cl-d">Save your top vendors across every category. Twine drafts a personalised inquiry for each one — your date, style, and budget woven in — and sends them all in a single tap.</div></div>
+      <div class="cl-item rv" data-d="1"><div class="cl-t">Guest Manager & RSVP</div><div class="cl-d">Import your guest list via CSV, generate unique RSVP links for every guest, track responses in real time, manage dietary requirements, and build your seating chart with drag and drop.</div></div>
+      <div class="cl-item rv" data-d="2"><div class="cl-t">Save the Date Builder</div><div class="cl-d">Choose from editorial card designs, customise your palette and typography, and send to your entire guest list in one tap. Guests get a one-tap Add to Calendar link automatically.</div></div>
+      <div class="cl-item rv"><div class="cl-t">Vendor Kanban Board</div><div class="cl-d">Every vendor moves through stages automatically: Saved → Inquired → Proposal Received → Booked. Nothing slips through. Your entire vendor team managed in one place.</div></div>
+      <div class="cl-item rv" data-d="1"><div class="cl-t">Budget Tracker</div><div class="cl-d">Set your total budget, allocate by category, and track spending against proposals as they arrive. See your remaining budget update in real time as vendors quote.</div></div>
+      <div class="cl-item rv" data-d="2"><div class="cl-t">Day-of Timeline</div><div class="cl-d">Build your minute-by-minute wedding day schedule and share it with your entire vendor team in one tap. Each vendor sees only their relevant events.</div></div>
     </div>
   </div>
 </div>
 
 <!-- COUNTDOWN -->
 <div class="countdown-bar">
-  <span class="cb-label">Launching In</span>
+  <span class="cb-label">App Store Launch In</span>
   <div class="cb-timer">
-    <div class="cb-unit"><div class="cb-n" id="cdD">42</div><div class="cb-l">Days</div></div>
+    <div class="cb-unit"><div class="cb-n" id="cdD">--</div><div class="cb-l">Days</div></div>
     <div class="cb-sep">:</div>
-    <div class="cb-unit"><div class="cb-n" id="cdH">08</div><div class="cb-l">Hours</div></div>
+    <div class="cb-unit"><div class="cb-n" id="cdH">--</div><div class="cb-l">Hours</div></div>
     <div class="cb-sep">:</div>
-    <div class="cb-unit"><div class="cb-n" id="cdM">33</div><div class="cb-l">Mins</div></div>
+    <div class="cb-unit"><div class="cb-n" id="cdM">--</div><div class="cb-l">Mins</div></div>
     <div class="cb-sep">:</div>
-    <div class="cb-unit"><div class="cb-n" id="cdS">17</div><div class="cb-l">Secs</div></div>
+    <div class="cb-unit"><div class="cb-n" id="cdS">--</div><div class="cb-l">Secs</div></div>
   </div>
   <span class="cb-label">Free for Couples · Always</span>
 </div>
@@ -1544,20 +2156,20 @@ footer{
       <h2 class="final-h">Join the<br>waitlist.<br>Plan with<br><em>confidence.</em></h2>
     </div>
     <div class="final-right rv-r">
-      <p class="final-body">Free for couples, always. Be among the first to access Twine when we launch. Vendors — claim your founding profile now and lock in your rate before we go live.</p>
+      <p class="final-body">Twine launches in 1–2 weeks. Join the waitlist now and you'll be first to download when it's live — before we open to the public. Free forever for couples. Vendors — claim your founding rate before we launch and lock it in for life.</p>
       <div class="final-form">
         <div id="finalWrap">
           <div class="form-grid">
             <input class="form-email" type="email" id="finalEmail" placeholder="your@email.com">
             <div class="form-sep"></div>
-            <button class="form-cta" onclick="submitFinal()">Get Early Access</button>
+            <button class="form-cta" onclick="submitFinal()">Join Waitlist — Launching Soon</button>
           </div>
         </div>
         <div class="form-success" id="finalSuccess">
           <div class="fs-t">You're in.</div>
-          <div class="fs-s">Watch your inbox — you'll be first to know when Twine goes live.</div>
+          <div class="fs-s">Twine launches in 1–2 weeks. Watch your inbox — you'll be first.</div>
         </div>
-        <div class="final-note">No credit card · Free forever for couples · Launching 2026</div>
+        <div class="final-note">No credit card · Free forever for couples · Launching in 1–2 weeks</div>
       </div>
     </div>
   </div>
@@ -1576,14 +2188,17 @@ footer{
       <div class="fm-sub">Wedding Discovery Platform</div>
     </div>
     <div class="fm-right">
-      <a href="#" class="fm-link">For Vendors</a>
-      <a href="#" class="fm-link">Privacy</a>
-      <a href="#" class="fm-link">Terms</a>
+      <a href="#vendors" class="fm-link">For Vendors</a>
+      <a href="https://instagram.com/twine.wedding" target="_blank" rel="noopener" class="fm-link">Instagram</a>
+      <a href="https://tiktok.com/@twine.wedding" target="_blank" rel="noopener" class="fm-link">TikTok</a>
     </div>
   </div>
   <div class="footer-bottom">
-    <span>© 2026 Twine. All rights reserved. Scripps Labs LLC.</span>
-    <span>Made with love for every love story.</span>
+    <span>© 2026 Twine. All rights reserved. Scripps Labs LLC. Newport Beach, CA.</span>
+    <span style="display:flex;gap:20px">
+      <a href="#" style="color:rgba(247,244,238,.25);text-decoration:none;transition:color .3s" onmouseover="this.style.color='rgba(247,244,238,.5)'" onmouseout="this.style.color='rgba(247,244,238,.25)'">Privacy Policy</a>
+      <a href="#" style="color:rgba(247,244,238,.25);text-decoration:none;transition:color .3s" onmouseover="this.style.color='rgba(247,244,238,.5)'" onmouseout="this.style.color='rgba(247,244,238,.25)'">Terms of Use</a>
+    </span>
   </div>
 </footer>
 
@@ -1651,32 +2266,85 @@ function validate(id){
   return true;
 }
 
-function submitCouple(){
-  if(!validate('cEmail'))return;
-  document.getElementById('cFormWrap').style.display='none';
-  document.getElementById('cSuccess').classList.add('show');
-}
-function submitVendor(){
-  if(!validate('vEmail'))return;
-  document.getElementById('vFormWrap').style.display='none';
-  document.getElementById('vSuccess').classList.add('show');
-}
-function submitFinal(){
-  if(!validate('finalEmail'))return;
-  document.getElementById('finalWrap').style.display='none';
-  document.getElementById('finalSuccess').classList.add('show');
+// Fire-and-forget: store the signup + trigger the confirmation email.
+// UI already shows success optimistically; the request runs in the background.
+function captureSignup(url,payload){
+  try{
+    fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload),keepalive:true})
+      .catch(function(){});
+  }catch(e){}
 }
 
-// COUNTDOWN
-const launch=new Date(Date.now()+42*24*60*60*1000);
-function tick(){
-  const d=launch-Date.now();if(d<=0)return;
-  document.getElementById('cdD').textContent=String(Math.floor(d/86400000)).padStart(2,'0');
-  document.getElementById('cdH').textContent=String(Math.floor(d%86400000/3600000)).padStart(2,'0');
-  document.getElementById('cdM').textContent=String(Math.floor(d%3600000/60000)).padStart(2,'0');
-  document.getElementById('cdS').textContent=String(Math.floor(d%60000/1000)).padStart(2,'0');
+function submitCouple(){
+  if(!validate('cEmail'))return;
+  const email=document.getElementById('cEmail').value.trim();
+  document.getElementById('cFormWrap').style.display='none';
+  document.getElementById('cSuccess').classList.add('show');
+  captureSignup('/api/couple-waitlist',{email:email,source:'couple_hero'});
 }
-tick();setInterval(tick,1000);
+
+function submitVendor(){
+  if(!validate('vEmail'))return;
+  const email=document.getElementById('vEmail').value.trim();
+  document.getElementById('vFormWrap').style.display='none';
+  // Hide the pay now secondary CTA since they've submitted email
+  const payNow = document.getElementById('vPayNow');
+  if(payNow) payNow.style.display='none';
+  document.getElementById('vSuccess').classList.add('show');
+  captureSignup('/api/vendor-waitlist',{email:email,tier_interest:'founding_29'});
+}
+
+// Stripe founding-vendor ($29/mo) hosted payment link.
+// Replace the placeholder below with the real https://buy.stripe.com/... link.
+var STRIPE_FOUNDING_29_LINK = '__STRIPE_FOUNDING_29_LINK__';
+function handlePayNow(e){
+  e.preventDefault();
+  if(STRIPE_FOUNDING_29_LINK.indexOf('http')===0){
+    window.location.href = STRIPE_FOUNDING_29_LINK;
+    return;
+  }
+  showToast('Payment link coming — enter your email above to receive it instantly');
+}
+
+function submitFinal(){
+  if(!validate('finalEmail'))return;
+  const email=document.getElementById('finalEmail').value.trim();
+  document.getElementById('finalWrap').style.display='none';
+  document.getElementById('finalSuccess').classList.add('show');
+  captureSignup('/api/couple-waitlist',{email:email,source:'final_cta'});
+}
+
+// TOAST — for pay now feedback
+let _tt;
+function showToast(msg){
+  let t = document.getElementById('_toast');
+  if(!t){
+    t = document.createElement('div');
+    t.id = '_toast';
+    t.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--ink);color:rgba(247,244,238,.9);padding:12px 24px;border-radius:4px;font-family:Jost,sans-serif;font-size:12px;letter-spacing:.06em;z-index:9999;transition:transform .4s cubic-bezier(.22,1,.36,1);white-space:nowrap;box-shadow:0 8px 24px rgba(13,11,9,.3)';
+    document.body.appendChild(t);
+  }
+  t.textContent = msg;
+  t.style.transform = 'translateX(-50%) translateY(0)';
+  clearTimeout(_tt);
+  _tt = setTimeout(()=>t.style.transform='translateX(-50%) translateY(80px)', 2800);
+}
+
+// COUNTDOWN — targets July 14, 2026 launch date
+// Mohamed: update this date when App Store approval confirmed
+const launch = new Date('2026-07-14T09:00:00-07:00');
+function tick(){
+  const d = launch - Date.now();
+  if(d <= 0){
+    ['cdD','cdH','cdM','cdS'].forEach(id => document.getElementById(id).textContent = '00');
+    return;
+  }
+  document.getElementById('cdD').textContent = String(Math.floor(d/86400000)).padStart(2,'0');
+  document.getElementById('cdH').textContent = String(Math.floor(d%86400000/3600000)).padStart(2,'0');
+  document.getElementById('cdM').textContent = String(Math.floor(d%3600000/60000)).padStart(2,'0');
+  document.getElementById('cdS').textContent = String(Math.floor(d%60000/1000)).padStart(2,'0');
+}
+tick(); setInterval(tick, 1000);
 
 // ── COMPARISON CAROUSEL ──
 (function(){
@@ -1770,6 +2438,52 @@ tick();setInterval(tick,1000);
   window.cmpNext = () => goTo(current + 1);
   window.cmpPrev = () => goTo(current - 1);
 })();
+
+// ── VENDOR FAQ TOGGLE ──
+function toggleFaq(el){
+  const wasOpen = el.classList.contains('open');
+  document.querySelectorAll('.v-faq-item').forEach(i => i.classList.remove('open'));
+  if(!wasOpen) el.classList.add('open');
+}
+
+// ── MOBILE STICKY CTA ──
+function submitMobile(){
+  const email = document.getElementById('mcbEmail')?.value.trim();
+  if(!email || !email.includes('@')) return;
+  document.getElementById('mobileCTA').classList.add('hidden');
+  document.getElementById('cEmail').value = email;
+  document.getElementById('cFormWrap').style.display='none';
+  document.getElementById('cSuccess').classList.add('show');
+  captureSignup('/api/couple-waitlist',{email:email,source:'mobile_sticky'});
+}
+
+// Hide sticky bar when main form is visible
+window.addEventListener('load', () => {
+  const formEl = document.getElementById('cFormWrap');
+  if(!formEl || !window.IntersectionObserver) return;
+  const bar = document.getElementById('mobileCTA');
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if(!bar) return;
+      const success = document.getElementById('cSuccess');
+      if(e.isIntersecting || success?.classList.contains('show')){
+        bar.classList.add('hidden');
+      } else {
+        bar.classList.remove('hidden');
+      }
+    });
+  }, {threshold:0.2});
+  obs.observe(formEl);
+});
 </script>
+<!-- MOBILE STICKY CTA — only shows in couple mode on mobile -->
+<div class="mobile-cta-bar" id="mobileCTA">
+  <div class="mcb-inner">
+    <input class="mcb-input" type="email" id="mcbEmail" placeholder="your@email.com" autocomplete="email">
+    <button class="mcb-btn" onclick="submitMobile()">Join</button>
+  </div>
+  <div class="mcb-note">Free forever · Launching in 1–2 weeks · No credit card</div>
+</div>
+
 </body>
 </html>
