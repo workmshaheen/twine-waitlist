@@ -1,9 +1,20 @@
 // POST /api/couple-waitlist  { email, source }
 // Stores the signup in Supabase (couple_waitlist) and sends a Resend confirmation.
+const { coupleConfirmation, adminNotification } = require('../lib/emails');
+
 const SUPABASE_URL = process.env.SUPABASE_URL;
 const SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
 const FROM = 'Twine <brad@twine.wedding>';
+const ADMIN = process.env.ADMIN_EMAIL || 'brad@twine.wedding';
+
+function sendEmail(payload) {
+  return fetch('https://api.resend.com/emails', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${RESEND_API_KEY}` },
+    body: JSON.stringify(payload),
+  });
+}
 
 function readBody(req) {
   if (req.body && typeof req.body === 'object') return req.body;
@@ -47,25 +58,16 @@ module.exports = async (req, res) => {
     return;
   }
 
-  // 2) Send confirmation email (non-fatal — signup is already saved)
+  // 2) Send emails (non-fatal — signup is already saved):
+  //    a) branded confirmation to the couple
+  //    b) admin notification to the Twine inbox (reply-to = the lead)
   try {
-    await fetch('https://api.resend.com/emails', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${RESEND_API_KEY}` },
-      body: JSON.stringify({
-        from: FROM,
-        to: [clean],
-        subject: "You're on the Twine waitlist — launching in 1–2 weeks",
-        html: `<div style="font-family:Georgia,'Times New Roman',serif;max-width:520px;margin:0 auto;color:#2b2622;line-height:1.6;font-size:16px">
-  <h1 style="font-size:24px;font-weight:400;letter-spacing:.5px;margin:0 0 16px">You're on the list.</h1>
-  <p>Thank you for joining the Twine waitlist. Your spot is reserved.</p>
-  <p>We're launching in <strong>1–2 weeks</strong>, and you'll be among the very first to know the moment we go live — early access, ahead of everyone else.</p>
-  <p>We can't wait to help you plan something beautiful.</p>
-  <p style="margin-top:28px">— The Twine team</p>
-  <p style="margin-top:24px;font-size:13px;color:#9a8f86">Twine · The modern wedding platform · twine.wedding</p>
-</div>`,
-      }),
-    });
+    const confirm = coupleConfirmation();
+    const admin = adminNotification({ type: 'couple', email: clean, meta: { source: source || 'waitlist' } });
+    await Promise.allSettled([
+      sendEmail({ from: FROM, to: [clean], subject: confirm.subject, html: confirm.html }),
+      sendEmail({ from: FROM, to: [ADMIN], reply_to: clean, subject: admin.subject, html: admin.html }),
+    ]);
   } catch (e) {
     console.error('Resend error (couple):', e);
   }

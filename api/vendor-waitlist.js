@@ -1,9 +1,20 @@
 // POST /api/vendor-waitlist  { email, tier_interest }
 // Stores the signup in Supabase (vendor_waitlist) and sends a Resend confirmation.
+const { vendorConfirmation, adminNotification } = require('../lib/emails');
+
 const SUPABASE_URL = process.env.SUPABASE_URL;
 const SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
 const FROM = 'Twine <brad@twine.wedding>';
+const ADMIN = process.env.ADMIN_EMAIL || 'brad@twine.wedding';
+
+function sendEmail(payload) {
+  return fetch('https://api.resend.com/emails', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${RESEND_API_KEY}` },
+    body: JSON.stringify(payload),
+  });
+}
 
 function readBody(req) {
   if (req.body && typeof req.body === 'object') return req.body;
@@ -47,29 +58,16 @@ module.exports = async (req, res) => {
     return;
   }
 
-  // 2) Send confirmation email (non-fatal — signup is already saved)
+  // 2) Send emails (non-fatal — signup is already saved):
+  //    a) branded founding-vendor confirmation
+  //    b) admin notification to the Twine inbox (reply-to = the lead)
   try {
-    await fetch('https://api.resend.com/emails', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${RESEND_API_KEY}` },
-      body: JSON.stringify({
-        from: FROM,
-        to: [clean],
-        subject: 'Your Twine founding spot is reserved',
-        html: `<div style="font-family:Georgia,'Times New Roman',serif;max-width:520px;margin:0 auto;color:#2b2622;line-height:1.6;font-size:16px">
-  <h1 style="font-size:24px;font-weight:400;letter-spacing:.5px;margin:0 0 16px">Your founding spot is reserved.</h1>
-  <p>Welcome to Twine. Your <strong>$29/month founding rate is locked in — forever</strong>. It will never increase for as long as you stay with us.</p>
-  <p>Here's what happens next:</p>
-  <ul style="padding-left:20px">
-    <li>Your secure payment link arrives <strong>within 48 hours</strong> to activate your subscription.</li>
-    <li>Your vendor profile goes <strong>live on launch day</strong>, in front of newly engaged couples in your area.</li>
-  </ul>
-  <p>You're one of the first vendors on the platform — thank you for building this with us.</p>
-  <p style="margin-top:28px">— The Twine team</p>
-  <p style="margin-top:24px;font-size:13px;color:#9a8f86">Twine · The modern wedding platform · twine.wedding</p>
-</div>`,
-      }),
-    });
+    const confirm = vendorConfirmation();
+    const admin = adminNotification({ type: 'vendor', email: clean, meta: { tier_interest: tier_interest || 'founding_29' } });
+    await Promise.allSettled([
+      sendEmail({ from: FROM, to: [clean], subject: confirm.subject, html: confirm.html }),
+      sendEmail({ from: FROM, to: [ADMIN], reply_to: clean, subject: admin.subject, html: admin.html }),
+    ]);
   } catch (e) {
     console.error('Resend error (vendor):', e);
   }
