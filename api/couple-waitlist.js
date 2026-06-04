@@ -7,6 +7,7 @@ const SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
 const FROM = 'Twine <brad@twine.wedding>';
 const ADMIN = process.env.ADMIN_EMAIL || 'brad@twine.wedding';
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 function sendEmail(payload) {
   return fetch('https://api.resend.com/emails', {
@@ -27,22 +28,27 @@ module.exports = async (req, res) => {
     res.status(405).json({ ok: false, error: 'Method not allowed' });
     return;
   }
+  if (!SUPABASE_URL || !SERVICE_KEY) {
+    console.error('couple-waitlist misconfigured: missing Supabase env');
+    res.status(500).json({ ok: false, error: 'server_misconfigured' });
+    return;
+  }
   const { email, source } = readBody(req);
   const clean = (email || '').toString().trim().toLowerCase();
-  if (!clean || !clean.includes('@') || clean.length > 320) {
+  if (!clean || clean.length > 320 || !EMAIL_RE.test(clean)) {
     res.status(400).json({ ok: false, error: 'Invalid email' });
     return;
   }
 
-  // 1) Store in Supabase
+  // 1) Store in Supabase (upsert on email so a returning signup updates, never duplicates)
   try {
-    const r = await fetch(`${SUPABASE_URL}/rest/v1/couple_waitlist`, {
+    const r = await fetch(`${SUPABASE_URL}/rest/v1/couple_waitlist?on_conflict=email`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         apikey: SERVICE_KEY,
         Authorization: `Bearer ${SERVICE_KEY}`,
-        Prefer: 'return=minimal',
+        Prefer: 'resolution=merge-duplicates,return=minimal',
       },
       body: JSON.stringify({ email: clean, source: (source || 'waitlist').toString().slice(0, 64) }),
     });

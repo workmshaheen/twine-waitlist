@@ -3,7 +3,24 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Twine — Early Access</title>
+<title>Twine — The Modern Wedding Platform</title>
+<meta name="description" content="Twine helps couples discover and book the wedding vendors they love, plan their timeline, and manage everything in one place. Free for couples, always.">
+<link rel="canonical" href="https://twine.wedding/">
+<meta name="theme-color" content="#0D0B09">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Twine">
+<meta property="og:url" content="https://twine.wedding/">
+<meta property="og:title" content="Twine — The Modern Wedding Platform">
+<meta property="og:description" content="Discover and book the vendors couples love. Plan your whole wedding in one place. Free for couples, always.">
+<meta property="og:image" content="https://twine.wedding/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Twine — The Modern Wedding Platform">
+<meta name="twitter:description" content="Discover and book the vendors couples love. Plan your whole wedding in one place.">
+<meta name="twitter:image" content="https://twine.wedding/og.png">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230D0B09'/%3E%3Ctext x='16' y='22' font-family='Georgia,serif' font-size='17' fill='%23F7F4EE' text-anchor='middle'%3ET%3C/text%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230D0B09'/%3E%3Ctext x='16' y='22' font-family='Georgia,serif' font-size='17' fill='%23F7F4EE' text-anchor='middle'%3ET%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
@@ -1413,7 +1430,7 @@ body.vm .vendor-only-grid{display:grid}
       <a href="#compare" class="nav-item">Compare</a>
     </div>
     <div class="nav-center">
-      <a href="#" class="nav-logo">Twine</a>
+      <a href="/" class="nav-logo">Twine</a>
       <div class="nav-logo-sub">Wedding Discovery</div>
     </div>
     <div class="nav-right">
@@ -1520,7 +1537,7 @@ body.vm .vendor-only-grid{display:grid}
         <div class="vp-head">Vendor Pricing — Lock in your tier before launch</div>
         <div class="vp-tier featured">
           <div class="vp-left">
-            <div class="vp-name">First 100 Vendors <span class="vp-badge vp-badge-hot">🔥 38 spots left</span></div>
+            <div class="vp-name">First 100 Vendors <span class="vp-badge vp-badge-hot" id="foundingBadge">🔥 38 spots left</span></div>
             <div class="vp-desc">Grandfathered forever — never pay more</div>
           </div>
           <div class="vp-right">
@@ -2160,7 +2177,7 @@ body.vm .vendor-only-grid{display:grid}
       <div class="final-form">
         <div id="finalWrap">
           <div class="form-grid">
-            <input class="form-email" type="email" id="finalEmail" placeholder="your@email.com">
+            <input class="form-email" type="email" id="finalEmail" placeholder="your@email.com" autocomplete="email">
             <div class="form-sep"></div>
             <button class="form-cta" onclick="submitFinal()">Join Waitlist — Launching Soon</button>
           </div>
@@ -2188,7 +2205,7 @@ body.vm .vendor-only-grid{display:grid}
       <div class="fm-sub">Wedding Discovery Platform</div>
     </div>
     <div class="fm-right">
-      <a href="#vendors" class="fm-link">For Vendors</a>
+      <a href="?vendor=1" class="fm-link">For Vendors</a>
       <a href="https://instagram.com/twine.wedding" target="_blank" rel="noopener" class="fm-link">Instagram</a>
       <a href="https://tiktok.com/@twine.wedding" target="_blank" rel="noopener" class="fm-link">TikTok</a>
     </div>
@@ -2196,8 +2213,8 @@ body.vm .vendor-only-grid{display:grid}
   <div class="footer-bottom">
     <span>© 2026 Twine. All rights reserved. Scripps Labs LLC. Newport Beach, CA.</span>
     <span style="display:flex;gap:20px">
-      <a href="#" style="color:rgba(247,244,238,.25);text-decoration:none;transition:color .3s" onmouseover="this.style.color='rgba(247,244,238,.5)'" onmouseout="this.style.color='rgba(247,244,238,.25)'">Privacy Policy</a>
-      <a href="#" style="color:rgba(247,244,238,.25);text-decoration:none;transition:color .3s" onmouseover="this.style.color='rgba(247,244,238,.5)'" onmouseout="this.style.color='rgba(247,244,238,.25)'">Terms of Use</a>
+      <a href="/privacy" style="color:rgba(247,244,238,.25);text-decoration:none;transition:color .3s" onmouseover="this.style.color='rgba(247,244,238,.5)'" onmouseout="this.style.color='rgba(247,244,238,.25)'">Privacy Policy</a>
+      <a href="/terms" style="color:rgba(247,244,238,.25);text-decoration:none;transition:color .3s" onmouseover="this.style.color='rgba(247,244,238,.5)'" onmouseout="this.style.color='rgba(247,244,238,.25)'">Terms of Use</a>
     </span>
   </div>
 </footer>
@@ -2269,10 +2286,9 @@ function validate(id){
 // Fire-and-forget: store the signup + trigger the confirmation email.
 // UI already shows success optimistically; the request runs in the background.
 function captureSignup(url,payload){
-  try{
-    fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload),keepalive:true})
-      .catch(function(){});
-  }catch(e){}
+  return fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload),keepalive:true})
+    .then(function(r){ if(!r.ok) throw new Error('save_failed'); return r; })
+    .catch(function(){ try{ showToast("Hmm — that didn't save. Please try again."); }catch(e){} });
 }
 
 function submitCouple(){
@@ -2485,5 +2501,22 @@ window.addEventListener('load', () => {
   <div class="mcb-note">Free forever · Launching in 1–2 weeks · No credit card</div>
 </div>
 
+<script>
+/* Enter-to-submit on every email field + live founding-vendor scarcity. */
+(function(){
+  var map = { cEmail: submitCouple, vEmail: submitVendor, finalEmail: submitFinal, mcbEmail: submitMobile };
+  Object.keys(map).forEach(function(id){
+    var el = document.getElementById(id);
+    if (el) el.addEventListener('keydown', function(e){ if(e.key==='Enter'){ e.preventDefault(); try{ map[id](); }catch(_){} } });
+  });
+  fetch('/api/vendor-count').then(function(r){ return r.json(); }).then(function(d){
+    if(!d) return;
+    var cap = d.cap||100, taken = Math.max(0, Math.min(cap, d.taken||0)), left = Math.max(0, cap - taken);
+    var bar = document.getElementById('foundingBar'); if(bar) bar.style.width = Math.round(taken/cap*100) + '%';
+    var cnt = document.getElementById('foundingCount'); if(cnt) cnt.textContent = taken + ' / ' + cap;
+    var badge = document.getElementById('foundingBadge'); if(badge) badge.textContent = '🔥 ' + left + ' spots left';
+  }).catch(function(){});
+})();
+</script>
 </body>
 </html>

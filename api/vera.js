@@ -31,19 +31,25 @@ Boundaries: don't invent specific vendor names, prices, or availability. Don't g
 
 function coupleContext(c) {
   if (!c || typeof c !== 'object') return 'No couple details on file yet.';
-  const names = [c.p1, c.p2].filter(Boolean).join(' & ');
+  const s = (v) => String(v == null ? '' : v).replace(/\s+/g, ' ').trim().slice(0, 120); // cap untrusted client text
+  const names = [c.p1, c.p2].map(s).filter(Boolean).join(' & ');
+  const budget = Number(c.budget);
   const lines = [
     names && `Couple: ${names}`,
-    c.date && `Wedding date: ${c.date}`,
-    c.location && `Location: ${c.location}`,
-    c.vibe && `Vibe: ${c.vibe}`,
-    c.budget && `Budget: $${Number(c.budget).toLocaleString()}`,
+    c.date && `Wedding date: ${s(c.date)}`,
+    c.location && `Location: ${s(c.location)}`,
+    c.vibe && `Vibe: ${s(c.vibe)}`,
+    Number.isFinite(budget) && budget > 0 && `Budget: $${budget.toLocaleString()}`,
   ].filter(Boolean);
   return lines.length ? `Here is what you know about this couple:\n${lines.join('\n')}` : 'No couple details on file yet.';
 }
 
 module.exports = async (req, res) => {
   if (req.method !== 'POST') { res.status(405).json({ ok: false, error: 'method_not_allowed' }); return; }
+  if (!SUPABASE_URL || !SERVICE_KEY || !ANTHROPIC_API_KEY) {
+    console.error('vera misconfigured: missing env');
+    res.status(500).json({ ok: false, error: 'server_misconfigured' }); return;
+  }
 
   // 1) Authenticate the caller via their Supabase session token.
   const auth = req.headers.authorization || req.headers.Authorization || '';
@@ -62,35 +68,50 @@ module.exports = async (req, res) => {
   }
   if (!uid) { res.status(401).json({ ok: false, error: 'invalid_session' }); return; }
 
-  // 2) Enforce the free-message limit server-side (RLS scopes reads to this couple).
   const sbHeaders = { apikey: SERVICE_KEY, Authorization: `Bearer ${token}` };
+  const persistMsg = (role, content) =>
+    fetch(`${SUPABASE_URL}/rest/v1/vera_messages`, {
+      method: 'POST',
+      headers: { ...sbHeaders, 'Content-Type': 'application/json', Prefer: 'return=minimal' },
+      body: JSON.stringify({ couple_id: uid, role, content }),
+    }).catch((e) => console.error('vera persist failed', e));
+
+  // 2) Read entitlement (fail closed below if we can't establish the limit).
   let unlocked = false;
   try {
     const c = await fetch(`${SUPABASE_URL}/rest/v1/couples?id=eq.${uid}&select=vera_unlocked`, { headers: sbHeaders });
     const rows = c.ok ? await c.json() : [];
     unlocked = !!(rows[0] && rows[0].vera_unlocked);
-  } catch { /* fail open on the read; the count check below still applies */ }
+  } catch { /* treat as not unlocked; count gate below decides */ }
 
+  // 3) Enforce the free-message limit. `used` counts prior user turns (the client no
+  //    longer pre-persists), so the gate is exact and race-free.
   if (!unlocked) {
+    let used = null;
     try {
       const r = await fetch(`${SUPABASE_URL}/rest/v1/vera_messages?couple_id=eq.${uid}&role=eq.user&select=id`,
         { headers: { ...sbHeaders, Prefer: 'count=exact', Range: '0-0' } });
       const range = r.headers.get('content-range') || '';
-      const used = parseInt((range.split('/')[1] || '0'), 10) || 0;
-      if (used > FREE_LIMIT) { res.status(402).json({ ok: false, error: 'limit_reached' }); return; }
-    } catch { /* if the count fails, allow the message rather than hard-block a paying flow */ }
+      const n = parseInt((range.split('/')[1] || ''), 10);
+      used = Number.isNaN(n) ? null : n;
+    } catch { used = null; }
+    if (used === null) { res.status(503).json({ ok: false, error: 'limit_check_failed' }); return; } // fail closed — don't burn credits
+    if (used >= FREE_LIMIT) { res.status(402).json({ ok: false, error: 'limit_reached' }); return; }
   }
 
-  // 3) Build the request and call Claude.
+  // 4) Build the request.
   const { messages, couple } = readBody(req);
   const history = Array.isArray(messages) ? messages : [];
   const turns = history
     .filter((m) => m && (m.role === 'user' || m.role === 'assistant') && typeof m.content === 'string' && m.content.trim())
     .slice(-12)
-    .map((m) => ({ role: m.role, content: m.content }));
+    .map((m) => ({ role: m.role, content: m.content.slice(0, 4000) }));
   if (!turns.length || turns[turns.length - 1].role !== 'user') {
     res.status(400).json({ ok: false, error: 'no_user_message' }); return;
   }
+
+  // Persist the user's message now (authoritative history + drives the limit count).
+  await persistMsg('user', turns[turns.length - 1].content);
 
   try {
     const r = await fetch('https://api.anthropic.com/v1/messages', {
@@ -117,6 +138,7 @@ module.exports = async (req, res) => {
     }
     const data = await r.json();
     const reply = (data.content || []).filter((b) => b.type === 'text').map((b) => b.text).join('').trim();
+    if (reply) await persistMsg('assistant', reply);
     res.status(200).json({ ok: true, reply });
   } catch (e) {
     console.error('Vera proxy error', e);
