@@ -102,7 +102,7 @@ module.exports = async (req, res) => {
       },
       body: JSON.stringify({
         model: MODEL,
-        max_tokens: 700,
+        max_tokens: 1000,
         system: [
           { type: 'text', text: PERSONA, cache_control: { type: 'ephemeral' } },
           { type: 'text', text: coupleContext(couple) },
