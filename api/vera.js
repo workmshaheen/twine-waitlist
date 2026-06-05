@@ -69,6 +69,18 @@ module.exports = async (req, res) => {
   if (!uid) { res.status(401).json({ ok: false, error: 'invalid_session' }); return; }
 
   const sbHeaders = { apikey: SERVICE_KEY, Authorization: `Bearer ${token}` };
+
+  // Ensure a couples row exists (service role) so the vera_messages FK and the
+  // free-limit count work for any valid session — don't rely on the client having
+  // completed onboarding. ignore-duplicates won't overwrite an existing row.
+  try {
+    await fetch(`${SUPABASE_URL}/rest/v1/couples?on_conflict=id`, {
+      method: 'POST',
+      headers: { apikey: SERVICE_KEY, Authorization: `Bearer ${SERVICE_KEY}`, 'Content-Type': 'application/json', Prefer: 'resolution=ignore-duplicates,return=minimal' },
+      body: JSON.stringify({ id: uid }),
+    });
+  } catch (e) { console.error('vera ensure-couple failed', e); }
+
   const persistMsg = (role, content) =>
     fetch(`${SUPABASE_URL}/rest/v1/vera_messages`, {
       method: 'POST',

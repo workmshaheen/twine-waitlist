@@ -51,6 +51,10 @@ async function upsertVendorByEmail(email, fields) {
 
 module.exports = async (req, res) => {
   if (req.method !== 'POST') { res.status(405).json({ received: false }); return; }
+  if (!SUPABASE_URL || !SERVICE_KEY || !STRIPE_SECRET) {
+    console.error('stripe webhook misconfigured: missing env');
+    res.status(500).json({ received: false, error: 'server_misconfigured' }); return;
+  }
 
   const body = readBody(req);
   const eventId = body && body.id;

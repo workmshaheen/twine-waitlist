@@ -40,7 +40,9 @@ module.exports = async (req, res) => {
     return;
   }
 
-  // 1) Store in Supabase (upsert on email so a returning signup updates, never duplicates)
+  // 1) Store in Supabase. ignore-duplicates: a returning email is a no-op (no new
+  //    row, no email re-send — anti-spam). Only a genuinely new row triggers emails.
+  let isNew = false;
   try {
     const r = await fetch(`${SUPABASE_URL}/rest/v1/couple_waitlist?on_conflict=email`, {
       method: 'POST',
@@ -48,7 +50,7 @@ module.exports = async (req, res) => {
         'Content-Type': 'application/json',
         apikey: SERVICE_KEY,
         Authorization: `Bearer ${SERVICE_KEY}`,
-        Prefer: 'resolution=merge-duplicates,return=minimal',
+        Prefer: 'resolution=ignore-duplicates,return=representation',
       },
       body: JSON.stringify({ email: clean, source: (source || 'waitlist').toString().slice(0, 64) }),
     });
@@ -58,13 +60,17 @@ module.exports = async (req, res) => {
       res.status(502).json({ ok: false, error: 'store_failed' });
       return;
     }
+    const rows = await r.json().catch(() => []);
+    isNew = Array.isArray(rows) && rows.length > 0;
   } catch (e) {
     console.error('Supabase error (couple):', e);
     res.status(502).json({ ok: false, error: 'store_failed' });
     return;
   }
 
-  // 2) Send emails (non-fatal — signup is already saved):
+  if (!isNew) { res.status(200).json({ ok: true, already: true }); return; }
+
+  // 2) Send emails for new signups only (non-fatal — signup is already saved):
   //    a) branded confirmation to the couple
   //    b) admin notification to the Twine inbox (reply-to = the lead)
   try {
