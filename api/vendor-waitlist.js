@@ -1,6 +1,7 @@
 // POST /api/vendor-waitlist  { email, tier_interest }
 // Stores the signup in Supabase (vendor_waitlist) and sends a Resend confirmation.
 const { vendorConfirmation, adminNotification } = require('../lib/emails');
+const { allow } = require('../lib/ratelimit');
 
 const SUPABASE_URL = process.env.SUPABASE_URL;
 const SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
@@ -31,6 +32,10 @@ module.exports = async (req, res) => {
   if (!SUPABASE_URL || !SERVICE_KEY) {
     console.error('vendor-waitlist misconfigured: missing Supabase env');
     res.status(500).json({ ok: false, error: 'server_misconfigured' });
+    return;
+  }
+  if (!(await allow(req, 'vendor-waitlist', 8, 60))) {
+    res.status(429).json({ ok: false, error: 'rate_limited' });
     return;
   }
   const { email, tier_interest } = readBody(req);

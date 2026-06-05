@@ -8,12 +8,16 @@
 // registry_items, and budget_items.
 const SUPABASE_URL = process.env.SUPABASE_URL;
 const SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
+const { allow } = require('../lib/ratelimit');
 
 module.exports = async (req, res) => {
   if (req.method !== 'POST') { res.status(405).json({ ok: false, error: 'method_not_allowed' }); return; }
   if (!SUPABASE_URL || !SERVICE_KEY) {
     console.error('delete-account misconfigured: missing Supabase env');
     res.status(500).json({ ok: false, error: 'server_misconfigured' }); return;
+  }
+  if (!(await allow(req, 'delete-account', 5, 60))) {
+    res.status(429).json({ ok: false, error: 'rate_limited' }); return;
   }
 
   const auth = req.headers.authorization || req.headers.Authorization || '';

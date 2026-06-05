@@ -56,6 +56,16 @@ module.exports = async (req, res) => {
     res.status(500).json({ received: false, error: 'server_misconfigured' }); return;
   }
 
+  // Reject anything that isn't a signed Stripe delivery. Real webhooks always carry
+  // a `stripe-signature` header; this blocks trivial unauthenticated POSTs from
+  // driving our outbound Stripe fetches. (Full HMAC verification with the raw body +
+  // STRIPE_WEBHOOK_SECRET is the next step — see note below; the re-fetch already
+  // guarantees event authenticity/content.)
+  if (!req.headers['stripe-signature']) {
+    res.status(400).json({ received: false, error: 'missing_signature' });
+    return;
+  }
+
   const body = readBody(req);
   const eventId = body && body.id;
   if (!eventId || typeof eventId !== 'string' || eventId.indexOf('evt_') !== 0) {

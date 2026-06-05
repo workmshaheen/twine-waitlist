@@ -8,6 +8,7 @@ const SUPABASE_URL = process.env.SUPABASE_URL;
 const SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
 const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY;
 const MODEL = process.env.VERA_MODEL || 'claude-haiku-4-5';
+const { allow } = require('../lib/ratelimit');
 const FREE_LIMIT = 5; // free user messages before the $10 unlock
 
 function readBody(req) {
@@ -49,6 +50,9 @@ module.exports = async (req, res) => {
   if (!SUPABASE_URL || !SERVICE_KEY || !ANTHROPIC_API_KEY) {
     console.error('vera misconfigured: missing env');
     res.status(500).json({ ok: false, error: 'server_misconfigured' }); return;
+  }
+  if (!(await allow(req, 'vera', 30, 60))) {
+    res.status(429).json({ ok: false, error: 'rate_limited' }); return;
   }
 
   // 1) Authenticate the caller via their Supabase session token.

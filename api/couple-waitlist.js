@@ -1,6 +1,7 @@
 // POST /api/couple-waitlist  { email, source }
 // Stores the signup in Supabase (couple_waitlist) and sends a Resend confirmation.
 const { coupleConfirmation, adminNotification } = require('../lib/emails');
+const { allow } = require('../lib/ratelimit');
 
 const SUPABASE_URL = process.env.SUPABASE_URL;
 const SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
@@ -31,6 +32,10 @@ module.exports = async (req, res) => {
   if (!SUPABASE_URL || !SERVICE_KEY) {
     console.error('couple-waitlist misconfigured: missing Supabase env');
     res.status(500).json({ ok: false, error: 'server_misconfigured' });
+    return;
+  }
+  if (!(await allow(req, 'couple-waitlist', 8, 60))) {
+    res.status(429).json({ ok: false, error: 'rate_limited' });
     return;
   }
   const { email, source } = readBody(req);
