@@ -9,7 +9,12 @@ const SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
 const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY;
 const MODEL = process.env.VERA_MODEL || 'claude-haiku-4-5';
 const { allow } = require('../lib/ratelimit');
-const FREE_LIMIT = 5; // free user messages before the $10 unlock
+// Per-user lifetime message ceiling. v1 ships Vera free, so this is set generously
+// (a real couple won't reach it) purely as a cost backstop; the per-IP rate limit
+// (30/min, see allow() below) is the real abuse bound. When IAP goes live (v1.1),
+// drop VERA_FREE_LIMIT back to the free-tier teaser (e.g. 5) and the app's paywall
+// re-engages automatically.
+const FREE_LIMIT = parseInt(process.env.VERA_FREE_LIMIT, 10) || 200;
 
 function readBody(req) {
   if (req.body && typeof req.body === 'object') return req.body;
